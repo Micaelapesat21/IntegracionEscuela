@@ -1,7 +1,8 @@
-var User = require('../models/bpuser');
+var User = require('../models/esctitular');
 var bodyParser = require('body-parser');
 
 
+/*
 let getUsers = (req, res) =>
 {      
     console.log("llegue a leer");
@@ -67,18 +68,24 @@ let searchUserbyKey = (req, res) =>
             console.log(results);    
         }
     });   
-}
+} */
 
-let createUser = (req,res) =>
+let crearTitular = (req,res) =>
 {
     console.log("Create user");
     console.log(req.body);
     var newContact = User({
-        name: req.body.name,
-        lastname:req.body.lastname,
-        mail: req.body.mail,
-        groupsID: [],
-        groupsAdmin: []
+        id: req.body.id,
+        nombre: req.body.nombre,
+        apellido:req.body.apellido,
+        dni: req.body.dni,
+        imagenPerfil: req.body.imagenPerfil,
+        pais: req.body.pais,
+        provincia: req.body.provincia,
+        ciudad: req.body.ciudad,
+        codigoPostal: req.body.codigoPostal,
+        direccion: req.body.direccion,
+        password: req.body.password,
     });
     newContact.save().
     then
@@ -94,6 +101,8 @@ let createUser = (req,res) =>
         }
     ) 
 }
+
+/*
 
 let registerUserWithSocialCredentials = (req,res) =>
 {
@@ -156,12 +165,14 @@ let updateUser = (req,res) =>
 }
 
 
-let deleteUser = (req,res)=>
+*/
+
+let eliminarTitular = (req,res)=>
 {
-    let id = {iduser: req.body.iduser};
+    let id = {idTitular: req.body.idTitular};
     User.deleteOne(id, function(err)
     {
-        res.status(200).send({estado:"Registro eliminado"}); //devuelvo resultado  
+        res.status(200).send({estado:"Titular eliminado"}); //devuelvo resultado  
         (err)=>
         { 
             res.status(500).send(err);
@@ -171,4 +182,5 @@ let deleteUser = (req,res)=>
            
    
 }
-module.exports={createUser,getUsers,deleteUser, getContactosByname,searchUserbyKey,updateUser,loginUser,registerUserWithSocialCredentials};
+
+module.exports={crearTitular, eliminarTitular};

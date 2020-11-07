@@ -7,7 +7,8 @@ var cors = require('cors');
 var app = express();
 
 //conectar BD
-var urlBD="mongodb+srv://itegracion-escuela:integracion@cluster0.jzudr.mongodb.net/integracion-escuela?retryWrites=true&w=majority";
+var urlBD="mongodb+srv://integracion-escuela:integracion-escuela@cluster0.jzudr.mongodb.net/integracion-escuela?retryWrites=true&w=majority";
+
  //opciones conexion
 var opts = {useNewUrlParser : true, useUnifiedTopology: true,connectTimeoutMS:20000, useFindAndModify: false};
 //importo driver
@@ -26,12 +27,12 @@ mongoose.connect(urlBD,opts).then(
 var apiRoutes = require("./api-routes")
 
 
-// Todo lo que recibe la app se tratara como json
-app.use(bodyParser.urlencoded(
-{
-    extended: true
-}));
-app.use(bodyParser.json());
+    // Todo lo que recibe la app se tratara como json
+    app.use(bodyParser.urlencoded(
+    {
+        extended: true
+    }));
+    app.use(bodyParser.json());
 app.use(cors());
 
 // Setup server port
@@ -41,7 +42,7 @@ var port = process.env.PORT || 8080;
 app.get('/', (req, res) => res.send('Hello World with Express in Integración de aplicaciones'));
 
 // Use Api routes in the App
-app.use('/boxplanbackend', apiRoutes);
+app.use('/escuelabackend', apiRoutes);
 
 // Launch app to listen to specified port
 app.listen(port, function () {
