@@ -16,6 +16,20 @@ router.get('/', function (req, res)
 
 //ESCTITULAR
 
+//EndPoint para leer toda la base de titulares
+router.get('/obtenerTitulares',function(req,res)
+{
+    console.log("leer");
+    apiController.obtenerTitulares(req,res);
+});
+
+//EndPoint para login del titular
+router.post('/loginTitular',function(req,res)
+{
+    console.log("leer");
+    apiController.loginTitular(req,res);
+});
+
 //EndPoint para insertar titular en la BD
 router.post('/crearTitular/Esctitular',function(req,res)
 {
@@ -23,11 +37,19 @@ router.post('/crearTitular/Esctitular',function(req,res)
     apiController.crearTitular(req,res);
 });
 
-//EndPoint para eliminar  usuario en la BD
+//EndPoint para eliminar titular en la BD
 router.delete('/eliminarTitular/Esctitular',function(req,res)
 {
     apiController.eliminarTitular(req,res);
 });
+
+//EndPoint para modificar titular en la BD
+router.post('/actualizarTitular/Esctitular',function(req,res)
+{
+    apiController.actualizarTitular(req,res);
+});
+
+
 
 //EndPoint para insertar  usuario en la BD con Social Credentials
 /*router.post('/registerUserWithSocialCredentials/Bpuser',function(req,res)

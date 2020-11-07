@@ -15,6 +15,13 @@ var contactSchema = new Schema({
     codigoPostal: String,
     direccion: String,
     password: String,
+    alumno:
+    [
+       { 
+           type: Schema.ObjectId,
+           ref: "escalumno"
+       }
+    ]
 });
 
 contactSchema.set('toObject', {

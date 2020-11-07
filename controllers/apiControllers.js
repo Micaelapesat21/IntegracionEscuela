@@ -1,15 +1,14 @@
-var User = require('../models/esctitular');
+var Titular = require('../models/esctitular');
 var bodyParser = require('body-parser');
 
 
-/*
-let getUsers = (req, res) =>
+
+let obtenerTitulares = (req, res) =>
 {      
     console.log("llegue a leer");
-    User.find(function(err,listUsers)
+    Titular.find(function(err,listaTitulares)
     {
-
-        res.status(200).send(listUsers);
+        res.status(200).send(listaTitulares);
         (err)=>{
             res.status(500).send(err);
             console.log(err);
@@ -18,10 +17,11 @@ let getUsers = (req, res) =>
            
 };
 
-let loginUser = (req, res) =>
+
+let loginTitular = (req, res) =>
 {   
-    console.log("Login user");
-    User.findOne({mail:req.body.mail,password:req.body.password},function(err,results)
+    console.log("Login titular");
+    Titular.findOne({dni:req.body.dni,password:req.body.password},function(err,results)
     {
         if(err){
             res.status(500).send(err);
@@ -34,6 +34,8 @@ let loginUser = (req, res) =>
     });
     
 }
+
+/*
 
 let getContactosByname = (req, res) =>
 {   
@@ -72,9 +74,9 @@ let searchUserbyKey = (req, res) =>
 
 let crearTitular = (req,res) =>
 {
-    console.log("Create user");
+    console.log("Crear titular");
     console.log(req.body);
-    var newContact = User({
+    var newContact = Titular({
         id: req.body.id,
         nombre: req.body.nombre,
         apellido:req.body.apellido,
@@ -147,30 +149,53 @@ let registerUserWithSocialCredentials = (req,res) =>
     });
 }
 
-let updateUser = (req,res) => 
+*/
+
+let actualizarTitular = (req,res) => 
 {
-    let id = {iduser: req.body.iduser};
-   
+    let id = {idTitular: req.body.idTitular};
+
     console.log("update",id);
-    User.findOneAndUpdate({ iduser : req.body.iduser},{$set : {name: req.body.name}},{new:true},function(err)
-    {
-       res.status(200).send({estado:"Registro modificado"}); //devuelvo resultado query       
-       (err)=>
-        { 
-            res.status(500).send(err);
-            console.log(err);
-        }
-    
-    });
+
+    let params = { 
+        nombre: req.body.nombre,
+        apellido: req.body.apellido, 
+        dni: req.body.dni,
+        imagenPerfil: req.body.imagenPerfil,
+        pais: req.body.pais,
+        provincia: req.body.provincia,
+        ciudad: req.body.ciudad,
+        codigoPostal: req.body.codigoPostal,
+        direccion: req.body.direccion,
+        password: req.body.password
+};
+
+for(let prop in params) if(!params[prop]) delete params[prop];
+
+
+    Titular.findOneAndUpdate(
+            id,
+            {$set : params},
+            {new:true},function(err)
+        {
+        console.log("Nombre modificado");
+        (err)=>
+            { 
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
+    res.status(200).send({estado:"Campos modificados"}); 
 }
 
 
-*/
+
 
 let eliminarTitular = (req,res)=>
 {
     let id = {idTitular: req.body.idTitular};
-    User.deleteOne(id, function(err)
+    Titular.deleteOne(id, function(err)
     {
         res.status(200).send({estado:"Titular eliminado"}); //devuelvo resultado  
         (err)=>
@@ -183,4 +208,11 @@ let eliminarTitular = (req,res)=>
    
 }
 
-module.exports={crearTitular, eliminarTitular};
+module.exports = 
+{
+    crearTitular,
+    eliminarTitular,
+    actualizarTitular,
+    obtenerTitulares,
+    loginTitular
+};
