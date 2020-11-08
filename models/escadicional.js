@@ -27,6 +27,6 @@ AdicionalSchema.set('toJSON', {
     }
 });
 
-var Escadicional = mongoose.model('escAdicional', AdicionalSchema);
+var Escadicional = mongoose.model('escadicional', AdicionalSchema);
 console.log("se creo modelo");
 module.exports = Escadicional;

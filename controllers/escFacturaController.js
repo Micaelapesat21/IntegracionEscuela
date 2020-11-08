@@ -1,2 +1,2 @@
-var Titular = require('../models/escFactura');
+var Titular = require('../models/escfactura');
 var bodyParser = require('body-parser');

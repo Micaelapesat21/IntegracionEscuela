@@ -1,4 +1,4 @@
-var Adicional = require('../models/escAdicional');
+var Adicional = require('../models/escadicional');
 var bodyParser = require('body-parser');
 
 

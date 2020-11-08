@@ -37,6 +37,6 @@ EmpleadoSchema.set('toJSON', {
   }
 });
 
-var Escempleado = mongoose.model('escEmpleado', EmpleadoSchema);
+var Escempleado = mongoose.model('escempleado', EmpleadoSchema);
 console.log("se creo modelo");
 module.exports = Escempleado;

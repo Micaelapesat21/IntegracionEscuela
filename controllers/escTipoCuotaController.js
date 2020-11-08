@@ -1,4 +1,4 @@
-var TipoCuota = require('../models/escTipoCuota');
+var TipoCuota = require('../models/esctipocuota');
 var bodyParser = require('body-parser');
 
 

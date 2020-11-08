@@ -1,4 +1,4 @@
-var Comedor = require('../models/escComedor');
+var Comedor = require('../models/esccomedor');
 var bodyParser = require('body-parser');
 
 

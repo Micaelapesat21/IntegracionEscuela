@@ -47,7 +47,7 @@ TitularSchema.set('toJSON', {
   }
 });
 
-var Esctitular = mongoose.model('escTitular', TitularSchema);
+var Esctitular = mongoose.model('esctitular', TitularSchema);
 console.log("se creo modelo");
 module.exports = Esctitular;
 

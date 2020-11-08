@@ -27,6 +27,6 @@ TipoCuotaSchema.set('toJSON', {
     }
 });
 
-var Esctipocuota = mongoose.model('escTipocuota', TipoCuotaSchema);
+var Esctipocuota = mongoose.model('esctipocuota', TipoCuotaSchema);
 console.log("se creo modelo");
 module.exports = Esctipocuota;

@@ -1,4 +1,4 @@
-var Titular = require('../models/escTitular');
+var Titular = require('../models/esctitular');
 var bodyParser = require('body-parser');
 
 

@@ -1,5 +1,5 @@
-var Alumno = require('../models/escAlumno');
-var Titular = require('../models/escTitular');
+var Alumno = require('../models/escalumno');
+var Titular = require('../models/esctitular');
 var bodyParser = require('body-parser');
 
 

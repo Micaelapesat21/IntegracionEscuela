@@ -35,6 +35,6 @@ AlumnoSchema.set('toJSON', {
     }
 });
 
-var Escalumno = mongoose.model('escAlumno', AlumnoSchema);
+var Escalumno = mongoose.model('escalumno', AlumnoSchema);
 console.log("se creo modelo");
 module.exports = Escalumno;

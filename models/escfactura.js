@@ -28,6 +28,6 @@ FacturaSchema.set('toJSON', {
     }
 });
 
-var Escfactura = mongoose.model('escFactura', FacturaSchema);
+var Escfactura = mongoose.model('escfactura', FacturaSchema);
 console.log("se creo modelo");
 module.exports = Escfactura;

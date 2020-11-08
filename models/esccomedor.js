@@ -28,6 +28,6 @@ ComedorSchema.set('toJSON', {
     }
 });
 
-var Esccomedor = mongoose.model('escComedor', ComedorSchema);
+var Esccomedor = mongoose.model('esccomedor', ComedorSchema);
 console.log("se creo modelo");
 module.exports = Esccomedor;
