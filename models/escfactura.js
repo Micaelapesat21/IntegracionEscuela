@@ -27,3 +27,7 @@ FacturaSchema.set('toJSON', {
         return ret;
     }
 });
+
+var Escfactura = mongoose.model('escFactura', FacturaSchema);
+console.log("se creo modelo");
+module.exports = Escfactura;

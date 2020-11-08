@@ -11,7 +11,7 @@ var AlumnoSchema = new Schema({
     [
        { 
            type: Schema.ObjectId,
-           ref: "esccuota"
+           ref: "esCcuota"
        }
     ]
 });
@@ -34,3 +34,7 @@ AlumnoSchema.set('toJSON', {
         return ret;
     }
 });
+
+var Escalumno = mongoose.model('escAlumno', AlumnoSchema);
+console.log("se creo modelo");
+module.exports = Escalumno;

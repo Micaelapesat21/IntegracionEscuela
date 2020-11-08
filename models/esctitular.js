@@ -3,17 +3,21 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var contactSchema = new Schema({
+var TitularSchema = new Schema({
     id:String,
     nombre:String,
     apellido:String,
-    dni:String,
+    tipoDocumento:String,
+    documento:String,
+    correo:String,
     imagenPerfil: String,
     pais: String,
     provincia: String,
     ciudad: String,
     codigoPostal: String,
     direccion: String,
+    direccion2: String,
+    telefonoContacto: String,
     password: String,
     alumno:
     [
@@ -24,7 +28,7 @@ var contactSchema = new Schema({
     ]
 });
 
-contactSchema.set('toObject', {
+TitularSchema.set('toObject', {
   transform: function (doc, ret) {
     ret._id = ret.id
 
@@ -34,7 +38,7 @@ contactSchema.set('toObject', {
   }
 })
 
-contactSchema.set('toJSON', {
+TitularSchema.set('toJSON', {
   transform: function(doc, ret, options) {
     ret.id = ret._id;
     delete ret._id;
@@ -43,7 +47,7 @@ contactSchema.set('toJSON', {
   }
 });
 
-var Esctitular = mongoose.model('esctitular', contactSchema);
+var Esctitular = mongoose.model('escTitular', TitularSchema);
 console.log("se creo modelo");
 module.exports = Esctitular;
 

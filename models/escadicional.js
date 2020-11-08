@@ -26,3 +26,7 @@ AdicionalSchema.set('toJSON', {
         return ret;
     }
 });
+
+var Escadicional = mongoose.model('escAdicional', AdicionalSchema);
+console.log("se creo modelo");
+module.exports = Escadicional;

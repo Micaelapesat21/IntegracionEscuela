@@ -57,3 +57,7 @@ CuotaSchema.set('toJSON', {
         return ret;
     }
 });
+
+var Esccuota = mongoose.model('escCuota', CuotaSchema);
+console.log("se creo modelo");
+module.exports = Esccuota;

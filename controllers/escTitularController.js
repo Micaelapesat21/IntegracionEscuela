@@ -1,4 +1,4 @@
-var Titular = require('../models/esctitular');
+var Titular = require('../models/escTitular');
 var bodyParser = require('body-parser');
 
 
@@ -21,7 +21,7 @@ let obtenerTitulares = (req, res) =>
 let loginTitular = (req, res) =>
 {   
     console.log("Login titular");
-    Titular.findOne({dni:req.body.dni,password:req.body.password},function(err,results)
+    Titular.findOne({documento:req.body.documento,password:req.body.password},function(err,results)
     {
         if(err){
             res.status(500).send(err);
@@ -77,17 +77,20 @@ let crearTitular = (req,res) =>
     console.log("Crear titular");
     console.log(req.body);
     var newContact = Titular({
-        id: req.body.id,
         nombre: req.body.nombre,
-        apellido:req.body.apellido,
-        dni: req.body.dni,
+        apellido: req.body.apellido, 
+        tipoDocumento: req.body.tipoDocumento,
+        documento: req.body.documento,
+        correo: req.body.correo,
         imagenPerfil: req.body.imagenPerfil,
         pais: req.body.pais,
         provincia: req.body.provincia,
         ciudad: req.body.ciudad,
         codigoPostal: req.body.codigoPostal,
         direccion: req.body.direccion,
-        password: req.body.password,
+        direccion2: req.body.direccion2,
+        telefonoContacto: req.body.telefonoContacto,
+        password: req.body.password
     });
     newContact.save().
     then
@@ -160,13 +163,17 @@ let actualizarTitular = (req,res) =>
     let params = { 
         nombre: req.body.nombre,
         apellido: req.body.apellido, 
-        dni: req.body.dni,
+        tipoDocumento: req.body.tipoDocumento,
+        documento: req.body.documento,
+        correo: req.body.correo,
         imagenPerfil: req.body.imagenPerfil,
         pais: req.body.pais,
         provincia: req.body.provincia,
         ciudad: req.body.ciudad,
         codigoPostal: req.body.codigoPostal,
         direccion: req.body.direccion,
+        direccion2: req.body.direccion2,
+        telefonoContacto: req.body.telefonoContacto,
         password: req.body.password
 };
 
@@ -191,21 +198,26 @@ for(let prop in params) if(!params[prop]) delete params[prop];
 
 
 
-
 let eliminarTitular = (req,res)=>
 {
-    let id = {idTitular: req.body.idTitular};
-    Titular.deleteOne(id, function(err)
-    {
-        res.status(200).send({estado:"Titular eliminado"}); //devuelvo resultado  
-        (err)=>
-        { 
-            res.status(500).send(err);
-            console.log(err);
-        }      
-    });
-           
-   
+    console.log(res.req.body.idTitular)
+    if (res.req.body.idTitular != null) {
+        let id = {_id: res.req.body.idTitular};
+
+        Titular.deleteOne(id, function(err)
+        {
+            console.log(id);
+            res.status(200).send({estado:"Titular eliminado"}); //devuelvo resultado  
+            (err)=>
+            { 
+                res.status(500).send(err);
+                console.log(err);
+            }      
+        });
+    } else {
+        console.log("Id en blanco");
+        res.status(200).send({estado:"Id en blanco, por favor enviar un idTitular"});
+    } 
 }
 
 module.exports = 
