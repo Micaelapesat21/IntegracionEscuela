@@ -11,7 +11,7 @@ var AlumnoSchema = new Schema({
     [
        { 
            type: Schema.ObjectId,
-           ref: "esCcuota"
+           ref: "esccuota"
        }
     ]
 });

@@ -13,8 +13,19 @@ let obtenerTitulares = (req, res) =>
             res.status(500).send(err);
             console.log(err);
         }
+    });  
+};
+
+let obtenerTitular = (req, res) =>
+{      
+    console.log("llegue a leer");
+    Titular.findOne({ correo: req.body.correo }, function (err, titular) { 
+        res.status(200).send(titular);
+        (err)=>{
+            res.status(500).send(err);
+            console.log(err);
+        }
     });
-           
 };
 
 
@@ -226,5 +237,6 @@ module.exports =
     eliminarTitular,
     actualizarTitular,
     obtenerTitulares,
+    obtenerTitular,
     loginTitular
 };

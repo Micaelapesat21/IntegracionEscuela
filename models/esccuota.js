@@ -4,11 +4,17 @@ var Schema = mongoose.Schema;
 
 var CuotaSchema = new Schema({
     id: String,
-    fechaDesde: Date,
-    fechaHasta: Date,
-    dni: String,
+    mes: String,
+    anio: String,
     facturada: Boolean,
     pagada: Boolean,
+    factura:
+    [
+        { 
+            type: Schema.ObjectId,
+            ref: "escfactura"
+        }
+    ],
     tipoCuota:
     [
        { 

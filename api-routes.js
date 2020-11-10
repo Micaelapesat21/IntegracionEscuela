@@ -29,6 +29,13 @@ router.get('/obtenerTitulares',function(req,res)
     escTitularController.obtenerTitulares(req,res);
 });
 
+//EndPoint para obtener el titular por mail
+router.get('/obtenerTitular',function(req,res)
+{
+    console.log("leer");
+    escTitularController.obtenerTitular(req,res);
+});
+
 //EndPoint para login del titular
 router.post('/loginTitular',function(req,res)
 {
@@ -70,6 +77,53 @@ router.post('/crearAlumno/Escalumno',function(req,res)
 {
     escAlumnoController.crearAlumno(req,res);
 });
+
+router.post('/actalizarAlumno/Escalumno', function(req, res)
+{
+    escAlumnoController.actualizarAlumno(req,res);
+});
+
+router.delete('/eliminarAlumno/Escalumno', function(req, res)
+{
+    escAlumnoController.eliminarAlumno(req,res);
+});
+
+router.get('/obtenerAlumnos', function(req, res)
+{
+    escAlumnoController.obtenerAlumnos(req,res);
+});
+
+
+//ESCCUOTA
+
+//EndPoint para leer toda la base de cuota
+router.get('/obtenerCuotas',function(req,res)
+{
+    console.log("leer");
+    escCuotaController.obtenerCuotas(req,res);
+});
+
+
+//EndPoint para insertar cuota en la BD
+router.post('/crearCuota/Esccuota',function(req,res)
+{
+    console.log(req.body);
+    escCuotaController.crearCuota(req,res);
+});
+
+//EndPoint para eliminar cuota en la BD
+router.delete('/eliminarCuota/Esccuota',function(req,res)
+{
+    escCuotaController.eliminarCuota(req,res);
+});
+
+//EndPoint para modificar cuota en la BD
+router.post('/actualizarCuota/Esccuota',function(req,res)
+{
+    escCuotaController.actualizarCuota(req,res);
+});
+
+
 
 
 
