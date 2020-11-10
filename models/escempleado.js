@@ -7,15 +7,21 @@ var EmpleadoSchema = new Schema({
     id:String,
     nombre:String,
     apellido:String,
-    dni:String,
-    imagenPerfil: String,
+    correo: String,
     pais: String,
     provincia: String,
     ciudad: String,
     codigoPostal: String,
     direccion: String,
-    password: String,
-    cargo: String
+    telefono: String,
+    categoria: String,
+    puesto: String,
+    cargaHoraria: String,
+    sueldo: Number,
+    fechaIngreso: String,
+    hijos: [{
+      nombre: String
+    }]
 });
 
 EmpleadoSchema.set('toObject', {

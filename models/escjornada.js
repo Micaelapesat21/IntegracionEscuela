@@ -2,14 +2,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var TipoCuotaSchema = new Schema({
+var JornadaSchema = new Schema({
     id: String,
-    nombreTipoCuota: String,
-    precioTipoCuota: Number
+    nombreJornada: String,
+    precioJornada: Number
 });
 
 
-TipoCuotaSchema.set('toObject', {
+JornadaSchema.set('toObject', {
     transform: function (doc, ret) {
         ret._id = ret.id
         delete ret._id
@@ -18,7 +18,7 @@ TipoCuotaSchema.set('toObject', {
     }
 })
   
-TipoCuotaSchema.set('toJSON', {
+JornadaSchema.set('toJSON', {
     transform: function(doc, ret, options) {
         ret.id = ret._id;
         delete ret._id;
@@ -27,6 +27,6 @@ TipoCuotaSchema.set('toJSON', {
     }
 });
 
-var Esctipocuota = mongoose.model('esctipocuota', TipoCuotaSchema);
+var Escjornada = mongoose.model('escjornada', JornadaSchema);
 console.log("se creo modelo");
-module.exports = Esctipocuota;
+module.exports = Escjornada;

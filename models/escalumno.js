@@ -6,12 +6,25 @@ var AlumnoSchema = new Schema({
     id: String,
     nombre: String,
     apellido: String,
+    correo: String,
+    pais: String,
+    provincia: String,
+    ciudad: String,
+    codigoPostal: String,
+    direccion: String,
+    telefono: String,
     dni: String,
-    cuota:
+    tipoCuota:
+    { 
+        type: Schema.ObjectId,
+        ref: "esctipocuota"
+    }
+    ,
+    servicios:
     [
        { 
            type: Schema.ObjectId,
-           ref: "esccuota"
+           ref: "escservicios"
        }
     ]
 });

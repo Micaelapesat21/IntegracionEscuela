@@ -5,9 +5,9 @@ let escAlumnoController = require('./controllers/escAlumnoController');
 let escCuotaController = require('./controllers/escCuotaController');
 let escAdicionalController = require('./controllers/escAdicionalController');
 let escComedorController = require('./controllers/escComedorController');
-let escTipoCuotaController = require('./controllers/escTipoCuotaController');
 let escFacturaController = require('./controllers/escFacturaController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
+const escJornadaController = require('./controllers/escJornadaController');
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -91,6 +91,11 @@ router.delete('/eliminarAlumno/Escalumno', function(req, res)
 router.get('/obtenerAlumnos', function(req, res)
 {
     escAlumnoController.obtenerAlumnos(req,res);
+});
+
+router.get('/obtenerAlumnoPorTitular', function(req, res)
+{
+    escAlumnoController.obtenerAlumnoPorTitular(req, res);
 });
 
 
@@ -197,31 +202,31 @@ router.post('/actualizarAdicional/Escadicional',function(req,res)
 
 //ESCADICIONAL
 
-//EndPoint para leer toda la base de tipocuota
-router.get('/obtenerTipoCuotas',function(req,res)
+//EndPoint para leer toda la base de jornada
+router.get('/obtenerJornadas',function(req,res)
 {
     console.log("leer");
-    escTipoCuotaController.obtenerTipoCuotas(req,res);
+    escJornadaController.obtenerJornadas(req,res);
 });
 
 
-//EndPoint para insertar tipocuota en la BD
-router.post('/crearTipoCuota/Esctipocuota',function(req,res)
+//EndPoint para insertar jornada en la BD
+router.post('/crearJornada/Escjornada',function(req,res)
 {
     console.log(req.body);
-    escTipoCuotaController.crearTipoCuota(req,res);
+    escJornadaController.crearJornada(req,res);
 });
 
-//EndPoint para eliminar tipocuota en la BD
-router.delete('/eliminarTipoCuota/Esctipocuota',function(req,res)
+//EndPoint para eliminar jornada en la BD
+router.delete('/eliminarJornada/Escjornada',function(req,res)
 {
-    escTipoCuotaController.eliminarTipoCuota(req,res);
+    escJornadaController.eliminarJornada(req,res);
 });
 
-//EndPoint para modificar tipocuota en la BD
-router.post('/actualizarTipoCuota/Esctipocuota',function(req,res)
+//EndPoint para modificar jornada en la BD
+router.post('/actualizarJornada/Escjornada',function(req,res)
 {
-    escTipoCuotaController.actualizarTipoCuota(req,res);
+    escJornadaController.actualizarJornada(req,res);
 });
 
 

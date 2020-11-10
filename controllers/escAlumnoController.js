@@ -10,9 +10,16 @@ let crearAlumno = (req,res) =>
     var nuevoAlumno = Alumno({
         nombre:req.body.nombre,
         apellido: req.body.apellido,
+        correo: req.body.correo,
+        pais: req.body.pais,
+        provincia: req.body.provincia,
+        ciudad: req.body.ciudad,
+        codigoPostal: req.body.codigoPostal,
+        direccion: req.body.direccion,
+        telefono: req.body.telefono,
         dni: req.body.dni,
-        imagenPerfil: req.body.imagenPerfil,
-        cuota: req.body.cuota
+        tipoCuota: req.body.tipoCuota,
+        servicios: req.body.servicios
     });
 
     console.log(nuevoAlumno);
@@ -54,9 +61,16 @@ let actualizarAlumno = (req,res) =>
     let params = { 
         nombre:req.body.nombre,
         apellido: req.body.apellido,
+        correo: req.body.correo,
+        pais: req.body.pais,
+        provincia: req.body.provincia,
+        ciudad: req.body.ciudad,
+        codigoPostal: req.body.codigoPostal,
+        direccion: req.body.direccion,
+        telefono: req.body.telefono,
         dni: req.body.dni,
-        imagenPerfil: req.body.imagenPerfil,
-        cuota: req.body.cuota
+        tipoCuota: req.body.tipoCuota,
+        servicios: req.body.servicios
 };
 
 for(let prop in params) if(!params[prop]) delete params[prop];
@@ -113,14 +127,36 @@ let obtenerAlumnos = (req, res) =>
     });       
 };
 
+let obtenerAlumnoPorTitular = (req, res) =>
+{      
+    console.log("llegue a leer");
+    Titular.findOne( { correo: req.body.correo }, function(err, docs) {
+        var titularBuscado = docs.alumno;
+        Alumno.find( { _id: titularBuscado }, function(err, docs) 
+        { 
+            res.status(200).send(docs);
+            (err)=>{
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+    });
+};
 
 
 
 
 
 
+let asignarServicioAAlumno = (req, res) =>
+{
 
+}
 
+let asignarJornadaAAlumno = (req, res) =>
+{
+    
+}
 
 
 
@@ -159,5 +195,6 @@ module.exports =
     asignarAdicional,
     eliminarAlumno,
     actualizarAlumno,
-    obtenerAlumnos
+    obtenerAlumnos,
+    obtenerAlumnoPorTitular
 };
