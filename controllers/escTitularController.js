@@ -167,7 +167,7 @@ let registerUserWithSocialCredentials = (req,res) =>
 
 let actualizarTitular = (req,res) => 
 {
-    let id = {idTitular: req.body.idTitular};
+    let id = {_id: res.req.body.idTitular};
 
     console.log("update",id);
 

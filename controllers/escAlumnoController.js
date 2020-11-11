@@ -16,10 +16,11 @@ let crearAlumno = (req,res) =>
         ciudad: req.body.ciudad,
         codigoPostal: req.body.codigoPostal,
         direccion: req.body.direccion,
-        telefono: req.body.telefono,
+        telefono1: req.body.telefono1,
+        telefono2: req.body.telefono2,
         dni: req.body.dni,
-        tipoCuota: req.body.tipoCuota,
-        servicios: req.body.servicios
+        turno: req.body.turno,
+        servicio: req.body.sevicio,
     });
 
     console.log(nuevoAlumno);
@@ -54,7 +55,7 @@ let crearAlumno = (req,res) =>
 
 let actualizarAlumno = (req,res) => 
 {
-    let id = {idAlumno: req.body.idAlumno};
+    let id = {_id: res.req.body.idAlumno};
 
     console.log("update",id);
 
@@ -67,10 +68,11 @@ let actualizarAlumno = (req,res) =>
         ciudad: req.body.ciudad,
         codigoPostal: req.body.codigoPostal,
         direccion: req.body.direccion,
-        telefono: req.body.telefono,
+        telefono1: req.body.telefono1,
+        telefono2: req.body.telefono2,
         dni: req.body.dni,
-        tipoCuota: req.body.tipoCuota,
-        servicios: req.body.servicios
+        turno: req.body.turno,
+        servicio: req.body.sevicio,
 };
 
 for(let prop in params) if(!params[prop]) delete params[prop];
@@ -117,7 +119,7 @@ let eliminarAlumno = (req,res)=>
 let obtenerAlumnos = (req, res) =>
 {      
     console.log("llegue a leer");
-    Comedor.find(function(err,listaAlumnos)
+    Alumno.find(function(err,listaAlumnos)
     {
         res.status(200).send(listaAlumnos);
         (err)=>{
@@ -148,15 +150,11 @@ let obtenerAlumnoPorTitular = (req, res) =>
 
 
 
-let asignarServicioAAlumno = (req, res) =>
+let asignarServicioAlumno = (req, res) =>
 {
 
 }
 
-let asignarJornadaAAlumno = (req, res) =>
-{
-    
-}
 
 
 

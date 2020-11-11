@@ -7,7 +7,7 @@ let escAdicionalController = require('./controllers/escAdicionalController');
 let escComedorController = require('./controllers/escComedorController');
 let escFacturaController = require('./controllers/escFacturaController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
-const escJornadaController = require('./controllers/escJornadaController');
+const escTurnoController = require('./controllers/escTurnoController');
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -202,31 +202,31 @@ router.post('/actualizarAdicional/Escadicional',function(req,res)
 
 //ESCADICIONAL
 
-//EndPoint para leer toda la base de jornada
-router.get('/obtenerJornadas',function(req,res)
+//EndPoint para leer toda la base de turno
+router.get('/obtenerTurnos',function(req,res)
 {
     console.log("leer");
-    escJornadaController.obtenerJornadas(req,res);
+    escTurnoController.obtenerTurnos(req,res);
 });
 
 
-//EndPoint para insertar jornada en la BD
-router.post('/crearJornada/Escjornada',function(req,res)
+//EndPoint para insertar turno en la BD
+router.post('/crearTurno/Escturno',function(req,res)
 {
     console.log(req.body);
-    escJornadaController.crearJornada(req,res);
+    escTurnoController.crearTurno(req,res);
 });
 
-//EndPoint para eliminar jornada en la BD
-router.delete('/eliminarJornada/Escjornada',function(req,res)
+//EndPoint para eliminar turno en la BD
+router.delete('/eliminarTurno/Escturno',function(req,res)
 {
-    escJornadaController.eliminarJornada(req,res);
+    escTurnoController.eliminarTurno(req,res);
 });
 
-//EndPoint para modificar jornada en la BD
-router.post('/actualizarJornada/Escjornada',function(req,res)
+//EndPoint para modificar turno en la BD
+router.post('/actualizarTurno/Escturno',function(req,res)
 {
-    escJornadaController.actualizarJornada(req,res);
+    escTurnoController.actualizarTurno(req,res);
 });
 
 

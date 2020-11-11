@@ -15,13 +15,6 @@ var CuotaSchema = new Schema({
             ref: "escfactura"
         }
     ],
-    tipoCuota:
-    [
-       { 
-           type: Schema.ObjectId,
-           ref: "esctipocuota"
-       }
-    ],
     comedor:
     [
        { 

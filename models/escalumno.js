@@ -12,14 +12,14 @@ var AlumnoSchema = new Schema({
     ciudad: String,
     codigoPostal: String,
     direccion: String,
-    telefono: String,
+    telefono1: String,
+    telefono2: String,
     dni: String,
-    tipoCuota:
+    turno:
     { 
         type: Schema.ObjectId,
-        ref: "esctipocuota"
-    }
-    ,
+        ref: "escturno"
+    },
     servicios:
     [
        { 
