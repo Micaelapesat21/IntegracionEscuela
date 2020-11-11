@@ -7,7 +7,6 @@ let escAdicionalController = require('./controllers/escAdicionalController');
 let escComedorController = require('./controllers/escComedorController');
 let escFacturaController = require('./controllers/escFacturaController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
-const escTurnoController = require('./controllers/escTurnoController');
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -131,6 +130,47 @@ router.post('/actualizarCuota/Esccuota',function(req,res)
 
 
 
+//ESCEMPLEADO
+
+//EndPoint para leer toda la base de empleado
+router.get('/obtenerEmpleados',function(req,res)
+{
+    console.log("leer");
+    escEmpleadoController.obtenerEmpleados(req,res);
+});
+
+//EndPoint para obtener el empleado por mail
+router.get('/obtenerEmpleado',function(req,res)
+{
+    console.log("leer");
+    escEmpleadoController.obtenerEmpleado(req,res);
+});
+
+//EndPoint para login del empleado
+router.post('/loginEmpleado',function(req,res)
+{
+    console.log("leer");
+    escEmpleadoController.loginEmpleado(req,res);
+});
+
+//EndPoint para insertar empleado en la BD
+router.post('/crearEmpleado/Escempleado',function(req,res)
+{
+    console.log(req.body);
+    escEmpleadoController.crearEmpleado(req,res);
+});
+
+//EndPoint para eliminar empleado en la BD
+router.delete('/eliminarEmpleado/Escempleado',function(req,res)
+{
+    escEmpleadoController.eliminarEmpleado(req,res);
+});
+
+//EndPoint para modificar empleado en la BD
+router.post('/actualizarEmpleado/Escempleado',function(req,res)
+{
+    escEmpleadoController.actualizarEmpleado(req,res);
+});
 
 
 
@@ -198,36 +238,6 @@ router.post('/actualizarAdicional/Escadicional',function(req,res)
     escAdicionalController.actualizarAdicional(req,res);
 });
 
-
-
-//ESCADICIONAL
-
-//EndPoint para leer toda la base de turno
-router.get('/obtenerTurnos',function(req,res)
-{
-    console.log("leer");
-    escTurnoController.obtenerTurnos(req,res);
-});
-
-
-//EndPoint para insertar turno en la BD
-router.post('/crearTurno/Escturno',function(req,res)
-{
-    console.log(req.body);
-    escTurnoController.crearTurno(req,res);
-});
-
-//EndPoint para eliminar turno en la BD
-router.delete('/eliminarTurno/Escturno',function(req,res)
-{
-    escTurnoController.eliminarTurno(req,res);
-});
-
-//EndPoint para modificar turno en la BD
-router.post('/actualizarTurno/Escturno',function(req,res)
-{
-    escTurnoController.actualizarTurno(req,res);
-});
 
 
 
