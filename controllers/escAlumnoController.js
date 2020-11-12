@@ -6,12 +6,14 @@ var bodyParser = require('body-parser');
 let crearAlumno = (req,res) =>
 {
 
-    Titular.findOne({_id: req.body.idTitular }, function(err, docs) {
+    Titular.find({_id: req.body.idTitular }, function(err, docs) {
+        console.log(docs);
         var titularBuscado = docs.alumno;
         var nombreTitular = docs.nombre + " " + docs.apellido;
+        
         Alumno.find( { _id: titularBuscado }, function(err, docs) 
         { 
-            console.log(nombreTitular);
+
             console.log("Crear alumno");
             console.log(req.body);
             var nuevoAlumno = Alumno({
