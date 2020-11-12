@@ -77,7 +77,7 @@ router.post('/crearAlumno/Escalumno',function(req,res)
     escAlumnoController.crearAlumno(req,res);
 });
 
-router.post('/actalizarAlumno/Escalumno', function(req, res)
+router.post('/actualizarAlumno/Escalumno', function(req, res)
 {
     escAlumnoController.actualizarAlumno(req,res);
 });
@@ -95,6 +95,16 @@ router.get('/obtenerAlumnos', function(req, res)
 router.get('/obtenerAlumnoPorTitular', function(req, res)
 {
     escAlumnoController.obtenerAlumnoPorTitular(req, res);
+});
+
+router.post('/asignarServicioAlumno', function(req, res)
+{
+    escAlumnoController.asignarServicioAlumno(req, res);
+});
+
+router.post('/desasignarServicioAlumno', function(req, res)
+{
+    escAlumnoController.desasignarServicioAlumno(req, res);
 });
 
 

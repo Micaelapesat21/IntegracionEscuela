@@ -20,7 +20,7 @@ let crearAlumno = (req,res) =>
         telefono2: req.body.telefono2,
         dni: req.body.dni,
         turno: req.body.turno,
-        servicio: req.body.sevicio,
+        servicios: req.body.servicios,
     });
 
     console.log(nuevoAlumno);
@@ -72,7 +72,7 @@ let actualizarAlumno = (req,res) =>
         telefono2: req.body.telefono2,
         dni: req.body.dni,
         turno: req.body.turno,
-        servicio: req.body.sevicio,
+        servicios: req.body.servicios
 };
 
 for(let prop in params) if(!params[prop]) delete params[prop];
@@ -83,6 +83,7 @@ for(let prop in params) if(!params[prop]) delete params[prop];
             {$set : params},
             {new:true},function(err)
         {
+        console.log(params);
         console.log("Alumno modificado");
         (err)=>
             { 
@@ -150,10 +151,64 @@ let obtenerAlumnoPorTitular = (req, res) =>
 
 
 
-let asignarServicioAlumno = (req, res) =>
-{
 
+let asignarServicioAlumno = (req,res) => 
+{
+    let id = {_id: res.req.body.idAlumno};
+
+    console.log("update",id);
+
+    let params = { 
+        servicios: req.body.servicios
+};
+
+    Alumno.findOneAndUpdate(
+            id,
+            {$push : params},
+            {new:true},function(err, success)
+        {
+        console.log(err);
+        console.log("Alumno modificado");
+        (err)=>
+            { 
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
+    res.status(200).send({estado:"Campos modificados"}); 
 }
+
+
+
+
+let desasignarServicioAlumno = (req,res) => 
+{
+    let id = {_id: res.req.body.idAlumno};
+
+    console.log("update",id);
+
+    let params = { 
+        servicios: req.body.servicios
+};
+
+    Alumno.findOneAndUpdate(
+            id,
+            {$pull : params},
+            {new:true},function(err, success)
+        {
+        console.log(err);
+        console.log("Alumno modificado");
+        (err)=>
+            { 
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
+    res.status(200).send({estado:"Campos modificados"}); 
+}
+
 
 
 
@@ -194,5 +249,7 @@ module.exports =
     eliminarAlumno,
     actualizarAlumno,
     obtenerAlumnos,
-    obtenerAlumnoPorTitular
+    obtenerAlumnoPorTitular,
+    asignarServicioAlumno,
+    desasignarServicioAlumno
 };
