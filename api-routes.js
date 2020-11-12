@@ -151,8 +151,7 @@ router.get('/obtenerCuotas',function(req,res)
 
 //EndPoint para insertar cuota en la BD
 router.post('/crearCuota/Esccuota',function(req,res)
-{
-    console.log(req.body);
+{   
     escCuotaController.crearCuota(req,res);
 });
 

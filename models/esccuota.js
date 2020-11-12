@@ -8,10 +8,14 @@ var CuotaSchema = new Schema({
     anio: String,
     pagada: Boolean,
     turno: String,
+    valorTurno: Number,
+    valorServicios: Number,
+    numberoTransaccion: Number,
     alumno: String,
     numeroFactura: String,
     fechaEmision: Date,
     fechaVencimiento: Date,
+    totalCuota: Number,
     servicios:
     [
         {
