@@ -3,7 +3,7 @@ let router = require('express').Router();
 let escTitularController = require('./controllers/escTitularController');
 let escAlumnoController = require('./controllers/escAlumnoController');
 let escCuotaController = require('./controllers/escCuotaController');
-let escAdicionalController = require('./controllers/escAdicionalController');
+let escServicioController = require('./controllers/escServicioController');
 let escComedorController = require('./controllers/escComedorController');
 let escFacturaController = require('./controllers/escFacturaController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
@@ -211,31 +211,31 @@ router.post('/actualizarComedor/Esccomedor',function(req,res)
 
 //ESCADICIONAL
 
-//EndPoint para leer toda la base de adicional
-router.get('/obtenerAdicionales',function(req,res)
+//EndPoint para leer toda la base de servicio
+router.get('/obtenerServicios',function(req,res)
 {
     console.log("leer");
-    escAdicionalController.obtenerAdicionales(req,res);
+    escServicioController.obtenerServicios(req,res);
 });
 
 
-//EndPoint para insertar adicional en la BD
-router.post('/crearAdicional/Escadicional',function(req,res)
+//EndPoint para insertar servicio en la BD
+router.post('/crearServicio/Escservicio',function(req,res)
 {
     console.log(req.body);
-    escAdicionalController.crearAdicional(req,res);
+    escServicioController.crearServicio(req,res);
 });
 
-//EndPoint para eliminar adicional en la BD
-router.delete('/eliminarAdicional/Escadicional',function(req,res)
+//EndPoint para eliminar servicio en la BD
+router.delete('/eliminarServicio/Escservicio',function(req,res)
 {
-    escAdicionalController.eliminarAdicional(req,res);
+    escServicioController.eliminarServicio(req,res);
 });
 
-//EndPoint para modificar adicional en la BD
-router.post('/actualizarAdicional/Escadicional',function(req,res)
+//EndPoint para modificar servicio en la BD
+router.post('/actualizarServicio/Escservicio',function(req,res)
 {
-    escAdicionalController.actualizarAdicional(req,res);
+    escServicioController.actualizarServicio(req,res);
 });
 
 

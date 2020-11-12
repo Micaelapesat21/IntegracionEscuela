@@ -103,6 +103,7 @@ let crearEmpleado = (req,res) =>
         cargaHoraria: req.body.cargaHoraria,
         sueldo: req.body.sueldo,
         fechaIngreso: req.body.fechaIngreso,
+        hijos: req.body.hijos
     });
     newContact.save().
     then
@@ -188,6 +189,7 @@ let actualizarEmpleado = (req,res) =>
         cargaHoraria: req.body.cargaHoraria,
         sueldo: req.body.sueldo,
         fechaIngreso: req.body.fechaIngreso,
+        hijos: req.body.hijos
 };
 
 for(let prop in params) if(!params[prop]) delete params[prop];

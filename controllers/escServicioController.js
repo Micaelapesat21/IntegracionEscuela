@@ -7,9 +7,8 @@ let crearServicio = (req,res) =>
     console.log("Crear servicio");
     console.log(req.body);
     var nuevoServicio = Servicio({
-        id: req.body.id,
-        nombreServicio: req.body.nombreServicio,
-        precioServicio:req.body.precioServicio
+        nombreCategoriaServicio: req.body.nombreCategoriaServicio,
+        detalleServicio: req.body.detalleServicio
     });
     nuevoServicio.save().
     then
