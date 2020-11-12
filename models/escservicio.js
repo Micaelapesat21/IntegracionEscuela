@@ -4,13 +4,11 @@ var Schema = mongoose.Schema;
 
 const servicioSchema = new Schema({
     
-    id: String,
-    nombreCategoriaServicio: String,
-    // Array of subdocuments
-    detalleServicio: [{
-      nombreServicio: String,
-      precioMensual: Number
-    }]
+        id: String,
+        nombreCategoriaServicio: String,
+        nombreServicio: String,
+        precioMensual: Number
+
   })
 
 servicioSchema.set('toObject', {

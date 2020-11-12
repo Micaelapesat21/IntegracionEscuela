@@ -26,6 +26,13 @@ var AlumnoSchema = new Schema({
            type: Schema.ObjectId,
            ref: "escservicios"
        }
+    ],
+    cuota:
+    [
+        {
+            type: Schema.ObjectId,
+            ref: "esccuota"
+        }
     ]
 });
 

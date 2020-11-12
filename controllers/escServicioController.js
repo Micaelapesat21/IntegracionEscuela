@@ -8,7 +8,8 @@ let crearServicio = (req,res) =>
     console.log(req.body);
     var nuevoServicio = Servicio({
         nombreCategoriaServicio: req.body.nombreCategoriaServicio,
-        detalleServicio: req.body.detalleServicio
+        nombreServicio: req.body.nombreServicio,
+        precioMensual: req.body.precioMensual,
     });
     nuevoServicio.save().
     then
@@ -32,8 +33,9 @@ let actualizarServicio = (req,res) =>
     console.log("update",id);
 
     let params = { 
-        nombreServicio: req.body.nombreServicio,
-        precioServicio: req.body.precioServicio, 
+        nombreCategoriaServicio: req.body.nombreCategoriaServicio,
+        detalleServicio: req.body.detalleServicio,
+        precioMensual: req.body.precioMensual,
 };
 
 for(let prop in params) if(!params[prop]) delete params[prop];

@@ -1,16 +1,68 @@
 var Cuota = require('../models/esccuota');
+var Alumno = require('../models/escalumno');
+var Servicio = require('../models/escservicio');
+var Turno = require('../models/escturno');
 var bodyParser = require('body-parser');
 
+
+/*
+
+var nuevaCuota = Cuota({
+            mes:req.body.mes,
+            anio: req.body.anio,
+            alumno: docs,
+        });
+
+*/
 
 let crearCuota = (req,res) =>
 {
     console.log("Crear cuota");
-    console.log(req.body);
+    console.log(res.req.body.idAlumno);
+
+    let id = {_id: res.req.body.idAlumno};
+
+    let dMes = req.body.mes;
+    let danio = req.body.anio;
+    let numeroFactura = Math.random()*10000000000;
+
+    Alumno.findOne( id, function(err, docs) 
+    { 
+        console.log(docs);
+        let alumno = docs.nombre + " " + docs.apellido;
+        let dni = docs.dni;
+        let idServicio = {_id: res.req.body.servicios};
+
+        for(let i = 0; i < res.req.body.servicios.length; i++) {
+            idServicio = {_id: res.req.body.servicios[i]};
+            console.log(res.req.body.servicios[i]);
+            Servicio.findOne( idServicio, function(err, docs) 
+            {
+                console.log(dni);
+                console.log(docs)
+                
+            });       
+
+
+        }
+
+    
+
+        res.status(200).send(docs);
+        (err)=>{
+            res.status(500).send(err);
+            console.log(err);
+        }
+    });
+
+}
+
+/*
     var nuevaCuota = Cuota({
         mes:req.body.mes,
         anio: req.body.anio,
-        facturada: req.body.facturada,
-        pagada: req.body.pagada
+        facturada: false,
+        pagada: false,
     });
 
     console.log(nuevaCuota);
@@ -19,7 +71,7 @@ let crearCuota = (req,res) =>
     (
         (nuevaCuota)=>
         {` `
-            console.log("Nuevo cuota", nuevaCuota);
+            console.log("Nueva cuota", nuevaCuota);
             Cuota.findOneAndUpdate({_id: req.body.idAlumno },{$push:{cuota:nuevaCuota._id}},{ new: true },function(err,results) {
                 if(err){
                     console.log("Error al crear cuota en push Cuota a Titular");
@@ -41,6 +93,7 @@ let crearCuota = (req,res) =>
         }
     )
 }
+*/
 
 
 let actualizarCuota = (req,res) => 

@@ -6,36 +6,19 @@ var CuotaSchema = new Schema({
     id: String,
     mes: String,
     anio: String,
-    facturada: Boolean,
     pagada: Boolean,
-    factura:
+    turno: String,
+    alumno: String,
+    numeroFactura: String,
+    fechaEmision: Date,
+    fechaVencimiento: Date,
+    servicios:
     [
-        { 
-            type: Schema.ObjectId,
-            ref: "escfactura"
+        {
+            "nombreServicio" : String,
+            "precioMensual" : Number
         }
     ],
-    comedor:
-    [
-       { 
-           type: Schema.ObjectId,
-           ref: "esccomedor"
-       }
-    ],
-    adicional:
-    [
-       { 
-           type: Schema.ObjectId,
-           ref: "escadicional"
-       }
-    ],
-    factura:
-    [
-       { 
-           type: Schema.ObjectId,
-           ref: "escfactura"
-       }
-    ]
 });
 
 

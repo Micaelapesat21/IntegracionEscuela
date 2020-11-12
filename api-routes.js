@@ -4,8 +4,6 @@ let escTitularController = require('./controllers/escTitularController');
 let escAlumnoController = require('./controllers/escAlumnoController');
 let escCuotaController = require('./controllers/escCuotaController');
 let escServicioController = require('./controllers/escServicioController');
-let escComedorController = require('./controllers/escComedorController');
-let escFacturaController = require('./controllers/escFacturaController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
 
 // Set default API response
@@ -182,39 +180,6 @@ router.post('/actualizarEmpleado/Escempleado',function(req,res)
     escEmpleadoController.actualizarEmpleado(req,res);
 });
 
-
-
-
-
-
-//ESCCOMEDOR
-
-//EndPoint para leer toda la base de comedor
-router.get('/obtenerComedores',function(req,res)
-{
-    console.log("leer");
-    escComedorController.obtenerComedores(req,res);
-});
-
-
-//EndPoint para insertar comedor en la BD
-router.post('/crearComedor/Esccomedor',function(req,res)
-{
-    console.log(req.body);
-    escComedorController.crearComedor(req,res);
-});
-
-//EndPoint para eliminar comedor en la BD
-router.delete('/eliminarComedor/Esccomedor',function(req,res)
-{
-    escComedorController.eliminarComedor(req,res);
-});
-
-//EndPoint para modificar comedor en la BD
-router.post('/actualizarComedor/Esccomedor',function(req,res)
-{
-    escComedorController.actualizarComedor(req,res);
-});
 
 
 
