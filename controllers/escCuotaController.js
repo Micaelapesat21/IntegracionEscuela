@@ -97,7 +97,7 @@ let crearCuota = (req,res) =>
                                 pagada: false,
                                 alumno: dAlumno,
                                 titular: dTitular,
-                                numeroFactura: (Math.random() * 10000000000000000),
+                                numeroFactura: (Math.random() * 10000000000000000000),
                                 facturada: true,
                                 pagada: false,
                                 fechaEmision: today,
