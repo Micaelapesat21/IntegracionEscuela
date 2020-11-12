@@ -5,6 +5,7 @@ let escAlumnoController = require('./controllers/escAlumnoController');
 let escCuotaController = require('./controllers/escCuotaController');
 let escServicioController = require('./controllers/escServicioController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
+let escTurnoController = require('./controllers/escTurnoController');
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -15,6 +16,38 @@ router.get('/', function (req, res)
        message: 'Welcome to RESTHub crafted with love!',
     });
 });
+
+
+//ESCTURNO
+
+//EndPoint para leer toda la base de turno
+router.get('/obtenerTurnos',function(req,res)
+{
+    console.log("leer");
+    escTurnoController.obtenerTurnos(req,res);
+});
+
+
+//EndPoint para insertar turno en la BD
+router.post('/crearTurno/Escturno',function(req,res)
+{
+    console.log(req.body);
+    escTurnoController.crearTurno(req,res);
+});
+
+//EndPoint para eliminar turno en la BD
+router.delete('/eliminarTurno/Escturno',function(req,res)
+{
+    escTurnoController.eliminarTurno(req,res);
+});
+
+//EndPoint para modificar turno en la BD
+router.post('/actualizarTurno/Escturno',function(req,res)
+{
+    escTurnoController.actualizarTurno(req,res);
+});
+
+
 
 
 //ESCTITULAR
