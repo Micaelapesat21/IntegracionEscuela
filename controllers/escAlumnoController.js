@@ -5,52 +5,63 @@ var bodyParser = require('body-parser');
 
 let crearAlumno = (req,res) =>
 {
-    console.log("Crear alumno");
-    console.log(req.body);
-    var nuevoAlumno = Alumno({
-        nombre:req.body.nombre,
-        apellido: req.body.apellido,
-        correo: req.body.correo,
-        pais: req.body.pais,
-        provincia: req.body.provincia,
-        ciudad: req.body.ciudad,
-        codigoPostal: req.body.codigoPostal,
-        direccion: req.body.direccion,
-        telefono1: req.body.telefono1,
-        telefono2: req.body.telefono2,
-        dni: req.body.dni,
-        turno: req.body.turno,
-        servicios: req.body.servicios,
-    });
 
-    console.log(nuevoAlumno);
-    nuevoAlumno.save().
-    then
-    (
-        (nuevoAlumno)=>
-        {` `
-            console.log("Nuevo alumno", nuevoAlumno);
-            Titular.findOneAndUpdate({_id: req.body.idTitular },{$push:{alumno:nuevoAlumno._id}},{ new: true },function(err,results) {
-                if(err){
-                    console.log("Error al crear alumno en push Alumno a Titular");
+    Titular.findOne({_id: req.body.idTitular }, function(err, docs) {
+        var titularBuscado = docs.alumno;
+        var nombreTitular = docs.nombre + " " + docs.apellido;
+        Alumno.find( { _id: titularBuscado }, function(err, docs) 
+        { 
+            console.log(nombreTitular);
+            console.log("Crear alumno");
+            console.log(req.body);
+            var nuevoAlumno = Alumno({
+                nombre:req.body.nombre,
+                apellido: req.body.apellido,
+                correo: req.body.correo,
+                pais: req.body.pais,
+                provincia: req.body.provincia,
+                ciudad: req.body.ciudad,
+                codigoPostal: req.body.codigoPostal,
+                direccion: req.body.direccion,
+                telefono1: req.body.telefono1,
+                telefono2: req.body.telefono2,
+                dni: req.body.dni,
+                turno: req.body.turno,
+                servicios: req.body.servicios,
+                nombreTitular: nombreTitular
+            });
+
+            console.log(nuevoAlumno);
+            nuevoAlumno.save().
+            then
+            (
+                (nuevoAlumno)=>
+                {` `
+                    console.log("Nuevo alumno", nuevoAlumno);
+                    Titular.findOneAndUpdate({_id: req.body.idTitular },{$push:{alumno:nuevoAlumno._id}},{ new: true },function(err,results) {
+                        if(err){
+                            console.log("Error al crear alumno en push Alumno a Titular");
+                            res.status(500).send(err);
+                            console.log(err);
+                        }
+                        else{
+                            console.log("Alumno creado");
+                            res.status(200).send(nuevoAlumno);
+                            console.log("Alumno encontrado", results);    
+                        }
+                    });
+                },
+                (err)=>
+                { 
+                    console.log("No pudo crear el grupo");  
                     res.status(500).send(err);
                     console.log(err);
                 }
-                else{
-                    console.log("Alumno creado");
-                    res.status(200).send(nuevoAlumno);
-                    console.log("Alumno encontrado", results);    
-                }
-            });
-        },
-        (err)=>
-        { 
-            console.log("No pudo crear el grupo");  
-            res.status(500).send(err);
-            console.log(err);
-        }
-    )
+            )
+        });
+    });
 }
+
 
 
 let actualizarAlumno = (req,res) => 

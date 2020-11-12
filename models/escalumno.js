@@ -15,6 +15,7 @@ var AlumnoSchema = new Schema({
     telefono1: String,
     telefono2: String,
     dni: String,
+    nombreTitular: String,
     turno:
     { 
         type: Schema.ObjectId,

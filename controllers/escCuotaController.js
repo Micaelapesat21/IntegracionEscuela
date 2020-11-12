@@ -2,6 +2,7 @@ var Cuota = require('../models/esccuota');
 var Alumno = require('../models/escalumno');
 var Servicio = require('../models/escservicio');
 var Turno = require('../models/escturno');
+var Titular = require('../models/esctitular')
 var bodyParser = require('body-parser');
 
 
@@ -42,7 +43,6 @@ let crearCuota = (req,res) =>
             precioMensual:Number
             }
         ]
-
 
         for(let i = 0; i < idServicio.length; i++) {
             Servicio.findOne( { _id: idServicio[i] }, function(err, docs) 
