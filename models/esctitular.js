@@ -25,6 +25,13 @@ var TitularSchema = new Schema({
            type: Schema.ObjectId,
            ref: "escalumno"
        }
+    ],
+    cuota:
+    [
+      {
+        type: Schema.ObjectId,
+        ref: "esccuota"
+      }
     ]
 });
 

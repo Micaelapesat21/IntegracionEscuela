@@ -12,7 +12,6 @@ var CuotaSchema = new Schema({
     valorTurno: Number,
     valorServicios: Number,
     numeroTransaccion: Number,
-    alumno: String,
     titular: String,
     numeroFactura: String,
     fechaEmision: Date,
@@ -26,6 +25,11 @@ var CuotaSchema = new Schema({
             "precioMensual" : Number
         }
     ],
+    datosFacturacion: 
+    { 
+        type: Schema.ObjectId,
+        ref: "esctitular"
+    }
 });
 
 

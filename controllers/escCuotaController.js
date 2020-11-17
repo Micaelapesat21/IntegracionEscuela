@@ -2,6 +2,7 @@ var Cuota = require('../models/esccuota');
 var Alumno = require('../models/escalumno');
 var Servicio = require('../models/escservicio');
 var Turno = require('../models/escturno');
+var Titular = require('../models/esctitular')
 var bodyParser = require('body-parser');
 
 
@@ -15,8 +16,100 @@ var nuevaCuota = Cuota({
 
 */
 
+let crearCuota = (req, res) =>
+{
+    console.log("Crear cuota");
+    let id = {_id: res.req.body.idTitular};
 
-let crearCuota = (req,res) =>
+    const fs = require('fs');
+    const fileName = '../nroFactura.json';
+    const file = require(fileName);
+        
+    file.nro = file.nro + 1;
+
+    fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
+        if (err) return console.log(err);
+        console.log(JSON.stringify(file));
+        console.log('writing to ' + fileName);
+      });
+
+    let dMes = req.body.mes;
+    let dAnio = req.body.anio;
+    let numeroFactura = file.nro;
+    console.log(numeroFactura);
+
+    Titular.findOne( id, function(err, docs){})
+    .populate({
+        path: 'alumno',
+        model: 'escalumno',
+        populate: [{
+            path: 'turno',
+            model: 'escturno'           
+        },
+        {
+            path: 'servicios',
+            model: "escservicio"
+        }]
+    })
+    .exec(function(err, resultado) {
+        console.log(resultado);
+        let precioTurno = resultado.alumno.turno.precioTurno;
+        let precioServicios = 0;
+        for(let i = 0; i < resultado.alumno.servicios.length; i++) {
+            precioServicios = resultado.alumno.servicios.precioMensual[i];
+        }
+        let precioFactura = precioTurno + precioServicios;
+
+        var nuevaCuota = Cuota({
+            mes:req.body.mes,
+            anio: req.body.anio,
+            pagada: false,
+            datosFacturacion: resultado,
+            numeroFactura: numeroFactura,
+            facturada: true,
+            pagada: false,
+            fechaEmision: today,
+            fechaVencimiento: today + 30,
+            valorTurno: precioTurno,
+            valorServicios: precioServicios,
+            totalCuota: precioFactura,
+            quienPaga: "",
+            numeroTransaccion: "",
+        });
+
+        nuevaCuota
+        .save().
+            then
+            (
+                (nuevaCuota)=>
+                {` `
+                    console.log("Nueva cuota", nuevaCuota);
+                    Titular.findOneAndUpdate({_id: req.body.idTitular },{$push:{cuota:nuevaCuota._id}},{ new: true },function(err,results) {
+                        if(err){
+                            console.log("Error al crear alumno en push Cuota a Alumno");
+                            res.status(500).send(err);
+                            console.log(err);
+                            return;
+                        }
+                        else{
+                            console.log("Cuota creada");
+                            res.status(200).send(nuevaCuota);
+                            console.log("Cuota encontrada", results);
+                            return;
+                        }
+                    });
+                },
+            )
+
+
+    });
+
+}
+
+
+
+
+let crearCuota1 = (req,res) =>
 {
     console.log("Crear cuota");
 
@@ -251,7 +344,6 @@ for(let prop in params) if(!params[prop]) delete params[prop];
             {$set : params},
             {new:true},function(err)
         {
-        console.log("Cuota modificado");
         (err)=>
             { 
                 res.status(500).send(err);
