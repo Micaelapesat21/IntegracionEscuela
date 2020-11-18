@@ -27,16 +27,14 @@ let crearCuota = (req, res) =>
         
     file.nro = file.nro + 1;
 
-    fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
-        if (err) return console.log(err);
-        console.log(JSON.stringify(file));
-        console.log('writing to ' + fileName);
-      });
+    fs.writeFileSync(fileName, JSON.stringify(file, null, 2));
 
     let dMes = req.body.mes;
     let dAnio = req.body.anio;
-    let numeroFactura = file.nro;
-    console.log(numeroFactura);
+    numeroFactura = Math.random()*10000000000;
+
+
+
 
     Titular.findOne( id, function(err, docs){})
     .populate({
@@ -46,19 +44,63 @@ let crearCuota = (req, res) =>
             path: 'turno',
             model: 'escturno'           
         },
-        {
+        { 
             path: 'servicios',
             model: "escservicio"
-        }]
+        }
+        ]
     })
     .exec(function(err, resultado) {
-        console.log(resultado);
-        let precioTurno = resultado.alumno.turno.precioTurno;
+
         let precioServicios = 0;
-        for(let i = 0; i < resultado.alumno.servicios.length; i++) {
-            precioServicios = resultado.alumno.servicios.precioMensual[i];
+        let precioServiciosCuota = 0;
+        let precioServiciosTotal = 0;
+        let precioTurnoTotal = 0;
+        let detalleCuotas = [ ];
+        let detalleServicios = [];
+        
+
+        
+        for(let i = 0; i < resultado.alumno.length; i++) {
+
+            precioTurnoTotal = precioTurnoTotal + resultado.alumno[i].turno.precioTurno;
+            
+            
+
+            precioServicios = 0;
+            if ( typeof JSON.stringify(resultado.alumno[i].servicios) !== 'undefined' ) {
+
+                precioServiciosCuota = 0;
+                for(let j = 0; j < resultado.alumno[i].servicios.length; j++) {
+                    precioServicios = resultado.alumno[i].servicios[j].precioMensual;
+                    precioServiciosTotal = precioServiciosTotal + precioServicios;
+                    precioServiciosCuota = precioServiciosCuota + precioServicios;
+                    detalleServicios = [];
+                    var detalleServicio = 
+                    {
+                        nombreServicio:  resultado.alumno[i].servicios[j].nombreServicio,
+                        precioMensual:  resultado.alumno[i].servicios[j].precioMensual
+                    }
+                    detalleServicios.push(detalleServicio);
+                }
+            }
+            
+
+            var detalleCuota = {
+                nombreAlumno: resultado.alumno[i].nombre + " " + resultado.alumno[i].apellido,
+                turno: resultado.alumno[i].turno.nombreTurno,
+                precioTurno: resultado.alumno[i].turno.precioTurno,
+                servicios: detalleServicios,
+                precioServicios: precioServiciosCuota
+            }
+            detalleCuotas.push(detalleCuota);
+
         }
-        let precioFactura = precioTurno + precioServicios;
+
+        
+        let precioFactura = precioTurnoTotal + precioServiciosTotal;
+        console.log(precioFactura);
+        var today = new Date();
 
         var nuevaCuota = Cuota({
             mes:req.body.mes,
@@ -70,12 +112,14 @@ let crearCuota = (req, res) =>
             pagada: false,
             fechaEmision: today,
             fechaVencimiento: today + 30,
-            valorTurno: precioTurno,
             valorServicios: precioServicios,
             totalCuota: precioFactura,
             quienPaga: "",
             numeroTransaccion: "",
+            detalleCuota: detalleCuotas,
         });
+
+        console.log(nuevaCuota);
 
         nuevaCuota
         .save().

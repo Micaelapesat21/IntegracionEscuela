@@ -13,11 +13,22 @@ var CuotaSchema = new Schema({
     valorServicios: Number,
     numeroTransaccion: Number,
     titular: String,
-    numeroFactura: String,
+    numeroFactura: Number,
     fechaEmision: Date,
     fechaVencimiento: Date,
     totalCuota: Number,
     quienPaga: String,
+    detalleCuota: [ {
+        "nombreAlumno" : String,
+        "turno" : String,
+        "precioTurno" : Number,
+        "servicios" :
+            {
+                "nombreServicio" : String,
+                "precioMensual" : Number,
+            },
+        "precioServicios" : Number,
+    }],
     servicios:
     [
         {
