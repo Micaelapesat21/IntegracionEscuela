@@ -21,14 +21,6 @@ let crearCuota = (req, res) =>
     console.log("Crear cuota");
     let id = {_id: res.req.body.idTitular};
 
-    const fs = require('fs');
-    const fileName = '../nroFactura.json';
-    const file = require(fileName);
-        
-    file.nro = file.nro + 1;
-
-    fs.writeFileSync(fileName, JSON.stringify(file, null, 2));
-
     let dMes = req.body.mes;
     let dAnio = req.body.anio;
     numeroFactura = Math.random()*10000000000;
