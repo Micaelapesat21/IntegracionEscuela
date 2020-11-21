@@ -422,6 +422,9 @@ let obtenerCuotas = (req, res) =>
             res.status(500).send(err);
             console.log(err);
         }
+    }).populate({
+        path: 'datosFacturacion',
+        model: 'esctitular'
     });       
 };
 
