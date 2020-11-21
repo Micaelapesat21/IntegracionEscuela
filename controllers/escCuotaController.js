@@ -13,7 +13,7 @@ var nuevaCuota = Cuota({
             anio: req.body.anio,
             alumno: docs,
         });
-
+ 
 */
 
 let crearCuota = (req, res) =>
