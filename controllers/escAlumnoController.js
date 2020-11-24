@@ -1,3 +1,4 @@
+var axios = require('axios');
 var Alumno = require('../models/escalumno');
 var Titular = require('../models/esctitular');
 var bodyParser = require('body-parser');
@@ -42,20 +43,51 @@ let crearAlumno = (req,res) =>
                     console.log("Nuevo alumno", nuevoAlumno);
                     Titular.findOneAndUpdate({_id: req.body.idTitular },{$push:{alumno:nuevoAlumno._id}},{ new: true },function(err,results) {
                         if(err){
+
+                            
                             console.log("Error al crear alumno en push Alumno a Titular");
                             res.status(500).send(err);
                             console.log(err);
                         }
                         else{
-                            console.log("Alumno creado");
-                            res.status(200).send(nuevoAlumno);
-                            console.log("Alumno encontrado", results);    
+
+                            var dataGimnasio = {
+                                "usuario": "ESCB_" + req.body.dni,
+                                "nombre": req.body.nombre,
+                                "apellido": req.body.apellido,
+                                "password": "123456",
+                                "email": req.body.correo,
+                                "dni": req.body.dni,
+                                "fechaNacimiento": "01/01/2000",
+                                "telefonoEmergencia": "1234" ,
+                                "contactoEmergencia": "XXX"
+                            };
+
+                            console.log(dataGimnasio);
+
+                            axios({
+                                method: 'post',
+                                url: 'https://peaceful-caverns-01556.herokuapp.com/api/alumnos/crear',
+                                data: dataGimnasio
+                              }).then((response) => {
+                                console.log(response);
+                                console.log("Alumno creado");
+                                console.log("Titular encontrado", results); 
+                                res.status(200).send(nuevoAlumno);
+                              }, (error) => {
+                                console.log(error);
+                                console.log("No pudo crear el alumno");  
+                                res.status(500).send(err);
+                                console.log(err);
+                              });
+
+                              
                         }
                     });
                 },
                 (err)=>
                 { 
-                    console.log("No pudo crear el grupo");  
+                    console.log("No pudo crear el alumno");  
                     res.status(500).send(err);
                     console.log(err);
                 }

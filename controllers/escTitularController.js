@@ -108,6 +108,7 @@ let crearTitular = (req,res) =>
     (
         (newContact)=>
         {console.log(newContact);
+
             res.status(200).send(newContact); 
         },
         (err)=>

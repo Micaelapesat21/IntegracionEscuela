@@ -4,6 +4,12 @@ var Servicio = require('../models/escservicio');
 var Turno = require('../models/escturno');
 var Titular = require('../models/esctitular')
 var bodyParser = require('body-parser');
+var axios = require('axios');
+var generate = require('csv-generate');
+var fs = require('fs');
+var path = require('path');
+var os = require('os');
+var FormData = require("form-data");
 
 
 /*
@@ -15,6 +21,134 @@ var nuevaCuota = Cuota({
         });
  
 */
+
+
+let crearFacturaBanco = (req, res) =>
+{
+    const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+    const csvWriter = createCsvWriter({
+        path: './assets/facturas/archivo_facturas.csv',
+        header: [
+            {id: 'titulo', title: 'codigo_pago_electronico;numero_factura;importe;fecha_vencimiento'},
+        ]
+    });
+    const records = [ {
+        titulo: '87875443434332' + ';' + '31454111' + ';' + '10000' + ';' + '22/11/2020'
+    }] ;
+     
+    csvWriter.writeRecords(records)       // returns a promise
+        .then(() => {
+
+            var newFile = fs.createReadStream('./assets/facturas/archivo_facturas.csv');
+            
+            var bodyFormData = new FormData();
+            bodyFormData.append("numero_cuenta", 5458616519778);
+            bodyFormData.append("archivo", newFile);
+
+            
+            axios.post(
+                'https://integracion-banco.herokuapp.com/facturas/cargar', bodyFormData, {
+                     headers: {
+                          'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoiNzE3NTFiMWMtYTY0Zi00NjQ0LWEzY2EtYzgxNDNjNDAwMTNiIiwiaWF0IjoxNjA2MTczMjg3LCJleHAiOjE2MDYyMTY0ODd9.SHiD77B4xwW2ERNi0M7WvQ7cu3rVrDs9Qkf0TmxVfK8',
+                          ...bodyFormData.getHeaders()
+                        } 
+                    }
+                )
+                .then((response) => {
+                    console.log(response)
+                    res.status(200).send(response.data);
+                },
+                (error) => {
+                    console.log(error.response)
+                    var status = error.response.status
+                    res.status(500).send(error);
+                }
+              );
+         
+              
+
+        });
+
+}
+
+
+
+let crearFacturaBanco1 = (req, res) =>
+{
+    console.log("crear factura");
+
+    let codigo_pago_eletronico = 'ESCUB_1234';
+    let numero_factura = 12345;
+    let importe = 20000;
+    let fecha_vencimiento = 22/11/2020;
+
+    dataLogin = {
+        "nombre_usuario": "escuelab.bankame",
+        "clave": "Escuelab1234"
+    };
+
+  
+ 
+
+    
+    generate({
+        columns: ['codigo_pago_electronico', 'numero_factura', 'importe', 'fecha_vencimiento'],
+      })
+
+    axios({
+        method: 'post',
+        url: 'https://integracion-banco.herokuapp.com/login',
+        data: dataLogin
+      }).then((response) => {
+        var loginDataRaw = response.data.user;
+        loginDataString = JSON.stringify(loginDataRaw);
+        loginDataStringRep = loginDataString.replace('x-access-token','token')
+        loginData = JSON.parse(loginDataStringRep);
+        token = 'Bearer ' + loginData.token;
+
+        
+        axios.get(
+            'https://integracion-banco.herokuapp.com/cuentas',
+            { headers: { Authorization : token } }
+            )
+            .then((response) => {
+                console.log(response.data)
+                var numeroCuenta = response.data.numero_cuenta;
+
+                axios.post(
+                    'https://integracion-banco.herokuapp.com/facturas/cargar',
+                    { headers: { Authorization : token } }
+                    )
+                    .then((response) => {
+                        console.log(response.data)
+        
+                    },
+                    (error) => {
+                        var status = error.response.status
+                        res.status(500).send(error);
+                    }
+                  );
+             
+
+
+            },
+            (error) => {
+                var status = error.response.status
+                res.status(500).send(error);
+            }
+          );
+
+        
+      }, (error) => {
+        console.log(error);
+        console.log("No pudo llamar al login");  
+        res.status(500).send(error);
+        console.log(error);
+      });
+    
+
+
+}
 
 let crearCuota = (req, res) =>
 {
@@ -436,5 +570,6 @@ module.exports =
     crearCuota,
     eliminarCuota,
     actualizarCuota,
-    obtenerCuotas
+    obtenerCuotas,
+    crearFacturaBanco
 };

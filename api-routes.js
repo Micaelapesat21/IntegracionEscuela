@@ -18,6 +18,12 @@ router.get('/', function (req, res)
 });
 
 
+router.post('/cargarFactura',function(req,res)
+{
+    console.log("leer");
+    escCuotaController.crearFacturaBanco(req,res);
+})
+
 //ESCTURNO
 
 //EndPoint para leer toda la base de turno
