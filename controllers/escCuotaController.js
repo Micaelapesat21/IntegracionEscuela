@@ -23,8 +23,22 @@ var nuevaCuota = Cuota({
 */
 
 
+
 let crearFacturaBanco = (req, res) =>
 {
+    console.log("crear factura");
+
+    let codigo_pago_electronico = '87875443434332';
+    let numero_factura = 31454111;
+    let importe = 20000;
+    let fecha_vencimiento = "22/11/2020";
+    let numero_cuenta = 5458616519778;
+
+    dataLogin = {
+        "nombre_usuario": "escuelab.bankame",
+        "clave": "Escuelab1234"
+    };
+
     const createCsvWriter = require('csv-writer').createObjectCsvWriter;
     const csvWriter = createCsvWriter({
         path: './assets/facturas/archivo_facturas.csv',
@@ -33,67 +47,11 @@ let crearFacturaBanco = (req, res) =>
         ]
     });
     const records = [ {
-        titulo: '87875443434332' + ';' + '31454111' + ';' + '10000' + ';' + '22/11/2020'
+        titulo: codigo_pago_electronico + ';' + numero_factura + ';' + importe + ';' + fecha_vencimiento
     }] ;
-     
-    csvWriter.writeRecords(records)       // returns a promise
-        .then(() => {
 
-            var newFile = fs.createReadStream('./assets/facturas/archivo_facturas.csv');
-            
-            var bodyFormData = new FormData();
-            bodyFormData.append("numero_cuenta", 5458616519778);
-            bodyFormData.append("archivo", newFile);
-
-            
-            axios.post(
-                'https://integracion-banco.herokuapp.com/facturas/cargar', bodyFormData, {
-                     headers: {
-                          'Authorization' : 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvX2lkIjoiNzE3NTFiMWMtYTY0Zi00NjQ0LWEzY2EtYzgxNDNjNDAwMTNiIiwiaWF0IjoxNjA2MTczMjg3LCJleHAiOjE2MDYyMTY0ODd9.SHiD77B4xwW2ERNi0M7WvQ7cu3rVrDs9Qkf0TmxVfK8',
-                          ...bodyFormData.getHeaders()
-                        } 
-                    }
-                )
-                .then((response) => {
-                    console.log(response)
-                    res.status(200).send(response.data);
-                },
-                (error) => {
-                    console.log(error.response)
-                    var status = error.response.status
-                    res.status(500).send(error);
-                }
-              );
-         
-              
-
-        });
-
-}
-
-
-
-let crearFacturaBanco1 = (req, res) =>
-{
-    console.log("crear factura");
-
-    let codigo_pago_eletronico = 'ESCUB_1234';
-    let numero_factura = 12345;
-    let importe = 20000;
-    let fecha_vencimiento = 22/11/2020;
-
-    dataLogin = {
-        "nombre_usuario": "escuelab.bankame",
-        "clave": "Escuelab1234"
-    };
-
-  
- 
 
     
-    generate({
-        columns: ['codigo_pago_electronico', 'numero_factura', 'importe', 'fecha_vencimiento'],
-      })
 
     axios({
         method: 'post',
@@ -105,40 +63,47 @@ let crearFacturaBanco1 = (req, res) =>
         loginDataStringRep = loginDataString.replace('x-access-token','token')
         loginData = JSON.parse(loginDataStringRep);
         token = 'Bearer ' + loginData.token;
-
         
         axios.get(
             'https://integracion-banco.herokuapp.com/cuentas',
             { headers: { Authorization : token } }
             )
             .then((response) => {
-                console.log(response.data)
-                var numeroCuenta = response.data.numero_cuenta;
+                var numero_cuenta = response.data.cuentas[0].numero_cuenta;
+                console.log(token)
 
-                axios.post(
-                    'https://integracion-banco.herokuapp.com/facturas/cargar',
-                    { headers: { Authorization : token } }
-                    )
-                    .then((response) => {
-                        console.log(response.data)
-        
-                    },
-                    (error) => {
-                        var status = error.response.status
-                        res.status(500).send(error);
-                    }
-                  );
-             
-
-
+                csvWriter.writeRecords(records)       // returns a promise
+                .then(() => {
+                    var newFile = fs.createReadStream('./assets/facturas/archivo_facturas.csv');
+                    var bodyFormData = new FormData();
+                    bodyFormData.append("numero_cuenta", numero_cuenta);
+                    bodyFormData.append("archivo", newFile);
+                    
+                    axios.post(
+                        'https://integracion-banco.herokuapp.com/facturas/cargar', bodyFormData, {
+                                headers: {
+                                    'Authorization' : token,
+                                    ...bodyFormData.getHeaders()
+                                } 
+                            }
+                        )
+                        .then((response) => {
+                            console.log(response)
+                            res.status(200).send(response.data);
+                        },
+                        (error) => {
+                            console.log(error.response)
+                            var status = error.response.status
+                            res.status(500).send(error);
+                        }
+                        );
+                });
             },
             (error) => {
                 var status = error.response.status
                 res.status(500).send(error);
             }
           );
-
-        
       }, (error) => {
         console.log(error);
         console.log("No pudo llamar al login");  
@@ -157,8 +122,27 @@ let crearCuota = (req, res) =>
 
     let dMes = req.body.mes;
     let dAnio = req.body.anio;
-    numeroFactura = Math.random()*10000000000;
+    var numeroFactu = 0;
 
+    const csv = require('csv-parser');
+    const fs = require('fs');
+    fs.createReadStream('./assets/numeroFactura.csv')
+    .pipe(csv())
+    .on('data', (row) => {
+        numeroFactu = parseInt(row.numeroFactura) + 1
+        console.log(numeroFactu)
+        const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+        const csvWriter = createCsvWriter({
+            path: './assets/numeroFactura.csv',
+            header: [   
+                {id: 'numeroFactura', title: 'numeroFactura'},
+            ]
+        });
+        const records = [ {
+            numeroFactura: numeroFactu
+        }] ;
+        csvWriter.writeRecords(records)
+    });
 
 
 
@@ -233,7 +217,7 @@ let crearCuota = (req, res) =>
             anio: req.body.anio,
             pagada: false,
             datosFacturacion: resultado,
-            numeroFactura: numeroFactura,
+            numeroFactura: numeroFactu,
             facturada: true,
             pagada: false,
             fechaEmision: today,
@@ -256,7 +240,7 @@ let crearCuota = (req, res) =>
                     console.log("Nueva cuota", nuevaCuota);
                     Titular.findOneAndUpdate({_id: req.body.idTitular },{$push:{cuota:nuevaCuota._id}},{ new: true },function(err,results) {
                         if(err){
-                            console.log("Error al crear alumno en push Cuota a Alumno");
+                            console.log("Error al crear cuota en push Cuota a Alumno");
                             res.status(500).send(err);
                             console.log(err);
                             return;
@@ -266,6 +250,11 @@ let crearCuota = (req, res) =>
                             res.status(200).send(nuevaCuota);
                             console.log("Cuota encontrada", results);
                             return;
+
+                            /*nuevaCuota.datosFacturacion.dni
+                            nuevaCuota.numeroFactura
+                            nuevaCuota.fechaVencimiento
+                            nuevaCuota.totalCuota*/
                         }
                     });
                 },
