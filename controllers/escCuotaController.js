@@ -619,7 +619,7 @@ let obtenerCuotas = (req, res) =>
         
                         
                         axios.get(
-                            'https://integracion-banco.herokuapp.com/cuentas/' + numero_cuenta + '/facturas/2021/1', 
+                            'https://integracion-banco.herokuapp.com/cuentas/' + numero_cuenta + '/facturas/2020/12', 
                                 { headers: { 'Authorization' : token } } )
                             .then((response) => {
                                 console.log(response.data)
