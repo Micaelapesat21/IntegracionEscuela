@@ -619,12 +619,13 @@ let obtenerCuotas = (req, res) =>
         
                         
                         axios.get(
-                            'https://integracion-banco.herokuapp.com/cuentas/' + numero_cuenta + '/facturas/2020/10', 
+                            'https://integracion-banco.herokuapp.com/cuentas/' + numero_cuenta + '/facturas/2021/1', 
                                 { headers: { 'Authorization' : token } } )
                             .then((response) => {
                                 console.log(response.data)
-                                res.status(200).send(response.data);
-                                for (let i = 0;response.data.facturas.length(); i++) {
+                                
+                                console.log( response.data.facturas.length);
+                                for (let i = 0; i < response.data.facturas.length ; i++) {
                                     if (response.data.facturas[i].fecha_pagado !== null) {
                                         
                                         params = {
@@ -638,25 +639,28 @@ let obtenerCuotas = (req, res) =>
                                             function(err, resultado) {
                                                 console.log(resultado);
 
-                                                if (i = response.data.facturas.length()) {
-                                                    Cuota.find(function(err,listaCuotas)
-                                                    {
-                                                        res.status(200).send(listaCuotas);
-                                                        (err)=>{
-                                                            res.status(500).send(err);
-                                                            console.log(err);
-                                                        }
-                                                    }).populate({
-                                                        path: 'datosFacturacion',
-                                                        model: 'esctitular'
-                                                    });
-                                                }
                                                 (err) => {
                                                     console.log(err);
                                                 }
                                             })
 
                                     }
+                                    console.log(i);
+                                    console.log(response.data.facturas.length);
+                                    if (i === response.data.facturas.length-1) {
+                                        Cuota.find(function(err,listaCuotas)
+                                        {
+                                            res.status(200).send(listaCuotas);
+                                            (err)=>{
+                                                res.status(500).send(err);
+                                                console.log(err);
+                                            }
+                                        }).populate({
+                                            path: 'datosFacturacion',
+                                            model: 'esctitular'
+                                        });
+                                    }
+
                                 }
                             },
                             (error) => {
