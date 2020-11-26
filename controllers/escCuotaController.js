@@ -159,7 +159,7 @@ let crearCuota = (req, res) =>
                             console.log("Cuota encontrada", results);
 
 
-                            let codigo_pago_electronico = nuevaCuota.datosFacturacion.documento;
+                            let codigo_pago_electronico = "ESCB_" + nuevaCuota.datosFacturacion.documento;
                             let numero_factura = nuevaCuota.numeroFactura;
                             let importe = nuevaCuota.totalCuota;
                             let fecha_vencimiento = formattedDate(nuevaCuota.fechaVencimiento);
