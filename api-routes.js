@@ -173,6 +173,12 @@ router.post('/actualizarCuota/Esccuota',function(req,res)
     escCuotaController.actualizarCuota(req,res);
 });
 
+//EndPoint para pagar la factura
+router.post('/realizarPago',function(req,res)
+{
+    escCuotaController.realizarPago(req,res);
+});
+
 
 
 

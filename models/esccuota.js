@@ -18,6 +18,7 @@ var CuotaSchema = new Schema({
     fechaVencimiento: Date,
     totalCuota: Number,
     quienPaga: String,
+    formaDePago: String,
     detalleCuota: [ {
         "nombreAlumno" : String,
         "turno" : String,
