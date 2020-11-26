@@ -276,24 +276,25 @@ let realizarPago = (req, res) => {
                 numeroTransaccion: numeroTrans
             }];
             csvWriter.writeRecords(records)
+            
+            let params = {
+                pagada: true,
+                numeroTransaccion: numeroTrans,
+                formaDePago: req.body.formaDePago
+            };
+
+            Cuota.findOneAndUpdate(
+                id, { $set: params }, { new: true },
+                function(err, resultado) {
+                    console.log("pago realizado");
+                    res.status(200).send(resultado);
+                    (err) => {
+                        res.status(500).send(err);
+                        console.log(err);
+                    }
+                });
         });
 
-    let params = {
-        pagada: true,
-        numeroTransaccion: numeroTrans,
-        formaDePago: req.body.formaDePago
-    };
-
-    Cuota.findOneAndUpdate(
-        id, { $set: params }, { new: true },
-        function(err, resultado) {
-            console.log("pago realizado");
-            res.status(200).send(resultado);
-            (err) => {
-                res.status(500).send(err);
-                console.log(err);
-            }
-        });
 }
 
 
