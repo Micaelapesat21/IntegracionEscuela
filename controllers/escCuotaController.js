@@ -130,7 +130,7 @@ let crearCuota = (req, res) =>
             facturada: true,
             pagada: false,
             fechaEmision: today,
-            fechaVencimiento: today + 30,
+            fechaVencimiento: today.setDate(today.getDate() + 30),
             valorServicios: precioServicios,
             totalCuota: precioFactura,
             quienPaga: "",
