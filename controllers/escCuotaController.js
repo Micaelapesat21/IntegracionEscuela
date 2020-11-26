@@ -218,7 +218,7 @@ let crearCuota = (req, res) =>
                                                 )
                                                 .then((response) => {
                                                     console.log(response)
-                                                    res.status(200).send(response.data);
+                                                    res.status(200).send(nuevaCuota);
                                                 },
                                                 (error) => {
                                                     console.log(error.response)
