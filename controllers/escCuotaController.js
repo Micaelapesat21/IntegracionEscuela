@@ -692,7 +692,20 @@ let obtenerCuotas = (req, res) =>
     });*/
 };
 
-
+let obtenerPago = (req, res) =>
+{
+    Cuota.find({ pagada: true } , function(err,listaCuotas)
+    {
+        res.status(200).send(listaCuotas);
+        (err)=>{
+            res.status(500).send(err);
+            console.log(err);
+        }
+    }).populate({
+        path: 'datosFacturacion',
+        model: 'esctitular'
+    });
+}
 
 
 module.exports = 
@@ -701,5 +714,6 @@ module.exports =
     eliminarCuota,
     actualizarCuota,
     obtenerCuotas,
-    realizarPago
+    realizarPago,
+    obtenerPago
 };

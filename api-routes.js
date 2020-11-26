@@ -179,8 +179,11 @@ router.post('/realizarPago',function(req,res)
     escCuotaController.realizarPago(req,res);
 });
 
-
-
+//EndPoint para obtener facturas pagas
+router.get('/obtenerPago',function(req,res)
+{
+    escCuotaController.obtenerPago(req,res);
+});
 
 //ESCEMPLEADO
 
