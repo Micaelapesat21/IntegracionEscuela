@@ -31,7 +31,8 @@ let crearAlumno = (req,res) =>
                 dni: req.body.dni,
                 turno: req.body.turno,
                 servicios: req.body.servicios,
-                nombreTitular: nombreTitular
+                nombreTitular: nombreTitular,
+                gimnasio: req.body.gimnasio
             });
 
             console.log(nuevoAlumno);
@@ -43,13 +44,13 @@ let crearAlumno = (req,res) =>
                     console.log("Nuevo alumno", nuevoAlumno);
                     Titular.findOneAndUpdate({_id: req.body.idTitular },{$push:{alumno:nuevoAlumno._id}},{ new: true },function(err,results) {
                         if(err){
-
-                            
                             console.log("Error al crear alumno en push Alumno a Titular");
                             res.status(500).send(err);
                             console.log(err);
                         }
                         else{
+                            if (nuevoAlumno.gimnasio === true) {
+                            console.log("Me doy de alta");
 
                             var dataGimnasio = {
                                 "usuario": "ESCB_" + req.body.dni,
@@ -80,7 +81,10 @@ let crearAlumno = (req,res) =>
                                 res.status(500).send(err);
                                 console.log(err);
                               });
-
+                            } else {
+                                console.log("No me doy de alta");
+                                res.status(200).send(nuevoAlumno);
+                            }
                               
                         }
                     });

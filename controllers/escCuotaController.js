@@ -570,7 +570,116 @@ let eliminarCuota = (req,res)=>
 let obtenerCuotas = (req, res) =>
 {      
     console.log("llegue a leer");
-    Cuota.find(function(err,listaCuotas)
+
+    dataLogin = {
+        "nombre_usuario": "escuelab.bankame",
+        "clave": "Escuelab1234"
+    };
+
+    var numeroTrans = 0;
+
+    const csv = require('csv-parser');
+    const fs = require('fs');
+    fs.createReadStream('./assets/numeroTransaccion.csv')
+        .pipe(csv())
+        .on('data', (row) => {
+            numeroTrans = parseInt(row.numeroTransaccion) + 1
+            console.log(numeroTrans)
+            const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+            const csvWriter = createCsvWriter({
+                path: './assets/numeroTransaccion.csv',
+                header: [
+                    { id: 'numeroTransaccion', title: 'numeroTransaccion' },
+                ]
+            });
+            const records = [{
+                numeroTransaccion: numeroTrans
+            }];
+            csvWriter.writeRecords(records);
+
+
+            axios({
+                method: 'post',
+                url: 'https://integracion-banco.herokuapp.com/login',
+                data: dataLogin
+              }).then((response) => {
+                var loginDataRaw = response.data.user;
+                loginDataString = JSON.stringify(loginDataRaw);
+                loginDataStringRep = loginDataString.replace('x-access-token','token')
+                loginData = JSON.parse(loginDataStringRep);
+                token = 'Bearer ' + loginData.token;
+                
+                axios.get(
+                    'https://integracion-banco.herokuapp.com/cuentas',
+                    { headers: { Authorization : token } }
+                    )
+                    .then((response) => {
+                        var numero_cuenta = response.data.cuentas[0].numero_cuenta;
+                        console.log(token)
+        
+                        
+                        axios.get(
+                            'https://integracion-banco.herokuapp.com/cuentas/' + numero_cuenta + '/facturas/2020/10', 
+                                { headers: { 'Authorization' : token } } )
+                            .then((response) => {
+                                console.log(response.data)
+                                res.status(200).send(response.data);
+                                for (let i = 0;response.data.facturas.length(); i++) {
+                                    if (response.data.facturas[i].fecha_pagado !== null) {
+                                        
+                                        params = {
+                                            formaDePago: "Banco B",
+                                            pagada: true,
+                                            numeroTransaccion: numeroTrans
+                                        }
+                                        Cuota.findOneAndUpdate(
+                                            { numeroFactura: response.data.facturas[i].numero_factura },
+                                            { $set: params }, { new: true },
+                                            function(err, resultado) {
+                                                console.log(resultado);
+
+                                                if (i = response.data.facturas.length()) {
+                                                    Cuota.find(function(err,listaCuotas)
+                                                    {
+                                                        res.status(200).send(listaCuotas);
+                                                        (err)=>{
+                                                            res.status(500).send(err);
+                                                            console.log(err);
+                                                        }
+                                                    }).populate({
+                                                        path: 'datosFacturacion',
+                                                        model: 'esctitular'
+                                                    });
+                                                }
+                                                (err) => {
+                                                    console.log(err);
+                                                }
+                                            })
+
+                                    }
+                                }
+                            },
+                            (error) => {
+                                console.log(error.response)
+                                var status = error.response.status
+                                res.status(500).send(error);
+                            });
+                    },
+                    (error) => {
+                        var status = error.response.status
+                        res.status(500).send(error);
+                    }
+                  );
+              }, (error) => {
+                console.log(error);
+                console.log("No pudo llamar al login");  
+                res.status(500).send(error);
+                console.log(error);
+              });   
+        });
+
+
+    /*Cuota.find(function(err,listaCuotas)
     {
         res.status(200).send(listaCuotas);
         (err)=>{
@@ -580,7 +689,7 @@ let obtenerCuotas = (req, res) =>
     }).populate({
         path: 'datosFacturacion',
         model: 'esctitular'
-    });       
+    });*/
 };
 
 
