@@ -6,6 +6,7 @@ let escCuotaController = require('./controllers/escCuotaController');
 let escServicioController = require('./controllers/escServicioController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
 let escTurnoController = require('./controllers/escTurnoController');
+let escUsuariosController = require('./controllers/escUsuariosController');
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -259,6 +260,50 @@ router.post('/actualizarServicio/Escservicio',function(req,res)
 {
     escServicioController.actualizarServicio(req,res);
 });
+
+
+//ESCUSUARIOS
+
+//EndPoint para leer toda la base de Usuarios
+router.get('/obtenerUsuarios',function(req,res)
+{
+    console.log("leer");
+    escUsuariosController.obtenerUsuarios(req,res);
+});
+
+//EndPoint para obtener el Usuarios por mail
+router.get('/obtenerUsuarios',function(req,res)
+{
+    console.log("leer");
+    escUsuariosController.obtenerUsuarios(req,res);
+});
+
+//EndPoint para login del Usuarios
+router.post('/loginUsuarios',function(req,res)
+{
+    console.log("leer");
+    escUsuariosController.loginUsuarios(req,res);
+});
+
+//EndPoint para insertar Usuarios en la BD
+router.post('/crearUsuarios/Escusuarios',function(req,res)
+{
+    console.log(req.body);
+    escUsuariosController.crearUsuarios(req,res);
+});
+
+//EndPoint para eliminar Usuarios en la BD
+router.delete('/eliminarUsuarios/Escusuarios',function(req,res)
+{
+    escUsuariosController.eliminarUsuarios(req,res);
+});
+
+//EndPoint para modificar empleado en la BD
+router.post('/actualizarUsuarios/Escusuarios',function(req,res)
+{
+    escUsuariosController.actualizarUsuarios(req,res);
+});
+
 
 
 

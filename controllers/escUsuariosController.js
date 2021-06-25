@@ -1,14 +1,14 @@
-var Empleado = require('../models/escempleado');
+var Usuarios = require('../models/escUsuarios');
 var bodyParser = require('body-parser');
 
 
 
-let obtenerEmpleados = (req, res) =>
+let obtenerUsuarios = (req, res) =>
 {      
     console.log("llegue a leer");
-    Empleado.find(function(err,listaEmpleados)
+    Usuarios.find(function(err,listaUsuarios)
     {
-        res.status(200).send(listaEmpleados);
+        res.status(200).send(listaUsuarios);
         (err)=>{
             res.status(500).send(err);
             console.log(err);
@@ -16,23 +16,12 @@ let obtenerEmpleados = (req, res) =>
     });  
 };
 
-let obtenerEmpleado = (req, res) =>
-{      
-    console.log("llegue a leer");
-    Empleado.findOne({ correo: req.body.correo }, function (err, empleado) { 
-        res.status(200).send(empleado);
-        (err)=>{
-            res.status(500).send(err);
-            console.log(err);
-        }
-    });
-};
 
 
-let loginEmpleado = (req, res) =>
+let loginUsuarios = (req, res) =>
 {   
-    console.log("Login empleado");
-    Empleado.findOne({documento:req.body.documento,password:req.body.password},function(err,results)
+    console.log("Login Usuarios");
+    Usuarios.findOne({email:req.body.email,password:req.body.password},function(err,results)
     {
         if(err){
             res.status(500).send(err);
@@ -83,27 +72,14 @@ let searchUserbyKey = (req, res) =>
     });   
 } */
 
-let crearEmpleado = (req,res) =>
+let crearUsuarios = (req,res) =>
 {
-    console.log("Crear empleado");
+    console.log("Crear usuario");
     console.log(req.body);
-    var newContact = Empleado({
-        id: req.body.id,
-        nombre:req.body.nombre,
-        apellido:req.body.apellido,
-        correo: req.body.correo,
-        pais: req.body.pais,
-        provincia: req.body.provincia,
-        ciudad: req.body.ciudad,
-        codigoPostal: req.body.codigoPosta,
-        direccion: req.body.direccion,
-        telefono: req.body.telefono,
-        categoria: req.body.categoria,
-        puesto: req.body.puesto,
-        cargaHoraria: req.body.cargaHoraria,
-        sueldo: req.body.sueldo,
-        fechaIngreso: req.body.fechaIngreso,
-        hijos: req.body.hijos
+    var newContact = Usuarios({
+        email: req.body.email,
+        password:req.body.password,
+        
     });
     newContact.save().
     then
@@ -118,7 +94,7 @@ let crearEmpleado = (req,res) =>
             console.log(err);
         }
     ) 
-};
+}
 
 /*
 
@@ -165,39 +141,25 @@ let registerUserWithSocialCredentials = (req,res) =>
     });
 }
 
-
 */
 
-let actualizarEmpleado = (req,res) => 
+let actualizarUsuarios = (req,res) => 
 {
-    let id = {_id: res.req.body.idEmpleado};
+    let email = {_email: res.req.body.emailUsuarios};
 
-    console.log("update",id);
+    console.log("update",email);
 
     let params = { 
-        id: req.body.id,
-        nombre:req.body.nombre,
-        apellido:req.body.apellido,
-        correo: req.body.correo,
-        pais: req.body.pais,
-        provincia: req.body.provincia,
-        ciudad: req.body.ciudad,
-        codigoPostal: req.body.codigoPosta,
-        direccion: req.body.direccion,
-        telefono: req.body.telefono,
-        categoria: req.body.categoria,
-        puesto: req.body.puesto,
-        cargaHoraria: req.body.cargaHoraria,
-        sueldo: req.body.sueldo,
-        fechaIngreso: req.body.fechaIngreso,
-        hijos: req.body.hijos
+        email: req.body.email,
+        password:req.body.password,
+        
 };
 
 for(let prop in params) if(!params[prop]) delete params[prop];
 
 
-    Empleado.findOneAndUpdate(
-            id,
+        Usuarios.findOneAndUpdate(
+            email,
             {$set : params},
             {new:true},function(err)
         {
@@ -214,16 +176,16 @@ for(let prop in params) if(!params[prop]) delete params[prop];
 
 
 
-let eliminarEmpleado = (req,res)=>
+let eliminarUsuarios = (req,res)=>
 {
-    console.log(res.req.body.idEmpleado)
-    if (res.req.body.idEmpleado != null) {
-        let id = {_id: res.req.body.idEmpleado};
+    console.log(res.req.body.emailUsuarios)
+    if (res.req.body.emailUsuarios != null) {
+        let id = {_id: res.req.body.emailUsuarios};
 
-        Empleado.deleteOne(id, function(err)
+        Usuarios.deleteOne(email, function(err)
         {
-            console.log(id);
-            res.status(200).send({estado:"Empleado eliminado"}); //devuelvo resultado  
+            console.log(email);
+            res.status(200).send({estado:"usuario eliminado"}); //devuelvo resultado  
             (err)=>
             { 
                 res.status(500).send(err);
@@ -231,17 +193,16 @@ let eliminarEmpleado = (req,res)=>
             }      
         });
     } else {
-        console.log("Id en blanco");
-        res.status(200).send({estado:"Id en blanco, por favor enviar un idEmpleado"});
+        console.log("email en blanco");
+        res.status(200).send({estado:"email en blanco, por favor enviar un email"});
     } 
 }
 
 module.exports = 
 {
-    crearEmpleado,
-    eliminarEmpleado,
-    actualizarEmpleado,
-    obtenerEmpleados,
-    obtenerEmpleado,
-    loginEmpleado
-}
+    crearUsuarios,
+    eliminarUsuarios,
+    actualizarUsuarios,
+    obtenerUsuarios,
+    loginUsuarios
+};
