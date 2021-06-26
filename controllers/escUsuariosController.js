@@ -76,10 +76,9 @@ let crearUsuarios = (req,res) =>
 {
     console.log("Crear usuario");
     console.log(req.body);
-    var newContact = Usuarios({
+    var newContact = Usuario({
         email: req.body.email,
-        password:req.body.password,
-        
+        password:req.body.password    
     });
     newContact.save().
     then
