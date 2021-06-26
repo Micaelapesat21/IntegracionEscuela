@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 
 var UsuariosSchema = new Schema({
     email:String,
-    password:String,
-   
+    password:String
+
 });
 
 UsuariosSchema.set('toObject', {
