@@ -28,6 +28,6 @@ UsuariosSchema.set('toJSON', {
   }
 });
 
-var EscUsuarios = mongoose.model('escUsuarios', UsuariosSchema);
+var escUsuarios = mongoose.model('escUsuarios', UsuariosSchema);
 console.log("se creo modelo");
-module.exports = EscUsuarios;
+module.exports = escUsuarios;

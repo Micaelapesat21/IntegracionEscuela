@@ -275,20 +275,20 @@ router.post('/loginUsuarios',function(req,res)
 });
 
 //EndPoint para insertar Usuarios en la BD
-router.post('/crearUsuarios/Escusuarios',function(req,res)
+router.post('/crearUsuarios/escUsuarios',function(req,res)
 {
     console.log(req.body);
     escUsuariosController.crearUsuarios(req,res);
 });
 
 //EndPoint para eliminar Usuarios en la BD
-router.delete('/eliminarUsuarios/Escusuarios',function(req,res)
+router.delete('/eliminarUsuarios/escUsuarios',function(req,res)
 {
     escUsuariosController.eliminarUsuarios(req,res);
 });
 
 //EndPoint para modificar empleado en la BD
-router.post('/actualizarUsuarios/Escusuarios',function(req,res)
+router.post('/actualizarUsuarios/escUsuarios',function(req,res)
 {
     escUsuariosController.actualizarUsuarios(req,res);
 });
