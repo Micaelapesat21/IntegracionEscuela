@@ -43,7 +43,7 @@ var port = process.env.PORT || 3000;
 app.get('/', (req, res) => res.send('Hello World with Express in Integración de aplicaciones'));
 
 // Use Api routes in the App
-app.use('/escuelabackend', apiRoutes);
+app.use('/regiapppfi2021', apiRoutes);
 
 
 // Launch app to listen to specified port
