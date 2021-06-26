@@ -1,4 +1,4 @@
-var Usuarios = require('../models/escUsuarios');
+var Usuario = require('../models/escusuario');
 var bodyParser = require('body-parser');
 
 
@@ -6,7 +6,7 @@ var bodyParser = require('body-parser');
 let obtenerUsuarios = (req, res) =>
 {      
     console.log("llegue a leer");
-    Usuarios.find(function(err,listaUsuarios)
+    Usuario.find(function(err,listaUsuarios)
     {
         res.status(200).send(listaUsuarios);
         (err)=>{
@@ -21,7 +21,7 @@ let obtenerUsuarios = (req, res) =>
 let loginUsuarios = (req, res) =>
 {   
     console.log("Login Usuarios");
-    Usuarios.findOne({email:req.body.email,password:req.body.password},function(err,results)
+    Usuario.findOne({email:req.body.email,password:req.body.password},function(err,results)
     {
         if(err){
             res.status(500).send(err);
@@ -158,7 +158,7 @@ let actualizarUsuarios = (req,res) =>
 for(let prop in params) if(!params[prop]) delete params[prop];
 
 
-        Usuarios.findOneAndUpdate(
+        Usuario.findOneAndUpdate(
             email,
             {$set : params},
             {new:true},function(err)
@@ -182,7 +182,7 @@ let eliminarUsuarios = (req,res)=>
     if (res.req.body.emailUsuarios != null) {
         let id = {_id: res.req.body.emailUsuarios};
 
-        Usuarios.deleteOne(email, function(err)
+        Usuario.deleteOne(email, function(err)
         {
             console.log(email);
             res.status(200).send({estado:"usuario eliminado"}); //devuelvo resultado  

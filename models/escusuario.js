@@ -3,13 +3,13 @@ var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;
 
-var UsuariosSchema = new Schema({
+var UsuarioSchema = new Schema({
     email:String,
     password:String
 
 });
 
-UsuariosSchema.set('toObject', {
+UsuarioSchema.set('toObject', {
   transform: function (doc, ret) {
     ret._id = ret.id
 
@@ -19,7 +19,7 @@ UsuariosSchema.set('toObject', {
   }
 })
 
-UsuariosSchema.set('toJSON', {
+UsuarioSchema.set('toJSON', {
   transform: function(doc, ret, options) {
     ret.id = ret._id;
     delete ret._id;
@@ -28,6 +28,6 @@ UsuariosSchema.set('toJSON', {
   }
 });
 
-var escUsuarios = mongoose.model('escUsuarios', UsuariosSchema);
+var escusuario = mongoose.model('escusuarios', UsuariosSchema);
 console.log("se creo modelo");
-module.exports = escUsuarios;
+module.exports = escusuario;
