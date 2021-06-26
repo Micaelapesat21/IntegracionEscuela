@@ -229,9 +229,6 @@ router.post('/actualizarEmpleado/Escempleado',function(req,res)
 });
 
 
-
-
-
 //ESCADICIONAL
 
 //EndPoint para leer toda la base de servicio
