@@ -271,7 +271,7 @@ router.get('/obtenerUsuarios',function(req,res)
 router.get('/obtenerUsuario',function(req,res)
 {
     console.log("leer");
-    escUsuarioController.obtenerUsuario(req,res);
+    escUsuariosController.obtenerUsuario(req,res);
 });
 
 
