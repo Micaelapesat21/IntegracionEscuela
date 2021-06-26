@@ -267,6 +267,14 @@ router.get('/obtenerUsuarios',function(req,res)
     escUsuariosController.obtenerUsuarios(req,res);
 });
 
+//EndPoint para obtener el usuario por mail
+router.get('/obtenerUsuario',function(req,res)
+{
+    console.log("leer");
+    escUsuarioController.obtenerUsuario(req,res);
+});
+
+
 //EndPoint para login del Usuarios
 router.post('/loginUsuarios',function(req,res)
 {

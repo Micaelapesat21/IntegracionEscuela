@@ -16,6 +16,18 @@ let obtenerUsuarios = (req, res) =>
     });  
 };
 
+let obtenerUsuario = (req, res) =>
+{      
+    console.log("llegue a leer");
+    Usuario.findOne({ email: req.body.email }, function (err, usuario) { 
+        res.status(200).send(usuario);
+        (err)=>{
+            res.status(500).send(err);
+            console.log(err);
+        }
+    });
+};
+
 
 
 let loginUsuarios = (req, res) =>
@@ -203,5 +215,6 @@ module.exports =
     eliminarUsuarios,
     actualizarUsuarios,
     obtenerUsuarios,
+    obtenerUsuario,
     loginUsuarios
 };
