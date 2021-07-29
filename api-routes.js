@@ -301,6 +301,26 @@ router.post('/actualizarUsuarios/escusuario',function(req,res)
     escUsuariosController.actualizarUsuarios(req,res);
 });
 
+//ESCALUMNOSRFID
+
+//Endpoint para obtener los alumnos con los serial RFID
+router.get('/obtenerAlumnosRfid', function(req, res)
+{
+    escAlumnoController.obtenerAlumnosRfid(req,res);
+});
+
+//Endpoint para asignar un serial rfid a un alumno
+router.post('/asignarAlumnoRfid', function(req, res)
+{
+    escAlumnoController.asignarAlumnoRfid(req, res);
+});
+
+//Endpoint para desasignar un serial Rfid de un alumno
+router.post('/desasignarAlumnoRfid', function(req, res)
+{
+    escAlumnoController.desasignarAlumnoRfid(req, res);
+});
+
 
 // Export API routes
 module.exports = router;

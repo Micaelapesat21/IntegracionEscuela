@@ -3,7 +3,9 @@ var Alumno = require('../models/escalumno');
 var Titular = require('../models/esctitular');
 var bodyParser = require('body-parser');
 
-
+//deberiamos agregar aca un crear alumnorfid sin ninguna pulsera o ningun serial asi lo 
+//podemos ver en la otra
+ 
 let crearAlumno = (req,res) =>
 {
 
@@ -88,6 +90,8 @@ let crearAlumno = (req,res) =>
                               
                         }
                     });
+
+                    //aca deberiamos poner que tmb guarde el alumno en la tabla alumnosRfid 
                 },
                 (err)=>
                 { 
