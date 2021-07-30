@@ -32,9 +32,10 @@ let crearAlumno = (req,res) =>
                 telefono2: req.body.telefono2,
                 dni: req.body.dni,
                 turno: req.body.turno,
+                curso: req.body.curso,
                 servicios: req.body.servicios,
                 nombreTitular: nombreTitular,
-                gimnasio: req.body.gimnasio
+                gimnasio: req.body.gimnasio,
             });
 
             console.log(nuevoAlumno);
@@ -125,6 +126,7 @@ let actualizarAlumno = (req,res) =>
         telefono2: req.body.telefono2,
         dni: req.body.dni,
         turno: req.body.turno,
+        curso: req.body.curso,
         servicios: req.body.servicios
 };
 

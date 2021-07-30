@@ -22,6 +22,11 @@ var AlumnoSchema = new Schema({
         type: Schema.ObjectId,
         ref: "escturno"
     },
+    curso:
+    { 
+        type: Schema.ObjectId,
+        ref: "esccurso"
+    },
     servicios:
     [
        { 

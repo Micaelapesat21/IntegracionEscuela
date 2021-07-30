@@ -7,6 +7,8 @@ let escServicioController = require('./controllers/escServicioController');
 let escEmpleadoController = require('./controllers/escEmpleadoController');    
 let escTurnoController = require('./controllers/escTurnoController');
 let escUsuariosController = require('./controllers/escUsuariosController');
+let escCursoController = require('./controllers/escCursoController');
+
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -319,6 +321,14 @@ router.post('/asignarAlumnoRfid', function(req, res)
 router.post('/desasignarAlumnoRfid', function(req, res)
 {
     escAlumnoController.desasignarAlumnoRfid(req, res);
+});
+
+//ESCCURSO
+
+//Endpoint para obtener los alumnos por curso
+router.get('/obtenerAlumosPorCurso', function(req, res)
+{
+    escCursoController.obtenerAlumnosPorCurso(req,res);
 });
 
 
