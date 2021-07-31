@@ -341,5 +341,25 @@ router.get('/obtenerCursos',function(req,res)
     escTitularController.obtenerCursos(req,res);
 });
 
+//EndPoint para insertar Curso en la BD
+router.post('/crearCurso/Esccurso',function(req,res)
+{
+    console.log(req.body);
+    escCursoController.crearCurso(req,res);
+});
+
+//EndPoint para eliminar Curso en la BD
+router.delete('/eliminarCurso/Esccurso',function(req,res)
+{
+    escCursoController.eliminarCurso(req,res);
+});
+
+//EndPoint para modificar turno en la BD
+router.post('/actualizarCurso/Esccurso',function(req,res)
+{
+    escCursoController.actualizarCurso(req,res);
+});
+
+
 // Export API routes
 module.exports = router;
