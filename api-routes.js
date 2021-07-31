@@ -338,7 +338,7 @@ router.get('/obtenerAlumosPorCurso', function(req, res)
 //EndPoint para leer toda la base de titulares
 router.get('/obtenerCursos',function(req,res)
 {
-    escTitularController.obtenerCursos(req,res);
+    escCursoController.obtenerCursos(req,res);
 });
 
 //EndPoint para insertar Curso en la BD
