@@ -147,6 +147,10 @@ router.post('/desasignarServicioAlumno', function(req, res)
     escAlumnoController.desasignarServicioAlumno(req, res);
 });
 
+router.post('/asignarCursoAlumno', function(req, res)
+{
+    escAlumnoController.asignarCursoAlumno(req, res);
+});
 
 //ESCCUOTA
 
@@ -331,6 +335,11 @@ router.get('/obtenerAlumosPorCurso', function(req, res)
     escCursoController.obtenerAlumnosPorCurso(req,res);
 });
 
+//EndPoint para leer toda la base de titulares
+router.get('/obtenerCursos',function(req,res)
+{
+    escTitularController.obtenerCursos(req,res);
+});
 
 // Export API routes
 module.exports = router;

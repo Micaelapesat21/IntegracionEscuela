@@ -33,10 +33,24 @@ let obtenerAlumnoPorCurso = (req, res) =>
     });
 };
 
+let obtenerCursos = (req, res) =>
+{      
+
+    Curso.find(function(err,listaCursos)
+    {
+        res.status(200).send(listaCursos);
+        (err)=>{
+            res.status(500).send(err);
+            console.log(err);
+        }
+    });  
+};
+
 
 module.exports = 
 {
     obtenerAlumnos,
-    obtenerAlumnoPorCurso
-    
+    obtenerAlumnoPorCurso,
+    obtenerCursos
+      
 };

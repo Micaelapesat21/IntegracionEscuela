@@ -1,6 +1,7 @@
 var axios = require('axios');
 var Alumno = require('../models/escalumno');
 var Titular = require('../models/esctitular');
+var Curso = require('../models/esccurso');
 var bodyParser = require('body-parser');
 
 //deberiamos agregar aca un crear alumnorfid sin ninguna pulsera o ningun serial asi lo 
@@ -215,7 +216,7 @@ let asignarServicioAlumno = (req,res) =>
 
     let params = { 
         servicios: req.body.servicios
-};
+    };
 
     Alumno.findOneAndUpdate(
             id,
@@ -233,8 +234,6 @@ let asignarServicioAlumno = (req,res) =>
 
     res.status(200).send({estado:"Campos modificados"}); 
 }
-
-
 
 
 let desasignarServicioAlumno = (req,res) => 
@@ -265,10 +264,6 @@ let desasignarServicioAlumno = (req,res) =>
 }
 
 
-
-
-
-
 let asignarAdicional = (req,res) =>
 {
     console.log("Asignar adicional");
@@ -296,6 +291,54 @@ let asignarAdicional = (req,res) =>
     }
 }
 
+let asignarCursoAlumno = (req,res) => 
+{
+    let id = {_id: res.req.body.idAlumno};
+    let params = { 
+        curso: req.body.curso
+    };
+
+    Alumno.findOneAndUpdate(
+            id,
+            {$push : params},
+            {new:true},function(err, success)
+        {
+        (err)=>
+            { 
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
+    var nuevoAlumno = Alumno({
+        nombre:req.body.nombre,
+        apellido: req.body.apellido,
+        correo: req.body.correo,
+        pais: req.body.pais,
+        provincia: req.body.provincia,
+        ciudad: req.body.ciudad,
+        codigoPostal: req.body.codigoPostal,
+        direccion: req.body.direccion,
+        telefono1: req.body.telefono1,
+        telefono2: req.body.telefono2,
+        dni: req.body.dni,
+        turno: req.body.turno,
+        curso: req.body.curso,
+        servicios: req.body.servicios,
+        nombreTitular: nombreTitular,
+        gimnasio: req.body.gimnasio
+    });
+
+    Curso.findOneAndUpdate({_id: req.body.idcurso },{$push:{alumnos:nuevoAlumno._id}},{ new: true },function(err,results) {
+        (err)=>
+            {
+            res.status(500).send(err);
+         
+            };
+
+        res.status(200).send({estado:"Alumno agregado al curso"}); 
+        });
+}
 
 module.exports = 
 {
@@ -306,5 +349,6 @@ module.exports =
     obtenerAlumnos,
     obtenerAlumnoPorTitular,
     asignarServicioAlumno,
-    desasignarServicioAlumno
+    desasignarServicioAlumno,
+    asignarCursoAlumno
 };
