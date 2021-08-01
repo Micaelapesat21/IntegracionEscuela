@@ -117,7 +117,10 @@ let obtenerCursos = (req, res) =>
             console.log(err);
         }
     });  
-    res.status(200).send(arregloCurso.sort());
+
+    arregloCurso.sort(function(a, b){return a.numero - b.numero})
+
+    res.status(200).send(arregloCurso);
        
 };
 
