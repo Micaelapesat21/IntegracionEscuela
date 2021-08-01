@@ -2,10 +2,9 @@ var Titular = require('../models/esctitular');
 var bodyParser = require('body-parser');
 
 
-
 let obtenerTitulares = (req, res) =>
 {      
-    console.log("llegue a leer");
+ 
     Titular.find(function(err,listaTitulares)
     {
         res.status(200).send(listaTitulares);

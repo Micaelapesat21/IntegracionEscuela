@@ -1,4 +1,3 @@
-var axios = require('axios');
 var Curso = require('../models/esccurso');
 var bodyParser = require('body-parser');
 
@@ -31,8 +30,6 @@ let actualizarCurso = (req,res) =>
 {
     let id = {_id: res.req.body.idCurso};
 
-    console.log("update",id);
-
     let params = { 
         numeroCurso: req.body.numeroCurso,
         divisionCurso: req.body.divisionCurso, 
@@ -41,12 +38,12 @@ let actualizarCurso = (req,res) =>
 for(let prop in params) if(!params[prop]) delete params[prop];
 
 
-    Turno.findOneAndUpdate(
+    Curso.findOneAndUpdate(
             id,
             {$set : params},
             {new:true},function(err)
         {
-        console.log("Curso modificado");
+
         (err)=>
             { 
                 res.status(500).send(err);
