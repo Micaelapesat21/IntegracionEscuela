@@ -107,13 +107,12 @@ let obtenerAlumnoPorCurso = (req, res) =>
 
 let obtenerCursos = (req, res) =>
 {      
-    var arregloCurso= new Array();
+   // var arregloCurso= new Array();
 
     Curso.find(function(err,listaCursos)
     {
-        arregloCurso.push(listaCursos);
        // arregloCurso.sort(function(a, b){return a.numero - b.numero});
-        res.status(200).send(arregloCurso);
+        res.status(200).send(listaCursos);
         (err)=>{
             res.status(500).send(err);
             console.log(err);
