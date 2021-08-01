@@ -118,7 +118,8 @@ let obtenerCursos = (req, res) =>
         }
     });  
 
-    res.status(200).send(arregloCurso.sort(function(a, b){return a.numero - b.numero}));
+    //arregloCurso.sort(function(a, b){return a.numero - b.numero})
+    res.status(200).send(arregloCurso.sort());
        
 };
 
