@@ -7,15 +7,15 @@ let crearCurso = (req,res) =>
 {
     var nuevoCurso = Curso({
         id: req.body.id,
-        numero: req.body.numeroCurso,
-        division:req.body.divisionCurso,
+        numero: req.body.numero,
+        division:req.body.division,
         alumnos: []
     });
     nuevoCurso.save().
     then
     (
         (nuevoCurso)=>
-        {console.log(nuevoCurso);
+        {
             res.status(200).send(nuevoCurso); 
         },
         (err)=>
@@ -107,15 +107,18 @@ let obtenerAlumnoPorCurso = (req, res) =>
 
 let obtenerCursos = (req, res) =>
 {      
-
+    var arregloCurso= new Array();
+    arregloCurso.push()
     Curso.find(function(err,listaCursos)
     {
-        res.status(200).send(listaCursos);
+        arregloCurso.push(listaCursos);
         (err)=>{
             res.status(500).send(err);
             console.log(err);
         }
     });  
+    res.status(200).send(arregloCurso.sort());
+       
 };
 
 
