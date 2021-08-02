@@ -53,6 +53,15 @@ let crearAlumno = (req,res) =>
                             console.log(err);
                         }
                         else{
+
+                            Curso.findOneAndUpdate({_id: req.body.idCurso},{$push:{alumnos:nuevoAlumno._id}},{ new: true },function(err,results) {
+                                if(err){
+                                    console.log("Error al crear alumno en push Alumno a curso");
+                                    res.status(500).send(err);
+                                    console.log(err);
+                                }
+                            });
+
                             if (nuevoAlumno.gimnasio === true) {
                             console.log("Me doy de alta");
 
@@ -201,11 +210,6 @@ let obtenerAlumnoPorTitular = (req, res) =>
         });
     });
 };
-
-
-
-
-
 
 
 let asignarServicioAlumno = (req,res) => 

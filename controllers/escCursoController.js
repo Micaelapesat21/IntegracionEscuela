@@ -33,7 +33,7 @@ let actualizarCurso = (req,res) =>
     let params = { 
         numeroCurso: req.body.numeroCurso,
         divisionCurso: req.body.divisionCurso, 
-};
+    };
 
 for(let prop in params) if(!params[prop]) delete params[prop];
 
@@ -125,6 +125,31 @@ let obtenerCursos = (req, res) =>
 };
 
 
+let asignarAlumnoCurso = (req,res) => 
+{
+    let id = {_id: res.req.body.idAlumno};
+    let idcurso = {_id: res.req.body.idCurso};
+
+    let params = { 
+        alumnos: idcurso.alumnos.push(id)
+    };
+
+    Curso.findOneAndUpdate(
+            id,
+            {$push : params},
+            {new:true},function(err, success)
+        {
+        (err)=>
+            { 
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
+    res.status(200).send({estado:"Alumno agregado"}); 
+}
+
+
 module.exports = 
 {
     crearCurso,
@@ -132,6 +157,7 @@ module.exports =
     eliminarCurso,
     obtenerAlumnos,
     obtenerAlumnoPorCurso,
-    obtenerCursos
+    obtenerCursos,
+    asignarAlumnoCurso
 
 };
