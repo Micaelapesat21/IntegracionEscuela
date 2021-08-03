@@ -53,8 +53,10 @@ let crearAlumno = (req,res) =>
                             console.log(err);
                         }
                         else{
-
-                            Curso.findOneAndUpdate({_id: req.body.idCurso},{$push:{alumnos:nuevoAlumno._id}},{ new: true },function(err,results) {
+                            console.log(req.body.idTitular);        
+                            console.log("estoy puscheando el alumno al curso");
+                            console.log(req.body.curso);
+                            Curso.findOneAndUpdate({_id: req.body.curso},{$push:{alumnos:nuevoAlumno._id}},{ new: true },function(err,results) {
                                 if(err){
                                     console.log("Error al crear alumno en push Alumno a curso");
                                     res.status(500).send(err);
