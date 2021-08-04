@@ -330,7 +330,7 @@ router.post('/desasignarAlumnoRfid', function(req, res)
 //ESCCURSO
 
 //Endpoint para obtener los alumnos por curso
-router.get('/obtenerAlumosPorCurso', function(req, res)
+router.get('/obtenerAlumnosPorCurso', function(req, res)
 {
     escCursoController.obtenerAlumnosPorCurso(req,res);
 });
