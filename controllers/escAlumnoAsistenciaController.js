@@ -9,18 +9,16 @@ var bodyParser = require('body-parser');
 
 let obtenerAlumnoPorCurso = (req, res) =>
 {      
-    Alumno.find ( { _id: req.body.curso }, function(err, listalumnos) 
-
-    { 
-        res.status(200).send(listalumnos.alumnos);
-        //agregar Array
-
-        (err)=>{
-
-            res.status(500).send(err)
-
-        }
-
+    curso.findOne( { curso: req.body.idcurso }, function(err, docs) {
+        var cursobuscado = docs.alumno;
+        Alumno.find( { _id: cursobuscado }, function(err, docs) 
+        { 
+            res.status(200).send(docs);
+            (err)=>{
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
     });
 
 };
