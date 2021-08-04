@@ -94,7 +94,7 @@ let obtenerAlumnoPorCurso = (req, res) =>
     Curso.findOne( { _id: req.body.curso }, function(err, listalumnos) 
 
     { 
-        res.status(200).send(listalumnos.alumnos);
+        res.status(200).send(listalumnos);
 
         (err)=>{
 
