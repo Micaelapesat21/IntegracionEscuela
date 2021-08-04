@@ -20,9 +20,9 @@ AlumnoAsistenaciaSchema.set('toObject', {
         delete ret.__v
         delete password
     }
-})
+});
   
-AlumnoSchema.set('toJSON', {
+AlumnoAsistenaciaSchema.set('toJSON', {
     transform: function(doc, ret, options) {
         ret.id = ret._id;
         delete ret._id;

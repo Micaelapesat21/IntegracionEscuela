@@ -30,15 +30,16 @@ if(alumno.curso = rec.body.curso)
 
 let obtenerAlumnoPorFecha = (req, res) =>
 {      
-    Asistencia.find ( { _id: req.body.fecha }, function(err, listalumnos) 
 
+    var listaalumnos= new Array();
+    Asistencia.find ( { _id: req.body.fecha }, function(err, alumno) 
     { 
-        res.status(200).send(listalumnos.alumnos);
-        //agregar array de alumnos para que me devuelva todos los de esa fecha 
+
+        listaalumnos.push(alumno);
+         //agregar array de alumnos para que me devuelva todos los de esa fecha 
+        res.status(200).send(listaalumnos);
         (err)=>{
-
             res.status(500).send(err)
-
         }
 
     });
