@@ -92,7 +92,7 @@ let obtenerAlumnos = (req, res) =>
 let obtenerAlumnosPorCurso = (req, res) =>
 {      
     //Curso.findOne( { _id: "6106d999be08ac21d6013843" }, function(err, listalumnos)
-    Curso.findOne( { _id: req.params.id }, function(err, listalumnos) 
+    Curso.findOne( { _id: req.params.idcurso }, function(err, listalumnos) 
     { 
         res.status(200).send(listalumnos.alumnos);
 
