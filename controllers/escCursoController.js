@@ -89,7 +89,7 @@ let obtenerAlumnos = (req, res) =>
     });       
 };
 
-let obtenerAlumnoPorCurso = (req, res) =>
+let obtenerAlumnosPorCurso = (req, res) =>
 {      
     Curso.findOne( { _id: req.body.curso }, function(err, listalumnos) 
 
@@ -156,7 +156,7 @@ module.exports =
     actualizarCurso,
     eliminarCurso,
     obtenerAlumnos,
-    obtenerAlumnoPorCurso,
+    obtenerAlumnosPorCurso,
     obtenerCursos,
     asignarAlumnoCurso
 
