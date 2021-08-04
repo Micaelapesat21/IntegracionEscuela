@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 //podemos ver en la otra
  
 
-let obtenerAlumnoPorCurso = (req, res) =>
+let obtenerAlumnoPorCursoA = (req, res) =>
 {      
     curso.findOne( { curso: req.body.idcurso }, function(err, docs) {
         var cursobuscado = docs.alumno;
@@ -62,7 +62,7 @@ let obtenerAlumnoPorEstado = (req, res) =>
 
 module.exports = 
 {
-    obtenerAlumnoPorCurso,
+    obtenerAlumnoPorCursoA,
     obtenerAlumnoPorFecha,
     obtenerAlumnoPorEstado
     
