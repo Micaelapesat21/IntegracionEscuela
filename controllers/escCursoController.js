@@ -1,4 +1,5 @@
 var Curso = require('../models/esccurso');
+var Alumno = require('../models/escalumno');
 var bodyParser = require('body-parser');
 
 //deberiamos agregar aca un crear alumnorfid sin ninguna pulsera o ningun serial asi lo 
@@ -92,16 +93,18 @@ let obtenerAlumnos = (req, res) =>
 let obtenerAlumnosPorCurso = (req, res) =>
 {      
     //Curso.findOne( { _id: "6106d999be08ac21d6013843" }, function(err, listalumnos)
-    Curso.findOne( { _id: req.params.curso }, function(err, listalumnos) 
-    { 
-        res.status(200).send(listalumnos.alumnos);
+    Curso.findOne( { _id: req.params.curso }, function(err, listalumnos) { 
+            var alumnoencontrado = docs.listalumnos;
+            Alumno.find( { _id: alumnoencontrado }, function(err, alumno) {
 
-        (err)=>{
+ //       res.status(200).send(listalumnos.alumnos);
+             res.status(200).send(alumno);
+            (err)=>{
 
-            res.status(500).send(err)
+                res.status(500).send(err)
 
-        }
-
+            }
+            });
     });
 };
 
