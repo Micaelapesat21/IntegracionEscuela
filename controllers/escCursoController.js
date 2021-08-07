@@ -93,8 +93,9 @@ let obtenerAlumnos = (req, res) =>
 let obtenerAlumnosPorCurso = (req, res) =>
 {      
     //Curso.findOne( { _id: "6106d999be08ac21d6013843" }, function(err, listalumnos)
-    Curso.findById( {_id: req.params.curso}, function(err, docs) { 
-            var alumnoencontrado = docs.alumno.filter((id) => id !== "");     
+    Curso.findById( req.params.curso, function(err, docs) { 
+            var alumnoencontrado = docs.alumnos.filter((id) => id !== "");    
+   
             Alumno.find( { _id: { $in:alumnoencontrado } }, function(err, alumno) {       
  //       res.status(200).send(listalumnos.alumnos);
                 res.status(200).send(alumno);
@@ -120,8 +121,20 @@ let obtenerCursos = (req, res) =>
     });  
 
     //arregloCurso.sort(function(a, b){return a.numero - b.numero})
- 
        
+};
+
+let obtenerCursosPorId = (req, res) =>
+{      
+   // var arregloCurso= new Array();
+
+   Curso.findById( req.params.curso, function(err, docs) { 
+        res.status(200).send(docs);
+        (err)=>{
+            res.status(500).send(err)
+        }
+    });
+        
 };
 
 
@@ -158,6 +171,7 @@ module.exports =
     obtenerAlumnos,
     obtenerAlumnosPorCurso,
     obtenerCursos,
+    obtenerCursosPorId,
     asignarAlumnoCurso
 
 };

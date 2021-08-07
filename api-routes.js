@@ -335,11 +335,18 @@ router.get('/obtenerAlumnosPorCurso/:curso', function(req, res)
     escCursoController.obtenerAlumnosPorCurso(req,res);
 });
 
-//EndPoint para leer toda la base de titulares
+//EndPoint para leer toda la base de cursos
 router.get('/obtenerCursos',function(req,res)
 {
     escCursoController.obtenerCursos(req,res);
 });
+
+//EndPoint para leer toda la base de cursos
+router.get('/obtenerCursosPorId/:curso',function(req,res)
+{
+    escCursoController.obtenerCursosPorId(req,res);
+});
+
 
 //EndPoint para insertar Curso en la BD
 router.post('/crearCurso/Esccurso',function(req,res)
