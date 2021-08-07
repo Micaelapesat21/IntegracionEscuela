@@ -97,10 +97,10 @@ let obtenerAlumnosPorCurso = (req, res) =>
             var alumnoencontrado = docs.alumno.filter((id) => id !== "");     
             Alumno.find( { _id: { $in:alumnoencontrado } }, function(err, alumno) {       
  //       res.status(200).send(listalumnos.alumnos);
-             res.status(200).send(alumno);
-            (err)=>{
-                res.status(500).send(err)
-            }
+                res.status(200).send(alumno);
+                (err)=>{
+                    res.status(500).send(err)
+                }
             });
     });
 };
