@@ -377,6 +377,5 @@ router.get('/obtenerAlumnosPorCursoA', function(req, res)
 });
 
 
-
 // Export API routes
 module.exports = router;
