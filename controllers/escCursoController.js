@@ -129,7 +129,7 @@ let obtenerCursosPorId = (req, res) =>
    // var arregloCurso= new Array();
 
    Curso.findById( req.params.curso, function(err, docs) { 
-        res.status(200).send(docs.numero);
+        res.status(200).send(docs.numero + docs.division);
         (err)=>{
             res.status(500).send(err)
         }
