@@ -6,6 +6,12 @@ var cors = require('cors');
 // Initialize the server express
 var app = express();
 
+var corsOptions = {
+  origin: true,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
+
 //conectar BD
 var urlBD='mongodb+srv://regiapp:regiapp@cluster0.z3gyq.mongodb.net/dbregiapp?retryWrites=true&w=majority';
 
@@ -22,11 +28,6 @@ mongoose.connect(urlBD,opts).then(
             console.log("ERROR:" + err); 
            } //manejo error
 );
-var corsOptions = {
-  origin: true,
-  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-app.use(cors(corsOptions));
 
 // Import router
 var apiRoutes = require("./api-routes")
