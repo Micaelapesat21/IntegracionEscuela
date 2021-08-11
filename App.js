@@ -22,7 +22,11 @@ mongoose.connect(urlBD,opts).then(
             console.log("ERROR:" + err); 
            } //manejo error
 );
-        
+var corsOptions = {
+  origin: "*",
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 // Import router
 var apiRoutes = require("./api-routes")
@@ -34,10 +38,9 @@ var apiRoutes = require("./api-routes")
         extended: true
     }));
     app.use(bodyParser.json());
-app.use(cors());
 
 // Setup server port
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 
 // Send message for default URL
 app.get('/', (req, res) => res.send('Hello World with Express in Integración de aplicaciones'));

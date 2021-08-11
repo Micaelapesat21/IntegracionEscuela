@@ -347,7 +347,6 @@ router.get('/obtenerCursosPorId/:curso',function(req,res)
     escCursoController.obtenerCursosPorId(req,res);
 });
 
-
 //EndPoint para insertar Curso en la BD
 router.post('/crearCurso/Esccurso',function(req,res)
 {
