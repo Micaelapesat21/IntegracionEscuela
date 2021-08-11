@@ -15,7 +15,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "connect-multiparty": "^2.2.0",
-    "cors": "2.8.5",
+    "cors": "^2.8.5",
     "csv-generate": "^3.3.0",
     "csv-parser": "^2.3.3",
     "csv-writer": "^1.6.0",
