@@ -5,7 +5,12 @@ var Schema = mongoose.Schema;
 
 var UsuarioSchema = new Schema({
     email:String,
-    password:String
+    password:String,
+    nombre:String,
+    documento:String,
+    contacto:String,
+    usuario: String,
+    pagoaldia:String
 
 });
 

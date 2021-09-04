@@ -33,7 +33,7 @@ let obtenerUsuario = (req, res) =>
 let loginUsuarios = (req, res) =>
 {   
     console.log("Login Usuarios");
-    Usuario.findOne({email:req.body.email,password:req.body.password},function(err,results)
+    Usuario.findOne({usuario:req.body.usuario,password:req.body.password},function(err,results)
     {
         if(err){
             res.status(500).send(err);
@@ -90,7 +90,12 @@ let crearUsuarios = (req,res) =>
     console.log(req.body);
     var newContact = Usuario({
         email: req.body.email,
-        password:req.body.password    
+        password:req.body.password, 
+        nombre:req.body.nombre,
+        documento:req.body.documento,
+        contacto:req.body.contacto,
+        usuario: req.body.usuario,
+        pagoaldia:"t"
     });
     newContact.save().
     then

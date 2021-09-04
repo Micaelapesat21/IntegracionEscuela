@@ -28,6 +28,8 @@ También tengo canal de YouTube: https://www.youtube.com/channel/UCroP4BTWjfM0Ck
 */ ?>
 <?php
 include_once "cors.php";
-include_once "funciones.php";
-$videojuegos = obtenerVideojuegos();
-echo json_encode($videojuegos);
+include_once "functions.php";
+//$employees = getEmployees();
+//echo json_encode($employees);
+$employees =  assignRfidCard($employee) {
+
