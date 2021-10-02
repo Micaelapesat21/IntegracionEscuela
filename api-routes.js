@@ -9,6 +9,7 @@ let escTurnoController = require('./controllers/escTurnoController');
 let escUsuariosController = require('./controllers/escUsuariosController');
 let escCursoController = require('./controllers/escCursoController');
 let escAlumnoAsistenciaController = require('./controllers/escAlumnoAsistenciaController');
+let escNotificacionController = require('./controllers/escNotificacionController');
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -375,6 +376,34 @@ router.get('/obtenerAlumnosPorCursoA', function(req, res)
     escAlumnoAsistenciaController.obtenerAlumnosPorCursoA(req,res);
 });
 
+///ESCNOTIFICACION
+
+//EndPoint para obtener las notificacion por Usuario
+router.get('/obtenerNotificacionesPorUsuario',function(req,res)
+{
+    console.log("leer");
+    escNotificacionController.obtenerNotificacionesPorUsuario(req,res);
+});
+
+//EndPoint para obtener las notificacion
+router.get('/obtenerNotificaciones',function(req,res)
+{
+    console.log("api-router-obtenerNotificaciones");
+    escNotificacionController.obtenerNotificaciones(req,res);
+});
+
+//EndPoint para crear notificacion
+router.post('/crearNotificacion/Escnotificacion',function(req,res)
+{
+    console.log(req.body);
+    escNotificacionController.crearNotificacion(req,res);
+});
+
+//EndPoint para eliminar Curso en la BD
+router.delete('/eliminarNotificacion/Escnotificacion',function(req,res)
+{
+    escNotificacionController.eliminarNotificacion(req,res);
+});
 
 // Export API routes
 module.exports = router;
