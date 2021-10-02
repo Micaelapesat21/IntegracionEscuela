@@ -20,7 +20,6 @@ var NotificacionSchema = new Schema({
 NotificacionSchema.set('toObject', {
   transform: function (doc, ret) {
     ret._id = ret.id
-
     delete ret._id
     delete ret.__v
     delete password
@@ -36,6 +35,6 @@ NotificacionSchema.set('toJSON', {
   }
 });
 
-var Escnotificacion = mongoose.model('escnotificacion', NotificacionSchema);
+var Escnotificacion = mongoose.model('escnotificaciones', NotificacionSchema);
 console.log("se creo modelo Notificaciones");
 module.exports = Escnotificacion;

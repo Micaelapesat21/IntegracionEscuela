@@ -345,6 +345,7 @@ router.get('/obtenerCursos',function(req,res)
 //EndPoint para leer toda la base de cursos
 router.get('/obtenerCursosPorId/:curso',function(req,res)
 {
+    console.log("obtenerCursosPorId");
     escCursoController.obtenerCursosPorId(req,res);
 });
 
@@ -379,9 +380,9 @@ router.get('/obtenerAlumnosPorCursoA', function(req, res)
 ///ESCNOTIFICACION
 
 //EndPoint para obtener las notificacion por Usuario
-router.get('/obtenerNotificacionesPorUsuario',function(req,res)
+router.get('/obtenerNotificacionesPorUsuario/:usuario', function(req, res)
 {
-    console.log("leer");
+    console.log("leer obtenerNotificacionesPorUsuario");
     escNotificacionController.obtenerNotificacionesPorUsuario(req,res);
 });
 

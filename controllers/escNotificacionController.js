@@ -1,4 +1,4 @@
-var Notificacion = require('../models/escnotificacion');
+var Notificacion = require('../models/escnotificaciones');
 var bodyParser = require('body-parser');
 
 
@@ -7,6 +7,7 @@ let obtenerNotificaciones = (req, res) =>
     console.log("obtenerNotificaciones");
     Notificacion.find(function(err,listaNotificaciones)
     {
+        console.log("collecion");
         res.status(200).send(listaNotificaciones);
         (err)=>{
             res.status(500).send(err);
@@ -17,8 +18,8 @@ let obtenerNotificaciones = (req, res) =>
 
 let obtenerNotificacionesPorUsuario = (req, res) =>
 {      
-    console.log("llegue a leer las notificaciones");
-    Notificacion.findOne({ usuario: req.body.usuario }, function (err, notificacion) { 
+    console.log("llegue a leer las notificaciones: " + req.params.usuario);
+    Notificacion.find({ "usuario": req.params.usuario }, function (err, notificacion) { 
         res.status(200).send(notificacion);
         (err)=>{
             res.status(500).send(err);
