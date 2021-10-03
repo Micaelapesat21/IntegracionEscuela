@@ -33,6 +33,6 @@ UsuarioSchema.set('toJSON', {
   }
 });
 
-var escusuarios = mongoose.model('escusuario', UsuarioSchema);
+var escusuarios = mongoose.model('escusuarios', UsuarioSchema);
 console.log("se creo modelo");
 module.exports = escusuarios;

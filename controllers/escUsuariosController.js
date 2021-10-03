@@ -1,4 +1,4 @@
-var Usuario = require('../models/escusuario');
+var Usuario = require('../models/escusuarios');
 var bodyParser = require('body-parser');
 
 
@@ -28,19 +28,30 @@ let obtenerUsuario = (req, res) =>
     });
 };
 
-
+let obtenerUsuario2 = (req, res) =>
+{      
+    console.log("llegue a leer");
+    Usuario.findOne({ usuario: req.body.usuario, password:req.body.password }, function (err, resultado) { 
+        res.status(200).send(resultado);
+        (err)=>{
+            res.status(500).send(err);
+            console.log(err);
+        }
+    });
+};
 
 let loginUsuarios = (req, res) =>
 {   
-    console.log("Login Usuarios");
-    Usuario.findOne({usuario:req.body.usuario,password:req.body.password},function(err,results)
+    console.log("Login Usuarios: " + req.body.usuario + req.body.password);
+    Usuario.findOne({usuario:req.body.usuario, password:req.body.password},function(err,results)
     {
         if(err){
             res.status(500).send(err);
             console.log(err);
         }
         else{
-            res.status(200).send(results);  
+            res.status(200).send(results); 
+            console.log("RES LOGIN: " + res); 
             console.log(results);    
         }
     });
@@ -221,5 +232,6 @@ module.exports =
     actualizarUsuarios,
     obtenerUsuarios,
     obtenerUsuario,
+    obtenerUsuario2,
     loginUsuarios
 };
