@@ -20,7 +20,7 @@ let obtenerNotificacionesPorUsuario = (req, res) =>
 {      
     console.log("llegue a leer las notificaciones: " + req.params.usuario);
     Notificacion.find({ "usuario": req.params.usuario }, function (err, notificacion) { 
-        res.status(200).send(notificacion);
+        res.status(200).send(notificacion.texto);
         (err)=>{
             res.status(500).send(err);
             console.log(err);

@@ -115,6 +115,7 @@ router.post('/actualizarTitular/Esctitular',function(req,res)
 //ESCALUMNO
 router.post('/crearAlumno/Escalumno',function(req,res)
 {
+    console.log("post: " + req.body.nombre);
     escAlumnoController.crearAlumno(req,res);
 });
 

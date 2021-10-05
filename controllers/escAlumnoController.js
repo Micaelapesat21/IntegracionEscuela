@@ -9,12 +9,10 @@ var bodyParser = require('body-parser');
  
 let crearAlumno = (req,res) =>
 {
-
-    Titular.find({_id: req.body.idTitular }, function(err, docs) {
-        console.log(docs);
+    
+    Titular.findOne({_id: req.body.idTitular }, function(err, docs) {
         var titularBuscado = docs.alumno;
         var nombreTitular = docs.nombre + " " + docs.apellido;
-        
         Alumno.find( { _id: titularBuscado }, function(err, docs) 
         { 
 
