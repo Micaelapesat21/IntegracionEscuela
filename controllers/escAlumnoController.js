@@ -162,10 +162,9 @@ for(let prop in params) if(!params[prop]) delete params[prop];
 
 let eliminarAlumno = (req,res)=>
 {
-    console.log(res.req.body.idAlumno)
-    if (res.req.body.idAlumno != null) {
-        let id = {_id: res.req.body.idAlumno};
-
+    console.log(res.req.body.id)
+    if (res.req.body.id != null) {
+        let id = {_id: res.req.body.id};
         Alumno.deleteOne(id, function(err)
         {
             console.log(id);
