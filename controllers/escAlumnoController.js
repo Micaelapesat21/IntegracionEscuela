@@ -32,9 +32,10 @@ let crearAlumno = (req,res) =>
                 dni: req.body.dni,
                 turno: req.body.turno,
                 curso: req.body.curso,
+                idTitular: req.body.idTitular,
                 servicios: req.body.servicios,
                 nombreTitular: nombreTitular,
-                gimnasio: req.body.gimnasio,
+                gimnasio: req.body.gimnasio
             });
 
             console.log(nuevoAlumno);
@@ -137,6 +138,7 @@ let actualizarAlumno = (req,res) =>
         dni: req.body.dni,
         turno: req.body.turno,
         curso: req.body.curso,
+        idTitular: req.body.idTitular,
         servicios: req.body.servicios
 };
 
@@ -181,6 +183,16 @@ let eliminarAlumno = (req,res)=>
 
             if(err){
                 console.log("Error al eliminar el curso");
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
+        Titular.findOneAndUpdate({nombre: res.req.body.idTitular},
+            {$pull:{alumno:res.req.body.id}},{ new: true },function(err,results) {
+
+            if(err){
+                console.log("Error al eliminar del titular");
                 res.status(500).send(err);
                 console.log(err);
             }
