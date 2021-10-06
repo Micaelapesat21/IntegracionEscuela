@@ -175,6 +175,17 @@ let eliminarAlumno = (req,res)=>
                 console.log(err);
             }      
         });
+
+        Curso.findOneAndUpdate({_id: res.req.body.curso},
+            {$pull:{alumnos:res.req.body.id}},{ new: true },function(err,results) {
+
+            if(err){
+                console.log("Error al eliminar el curso");
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
     } else {
         console.log("Id en blanco");
         res.status(200).send({estado:"Id en blanco, por favor enviar un idAlumno"});
