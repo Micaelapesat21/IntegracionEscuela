@@ -1,5 +1,8 @@
 var Notificacion = require('../models/escnotificaciones');
+var Curso = require('../models/esccurso');
+var Alumno = require('../models/escalumno');
 var bodyParser = require('body-parser');
+const { QueryCursor } = require('mongoose');
 
 
 let obtenerNotificaciones = (req, res) =>
@@ -90,6 +93,93 @@ let crearNotificacion = (req,res) =>
             console.log(err);
         }
     ) 
+}
+
+function findUser(userId,res){
+    
+    return Alumno.findOne({_id: userId});
+}
+
+let crearNotificacionMasiva = async (req,res) =>
+{
+    console.log("Crear Notificacion Masiva");
+    // recibo un id de curso y un texto para enviar
+    // tengo que recorrer los alumnos del curso para agrrar de ahi 
+    // los titulares y colocarlos como usuarios.  
+
+    console.log(req.body);
+    console.log("Curso id: " + req.body.curso);
+ 
+
+    cursoSeleccionado = Curso.findOne({_id: req.body.curso}, function(err,result) {
+            console.log("Encontro el curso:" + result);
+            alumnosCurso = new Array();
+            alumnosCurso = result.alumnos;
+
+            console.log("Notificacion para los alumnos:" + alumnosCurso);
+            console.log("Longitud del arreglo alumnos: " + alumnosCurso.length);
+
+            for(i=0; i < alumnosCurso.length; i = i + 1){
+                Alumno.findOne({_id: alumnosCurso[i]},function(err,result){
+                    console.log("Titular:" + result.idTitular);
+                    var newContact = Notificacion({
+                        usuario: result.idTitular,
+                        leida: "N", 
+                        texto: req.body.texto,
+                        fecha: req.body.fecha,
+                        alumno: result._id
+                    });
+                    newContact.save().then
+                                            (
+                                                (newContact)=>
+                                                {console.log(newContact);
+
+                                                    res.status(200).send(newContact); 
+                                                },
+                                                (err)=>
+                                                { 
+                                                    res.status(500).send(err);
+                                                    console.log(err);
+                                                }
+                                            ) 
+
+                });
+                
+            }
+           
+           
+    });
+    
+
+    return true;
+/*
+    for(j=0; j < titulares.length(); j = j + 1){
+        
+        //creo una notificación
+        var newContact = Notificacion({
+            usuario: titulares[j],
+            leida: "N", 
+            texto: req.body.texto,
+            alumno: ""
+        });
+                //la guardardo en la colección
+                newContact.save().
+                then
+                (
+                    (newContact)=>
+                    {console.log(newContact);
+
+                        res.status(200).send(newContact); 
+                    },
+                    (err)=>
+                    { 
+                        res.status(500).send(err);
+                        console.log(err);
+                    }
+                ) 
+    };
+*/
+    
 }
 
 /*
@@ -198,5 +288,6 @@ module.exports =
     eliminarNotificacion,
     actualizarNotificacion,
     obtenerNotificacionesPorUsuario,
-    obtenerNotificaciones
+    obtenerNotificaciones,
+    crearNotificacionMasiva
 };

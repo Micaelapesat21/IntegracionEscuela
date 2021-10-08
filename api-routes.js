@@ -401,6 +401,12 @@ router.post('/crearNotificacion/Escnotificacion',function(req,res)
     escNotificacionController.crearNotificacion(req,res);
 });
 
+//EndPoint para enviar notificaciones Masivas
+router.post('/crearNotificacionMasiva/Escnotificacion',function(req,res)
+{
+    escNotificacionController.crearNotificacionMasiva(req,res);
+});
+
 //EndPoint para eliminar Curso en la BD
 router.delete('/eliminarNotificacion/Escnotificacion',function(req,res)
 {
