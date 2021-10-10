@@ -380,6 +380,12 @@ router.post('/actualizarCurso/Esccurso',function(req,res)
 
 //ESCALUMNOASISTENCIA
 
+router.post('/crearAsistencia/Escasistencia',function(req,res)
+{
+    console.log(req.body);
+    escAlumnoAsistenciaController.crearAsistencia(req,res);
+});
+
 //Endpoint para obtener los alumnos por curso
 router.get('/obtenerAlumnosPorCursoA', function(req, res)
 {

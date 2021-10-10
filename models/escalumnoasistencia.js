@@ -2,13 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AlumnoAsistenaciaSchema = new Schema({
-    fecha: Date,
-    estado: ['Presente', 'Ausente'],
-    alumno_id:
-    { 
-        type: Schema.ObjectId,
-        ref: "escalumno"
-    }
+    fecha: String,
+    estado: String,
+    alumno_id:String
 });
 
 
@@ -30,7 +26,8 @@ AlumnoAsistenaciaSchema.set('toJSON', {
     }
 });
 
-var Escalumnoasistenacia = mongoose.model('escalumnoasistencia', AlumnoAsistenaciaSchema);
+var collectionName = 'escalumnoasistencia'
+var Escalumnoasistenacia = mongoose.model('escalumnoasistencia ', AlumnoAsistenaciaSchema, collectionName);
 console.log("se creo modelo alumnoAsistencia");
 module.exports = Escalumnoasistenacia;
 

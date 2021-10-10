@@ -81,22 +81,14 @@ let obtenerAsistenciasPorAlumnoYFecha = (req, res) =>
         console.log("fechaI en fecha: " + tsI);
         console.log("fechaF en fecha: " + tsF);
 
-
-
-    Asistencia.find({alumno_id: req.body.alumnoId}, function(err, alumno) 
-    { 
-       // console.log("Alumno: " + alumno);
-       // var fecha = Date.parse(alumno.fecha);
-       // console.log("Fecha collection: " + fecha);
-      //  if (fecha > tsI &&  fecha < tsF){
+    Asistencia.find({$and:[{alumno_id: req.body.alumnoId}, {fecha:{$gte:req.body.fechaI}}, {fecha:{$lte:req.body.fechaF}}]}, function(err, alumno) 
+    {
                 res.status(200).send(alumno);
             //agregar array 
                 (err)=>{
 
-                    res.status(500).send(err)
+                    res.status(500).send(err);
                 }
-       // }
-
     });
 };
 
@@ -105,20 +97,43 @@ let obtenerAsistencias = (req, res) =>
 {      
 
     console.log("obtenerAsistencias");
-    Asistencia.find( function(err, alumno) 
+    Asistencia.find( function(err, result) 
     { 
-
         console.log("estoy dentro de la colección: ");
-        res.status(200).send(alumno);
+        console.log("resultado: " + result);
+        
+        res.status(200).send(result);
           (err)=>{
                 res.status(500).send(err)
             }
     });
 };
 
+let crearAsistencia = (req,res) =>
+{
+    var nuevaAsistencia = Asistencia({
+        fecha: req.body.fecha,
+        estado: req.body.estado,
+        alumno_id:req.body.alumno_id
+    });
+    nuevaAsistencia.save().
+    then
+    (
+        (nuevaAsistencia)=>
+        {
+            res.status(200).send(nuevaAsistencia); 
+        },
+        (err)=>
+        { 
+            res.status(500).send(err);
+            console.log(err);
+        }
+    ) 
+}
 
 module.exports = 
 {
+    crearAsistencia,
     obtenerAlumnoPorCursoA,
     obtenerAlumnoPorFecha,
     obtenerAlumnoPorEstado,
