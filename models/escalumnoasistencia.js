@@ -2,10 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var AlumnoAsistenaciaSchema = new Schema({
-    id: String,
-    date: Date,
-    status: ['Presente', 'Ausente'],
-    alumno:
+    fecha: Date,
+    estado: ['Presente', 'Ausente'],
+    alumno_id:
     { 
         type: Schema.ObjectId,
         ref: "escalumno"

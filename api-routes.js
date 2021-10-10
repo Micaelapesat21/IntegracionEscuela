@@ -129,14 +129,22 @@ router.delete('/eliminarAlumno/Escalumno', function(req, res)
     escAlumnoController.eliminarAlumno(req,res);
 });
 
+//obtener todos los alumnos de la collection
 router.get('/obtenerAlumnos', function(req, res)
 {
     escAlumnoController.obtenerAlumnos(req,res);
 });
 
-router.get('/obtenerAlumnoPorTitular', function(req, res)
+//path para obtener todos los alumnos de un titular, dado su id
+router.get('/obtenerAlumnoPorTitular/:id', function(req, res)
 {
     escAlumnoController.obtenerAlumnoPorTitular(req, res);
+});
+
+//path para obtener todos los alumnos de un titular, dado su id
+router.get('/obtenerAlumnoPorUsuario/:id', function(req, res)
+{
+    escAlumnoController.obtenerAlumnoPorUsuario(req, res);
 });
 
 router.post('/asignarServicioAlumno', function(req, res)
@@ -376,6 +384,17 @@ router.post('/actualizarCurso/Esccurso',function(req,res)
 router.get('/obtenerAlumnosPorCursoA', function(req, res)
 {
     escAlumnoAsistenciaController.obtenerAlumnosPorCursoA(req,res);
+});
+
+//obtenemos las asistencias de un alumno en un rango de fechas particular
+router.get('/obtenerAsistenciasPorAlumnoYFecha', function(req, res)
+{
+    escAlumnoAsistenciaController.obtenerAsistenciasPorAlumnoYFecha(req,res);
+});
+
+router.get('/obtenerAsistencias', function(req, res)
+{
+    escAlumnoAsistenciaController.obtenerAsistencias(req,res);
 });
 
 ///ESCNOTIFICACION

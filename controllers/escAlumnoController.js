@@ -2,6 +2,7 @@ var axios = require('axios');
 var Alumno = require('../models/escalumno');
 var Titular = require('../models/esctitular');
 var Curso = require('../models/esccurso');
+var Usuario = require('../models/escusuarios');
 var bodyParser = require('body-parser');
 
 //deberiamos agregar aca un crear alumnorfid sin ninguna pulsera o ningun serial asi lo 
@@ -220,7 +221,7 @@ let obtenerAlumnos = (req, res) =>
 let obtenerAlumnoPorTitular = (req, res) =>
 {      
     console.log("llegue a leer");
-    Titular.findOne( { correo: req.body.correo }, function(err, docs) {
+    Titular.findOne( { _id: req.params.id }, function(err, docs) {
         var titularBuscado = docs.alumno;
         Alumno.find( { _id: titularBuscado }, function(err, docs) 
         { 
@@ -231,6 +232,26 @@ let obtenerAlumnoPorTitular = (req, res) =>
             }
         });
     });
+};
+
+let obtenerAlumnoPorUsuario = (req, res) =>
+{      
+    console.log("llegue a leer");
+    Usuario.findOne( { _id: req.params.id }, function(err, docs) {
+        var docUsuario = docs.documento
+
+        Titular.findOne({documento: docUsuario}, function(err,docs1) {
+        var titularBuscado = docs1.alumno;
+
+            Alumno.find( { _id: titularBuscado }, function(err, docs3) { 
+                res.status(200).send(docs3);
+                (err)=>{
+                    res.status(500).send(err);
+                    console.log(err);
+                }
+            });
+    });
+});
 };
 
 
@@ -374,6 +395,7 @@ module.exports =
     actualizarAlumno,
     obtenerAlumnos,
     obtenerAlumnoPorTitular,
+    obtenerAlumnoPorUsuario,
     asignarServicioAlumno,
     desasignarServicioAlumno,
     asignarCursoAlumno

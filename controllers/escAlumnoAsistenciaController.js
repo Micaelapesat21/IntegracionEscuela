@@ -1,4 +1,4 @@
-var axios = require('axios');
+//var axios = require('axios');
 var Asistencia = require('../models/escalumnoasistencia');
 var Alumno =  require('../models/escalumno');
 var bodyParser = require('body-parser');
@@ -61,10 +61,67 @@ let obtenerAlumnoPorEstado = (req, res) =>
     });
 };
 
+let obtenerAsistenciasPorAlumnoYFecha = (req, res) =>
+{      
+
+    console.log("Asistencias por alumno y fecha: " + req.body);
+    /*
+        userId: userId,
+        alumnoId: alumno,
+        fechaI: fechaInicio,
+        fechaF: fechaFin
+    */
+        console.log("alumnoId:" + req.body.alumnoId);
+        console.log("fechaI: " + req.body.fechaI);
+        console.log("fechaF: " + req.body.fechaF);
+
+
+        var tsI = Date.parse(req.body.fechaI);
+        var tsF = Date.parse(req.body.fechaF);
+        console.log("fechaI en fecha: " + tsI);
+        console.log("fechaF en fecha: " + tsF);
+
+
+
+    Asistencia.find({alumno_id: req.body.alumnoId}, function(err, alumno) 
+    { 
+       // console.log("Alumno: " + alumno);
+       // var fecha = Date.parse(alumno.fecha);
+       // console.log("Fecha collection: " + fecha);
+      //  if (fecha > tsI &&  fecha < tsF){
+                res.status(200).send(alumno);
+            //agregar array 
+                (err)=>{
+
+                    res.status(500).send(err)
+                }
+       // }
+
+    });
+};
+
+
+let obtenerAsistencias = (req, res) =>
+{      
+
+    console.log("obtenerAsistencias");
+    Asistencia.find( function(err, alumno) 
+    { 
+
+        console.log("estoy dentro de la colección: ");
+        res.status(200).send(alumno);
+          (err)=>{
+                res.status(500).send(err)
+            }
+    });
+};
+
+
 module.exports = 
 {
     obtenerAlumnoPorCursoA,
     obtenerAlumnoPorFecha,
-    obtenerAlumnoPorEstado
-    
+    obtenerAlumnoPorEstado,
+    obtenerAsistenciasPorAlumnoYFecha,
+    obtenerAsistencias  
 };
