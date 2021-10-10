@@ -137,7 +137,7 @@ let crearNotificacionMasiva = async (req,res) =>
                                     leida: "N", 
                                     texto: req.body.texto,
                                     fecha: req.body.fecha,
-                                    alumno: result._id
+                                    alumno: result.nombre + " " + result.apellido
                                 });
                                 newContact.save().then
                                                         (

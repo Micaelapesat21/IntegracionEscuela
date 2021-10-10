@@ -10,11 +10,7 @@ var NotificacionSchema = new Schema({
     },
     leida: String,
     texto: String,
-    alumno:
-    { 
-        type: Schema.ObjectId,
-        ref: "escalumno"
-    }
+    alumno: String
 });
 
 NotificacionSchema.set('toObject', {
