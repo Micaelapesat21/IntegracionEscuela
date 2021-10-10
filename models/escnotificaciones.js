@@ -10,7 +10,8 @@ var NotificacionSchema = new Schema({
     },
     leida: String,
     texto: String,
-    alumno: String
+    alumno: String,
+    fecha: String
 });
 
 NotificacionSchema.set('toObject', {
