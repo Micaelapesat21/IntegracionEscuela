@@ -1,6 +1,8 @@
 var Notificacion = require('../models/escnotificaciones');
 var Curso = require('../models/esccurso');
 var Alumno = require('../models/escalumno');
+var Titular = require('../models/esctitular');
+var Usuario = require('../models/escusuarios');
 var bodyParser = require('body-parser');
 const { QueryCursor } = require('mongoose');
 
@@ -22,8 +24,9 @@ let obtenerNotificaciones = (req, res) =>
 let obtenerNotificacionesPorUsuario = (req, res) =>
 {      
     console.log("llegue a leer las notificaciones: " + req.params.usuario);
-    Notificacion.find({ "usuario": req.params.usuario }, function (err, notificacion) { 
-        res.status(200).send(notificacion.texto);
+    Notificacion.find({usuario:req.params.usuario}, function (err, notificacion) { 
+        console.log("encontre algo" + notificacion);
+        res.status(200).send(notificacion);
         (err)=>{
             res.status(500).send(err);
             console.log(err);
@@ -121,30 +124,38 @@ let crearNotificacionMasiva = async (req,res) =>
 
             for(i=0; i < alumnosCurso.length; i = i + 1){
                 Alumno.findOne({_id: alumnosCurso[i]},function(err,result){
-                    console.log("Titular:" + result.idTitular);
-                    var newContact = Notificacion({
-                        usuario: result.idTitular,
-                        leida: "N", 
-                        texto: req.body.texto,
-                        fecha: req.body.fecha,
-                        alumno: result._id
-                    });
-                    newContact.save().then
-                                            (
-                                                (newContact)=>
-                                                {console.log(newContact);
+                 
+                    Titular.findOne({_id: result.idTitular},function(err,result2){
+                        
+                        Usuario.findOne({usuario: result2.documento},function(err,result3){
+                                    console.log("alumno:" + result._id);
+                                    console.log("Titular:" + result2.documento);
+                                    console.log("Usuario:" + result3._id);
 
-                                                    res.status(200).send(newContact); 
-                                                },
-                                                (err)=>
-                                                { 
-                                                    res.status(500).send(err);
-                                                    console.log(err);
-                                                }
-                                            ) 
+                                var newContact = Notificacion({
+                                    usuario: result3._id,
+                                    leida: "N", 
+                                    texto: req.body.texto,
+                                    fecha: req.body.fecha,
+                                    alumno: result._id
+                                });
+                                newContact.save().then
+                                                        (
+                                                            (newContact)=>
+                                                            {console.log(newContact);
 
-                });
-                
+                                                                res.status(200).send(newContact); 
+                                                            },
+                                                            (err)=>
+                                                            { 
+                                                                res.status(500).send(err);
+                                                                console.log(err);
+                                                            }
+                                                        ) 
+
+                            });
+                        });
+                        });
             }
            
            
@@ -152,34 +163,7 @@ let crearNotificacionMasiva = async (req,res) =>
     
 
     return true;
-/*
-    for(j=0; j < titulares.length(); j = j + 1){
-        
-        //creo una notificación
-        var newContact = Notificacion({
-            usuario: titulares[j],
-            leida: "N", 
-            texto: req.body.texto,
-            alumno: ""
-        });
-                //la guardardo en la colección
-                newContact.save().
-                then
-                (
-                    (newContact)=>
-                    {console.log(newContact);
 
-                        res.status(200).send(newContact); 
-                    },
-                    (err)=>
-                    { 
-                        res.status(500).send(err);
-                        console.log(err);
-                    }
-                ) 
-    };
-*/
-    
 }
 
 /*

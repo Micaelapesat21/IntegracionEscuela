@@ -6,7 +6,7 @@ var NotificacionSchema = new Schema({
     usuario:
     { 
         type: Schema.ObjectId,
-        ref: "escusuario"
+        ref: "escusuarios"
     },
     leida: String,
     texto: String,
