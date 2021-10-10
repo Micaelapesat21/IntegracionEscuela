@@ -412,6 +412,12 @@ router.delete('/eliminarNotificacion/Escnotificacion',function(req,res)
 {
     escNotificacionController.eliminarNotificacion(req,res);
 });
+//EndPoint para enviar notificaciones Masivas
+router.post('/actualizarNotificacion/Escnotificacion/:id',function(req,res)
+{
+    escNotificacionController.actualizarNotificacion(req,res);
+});
+
 
 // Export API routes
 module.exports = router;

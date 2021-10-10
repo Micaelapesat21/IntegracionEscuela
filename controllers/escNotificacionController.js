@@ -24,7 +24,8 @@ let obtenerNotificaciones = (req, res) =>
 let obtenerNotificacionesPorUsuario = (req, res) =>
 {      
     console.log("llegue a leer las notificaciones: " + req.params.usuario);
-    Notificacion.find({usuario:req.params.usuario}, function (err, notificacion) { 
+    //obtiene las notificaciones no leidas del usuario, ojo
+    Notificacion.find({usuario:req.params.usuario, leida: "N"}, function (err, notificacion) { 
         console.log("encontre algo" + notificacion);
         res.status(200).send(notificacion);
         (err)=>{
@@ -214,24 +215,29 @@ let registerUserWithSocialCredentials = (req,res) =>
 */
 let actualizarNotificacion = (req,res) => 
 {
-    let id = {_id: res.req.body.idNotificacion};
+    //let id = {_id: res.req.body.idNotificacion};
+    console.log("notificacion a marcar: " +  req.params.id)
+    Notificacion.find({_id:req.params.id}, function (err, notificacion) { 
 
-    console.log("update",id);
+    //console.log("update",id);
 
     let params = { 
-        usuario: req.body.usuario,
-        leida: req.body.leida, 
-        texto: req.body.texto,
-        alumno: req.body.alumno
-};
+        usuario: notificacion.usuario,
+        leida: "S", 
+        texto: notificacion.texto,
+        alumno: notificacion.alumno,
+        fecha: notificacion.fecha
+    };
 
 for(let prop in params) if(!params[prop]) delete params[prop];
 
     Notificacion.findOneAndUpdate(
-            id,
+            {_id: req.params.id},
             {$set : params},
-            {new:true},function(err)
+            //{new:true},
+            function(err)
         {
+        console.log(req.params.id);
         console.log(params);
         console.log("Notificacion modificada");
         (err)=>
@@ -241,7 +247,9 @@ for(let prop in params) if(!params[prop]) delete params[prop];
             }
         });
 
-    res.status(200).send({estado:"Campos modificados"}); 
+        res.status(200).send({estado:"Campos modificados"}); 
+
+    });
 }
 
 let eliminarNotificacion = (req,res)=>
