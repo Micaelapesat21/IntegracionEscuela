@@ -83,11 +83,9 @@ let obtenerAsistenciasPorAlumnoYFecha = (req, res) =>
 
     Asistencia.find({$and:[{alumno_id: req.body.alumnoId}, {fecha:{$gte:req.body.fechaI}}, {fecha:{$lte:req.body.fechaF}}]}, function(err, alumno) 
     {
-        
-                res.status(200).send(alumno);
+             res.status(200).send(alumno);
             //agregar array 
                 (err)=>{
-
                     res.status(500).send(err);
                 }
     });

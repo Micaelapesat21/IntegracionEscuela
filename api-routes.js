@@ -393,7 +393,7 @@ router.get('/obtenerAlumnosPorCursoA', function(req, res)
 });
 
 //obtenemos las asistencias de un alumno en un rango de fechas particular
-router.get('/obtenerAsistenciasPorAlumnoYFecha', function(req, res)
+router.post('/obtenerAsistenciasPorAlumnoYFecha', function(req, res)
 {
     escAlumnoAsistenciaController.obtenerAsistenciasPorAlumnoYFecha(req,res);
 });

@@ -207,7 +207,7 @@ let eliminarAlumno = (req,res)=>
 
 let obtenerAlumnos = (req, res) =>
 {      
-    console.log("llegue a leer");
+    console.log("llegue a leer obtenerAlumnos");
     Alumno.find(function(err,listaAlumnos)
     {
         res.status(200).send(listaAlumnos);
@@ -220,7 +220,7 @@ let obtenerAlumnos = (req, res) =>
 
 let obtenerAlumnoPorTitular = (req, res) =>
 {      
-    console.log("llegue a leer");
+    console.log("llegue a leer obtenerAlumnoPorTitular");
     Titular.findOne( { _id: req.params.id }, function(err, docs) {
         var titularBuscado = docs.alumno;
         Alumno.find( { _id: titularBuscado }, function(err, docs) 
@@ -236,7 +236,7 @@ let obtenerAlumnoPorTitular = (req, res) =>
 
 let obtenerAlumnoPorUsuario = (req, res) =>
 {      
-    console.log("llegue a leer");
+    console.log("llegue a leer obtenerAlumnoPorUsuario");
     Usuario.findOne( { _id: req.params.id }, function(err, docs) {
         var docUsuario = docs.documento
 
