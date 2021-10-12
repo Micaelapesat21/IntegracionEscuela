@@ -10,6 +10,9 @@ let escUsuariosController = require('./controllers/escUsuariosController');
 let escCursoController = require('./controllers/escCursoController');
 let escAlumnoAsistenciaController = require('./controllers/escAlumnoAsistenciaController');
 let escNotificacionController = require('./controllers/escNotificacionController');
+let escAlumnoRetirosController = require('./controllers/escAlumnoRetirosController');
+let escAlumnoCertificadosController = require('./controllers/escAlumnoCertificadosController');
+
 
 // Set default API response
 router.get('/', function (req, res) 
@@ -441,6 +444,45 @@ router.delete('/eliminarNotificacion/Escnotificacion',function(req,res)
 router.patch('/actualizarNotificacion/Escnotificacion/:id',function(req,res)
 {
     escNotificacionController.actualizarNotificacion(req,res);
+});
+
+//ESCALUMNORETIROS
+//EndPoint para crear responsables de retiros de alumnos
+router.post('/crearRetiro/Escalumnoretiros',function(req,res)
+{
+    escAlumnoRetirosController.crearRetiro(req,res);
+});
+
+//EndPoint para obtener los responsables de retirar
+router.post('/obtenerRetiros',function(req,res)
+{
+    escAlumnoRetirosController.obtenerRetiros(req,res);
+});
+
+//EndPoint para obtener los esponsables para retirar a un alumno
+router.post('/obtenerRetirosPorAlumno',function(req,res)
+{
+    escAlumnoRetirosController.obtenerRetirosPorAlumno(req,res);
+});
+
+
+//ESCALUMNO CERTIFICADO
+//EndPoint para crear responsables de retiros de alumnos
+router.post('/crearCertificado/Escalumnocertificados',function(req,res)
+{
+    escAlumnoCertificadosController.crearCertificado(req,res);
+});
+
+//EndPoint para obtener los responsables de retirar
+router.post('/obtenerCertificados',function(req,res)
+{
+    escAlumnoCertificadosController.obtenerCertificados(req,res);
+});
+
+//EndPoint para obtener los esponsables para retirar a un alumno
+router.post('/obtenerCertificadosPorAlumno',function(req,res)
+{
+    escAlumnoCertificadosController.obtenerCertificadosPorAlumno(req,res);
 });
 
 
