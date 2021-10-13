@@ -38,9 +38,12 @@ let obtenerRetirosPorAlumno = (req, res) =>
 let crearRetiro = (req,res) =>
 {
     console.log("crearRetiro " );
+    console.log( "fecha: " + req.body.fecha);
+    console.log( "alumno_id: " + req.body.alumnoId);
+    console.log( "imagenSource: " + req.body.imgsource);
     var nuevoRetiro = Retiro({
         fecha: req.body.fecha,
-        alumno_id:req.body.alumno_id,
+        alumno_id:req.body.alumnoId,
         imagenSource: req.body.imgsource
     });
     nuevoRetiro.save().

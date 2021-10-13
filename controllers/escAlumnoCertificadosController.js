@@ -36,9 +36,12 @@ let obtenerCertificadosPorAlumno = (req, res) =>
 let crearCertificado = (req,res) =>
 {
     console.log("crearCertificado " );
+    console.log( "fecha: " + req.body.fecha);
+    console.log( "alumno_id: " + req.body.alumno);
+    console.log( "certificado: " + req.body.imgsource);
     var nuevoCertificado = Certificado({
         fecha: req.body.fecha,
-        alumno_id:req.body.alumno_id,
+        alumno_id:req.body.alumno,
         certificado: req.body.imgsource
     });
     nuevoCertificado.save().
