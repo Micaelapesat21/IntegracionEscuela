@@ -460,7 +460,7 @@ router.get('/obtenerRetiros',function(req,res)
 });
 
 //EndPoint para obtener los esponsables para retirar a un alumno
-router.get('/obtenerRetirosPorAlumno',function(req,res)
+router.get('/obtenerRetirosPorAlumno/:alumnoId',function(req,res)
 {
     escAlumnoRetirosController.obtenerRetirosPorAlumno(req,res);
 });
@@ -480,7 +480,7 @@ router.get('/obtenerCertificados',function(req,res)
 });
 
 //EndPoint para obtener los esponsables para retirar a un alumno
-router.get('/obtenerCertificadosPorAlumno',function(req,res)
+router.get('/obtenerCertificadosPorAlumno/:alumnoId',function(req,res)
 {
     escAlumnoCertificadosController.obtenerCertificadosPorAlumno(req,res);
 });

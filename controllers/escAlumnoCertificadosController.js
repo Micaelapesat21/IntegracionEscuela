@@ -19,10 +19,10 @@ let obtenerCertificadosPorAlumno = (req, res) =>
 {      
 
     console.log("oobtenerCertificadosPorAlumno " );
-    console.log("Retiros por alumno: " + req.body);
-    console.log("alumnoId:" + req.body.alumnoId);
+    console.log("Retiros por alumno: " + req.params);
+    console.log("alumnoId:" + req.params.alumnoId);
         
-    Certificado.find({alumno_id: req.body.alumnoId}, function(err, result) 
+    Certificado.find({alumno_id: req.params.alumnoId}, function(err, result) 
     {
              res.status(200).send(result);
             //agregar array 

@@ -21,10 +21,10 @@ let obtenerRetirosPorAlumno = (req, res) =>
 {      
 
     console.log("obtenerRetirosPorAlumno " );
-    console.log("Retiros por alumno: " + req.body);
-    console.log("alumnoId:" + req.body.alumnoId);
+    console.log("Retiros por alumno: " + req.params);
+    console.log("alumnoId:" + req.params.alumnoId);
         
-    Retiro.find({alumno_id: req.body.alumnoId}, function(err, result) 
+    Retiro.find({alumno_id: req.params.alumnoId}, function(err, result) 
     {
              res.status(200).send(result);
             //agregar array 
