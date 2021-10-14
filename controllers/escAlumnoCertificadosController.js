@@ -37,11 +37,11 @@ let crearCertificado = (req,res) =>
 {
     console.log("crearCertificado " );
     console.log( "fecha: " + req.body.fecha);
-    console.log( "alumno_id: " + req.body.alumno);
+    console.log( "alumno_id: " + req.body.alumnoId);
     console.log( "certificado: " + req.body.imgsource);
     var nuevoCertificado = Certificado({
         fecha: req.body.fecha,
-        alumno_id:req.body.alumno,
+        alumno_id:req.body.alumnoId,
         certificado: req.body.imgsource
     });
     nuevoCertificado.save().
