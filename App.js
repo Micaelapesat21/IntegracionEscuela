@@ -36,9 +36,13 @@ var apiRoutes = require("./api-routes")
     // Todo lo que recibe la app se tratara como json
     app.use(bodyParser.urlencoded(
     {
+      limit: '50mb',
+      parameterLimit: 100000,
         extended: true
     }));
-    app.use(bodyParser.json());
+    app.use(bodyParser.json({
+      limit: '50mb'
+    }));
 
 // Setup server port
 var port = process.env.PORT || 8080;

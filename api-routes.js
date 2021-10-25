@@ -14,6 +14,73 @@ let escAlumnoRetirosController = require('./controllers/escAlumnoRetirosControll
 let escAlumnoCertificadosController = require('./controllers/escAlumnoCertificadosController');
 
 
+
+
+// para las imagenes
+const AWS = require('aws-sdk');
+const multerS3 = require( 'multer-s3' );
+const multerrr = require('multer');
+//const uploadCertificados = multerrr({dest: 'Certificados/'})
+
+// SET STORAGE RETIROS
+var storage = multerrr.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null,  'Certificados/')
+    },
+    filename: function (req, file, cb) {
+        cb(null, path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
+    
+    }
+  })
+const uploadCertificados = multerrr({storage: storage})
+const uploadRetiros = multerrr({
+    dest: 'Retiros/',
+})
+
+const path = require( 'path' );
+const url = require('url');
+const fs= require('fs');
+
+const s3 = new AWS.S3({
+    accessKeyId: "AKIAYYJPLQ2CRBWYJPGY",
+    secretAccessKey: "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", 
+    region: 'sa-east-1'
+});
+
+const profileImgUpload = multerrr({
+    storage: multerS3({
+     s3: s3,
+     bucket: 'regiapp-s3-data',
+     //acl: 'public-read',
+     key: function (req, file, cb) {
+        console.log(file);
+      cb(null, 'Retiros/' + path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
+     }
+    }),
+    limits:{ fileSize: 20000000 }, // In bytes: 2000000 bytes = 2 MB
+    fileFilter: function( req, file, cb ){
+     checkFileType( file, cb );
+    }
+   }).single('profileImage');
+
+function checkFileType( file, cb ){
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    const extname = filetypes.test( path.extname( file.originalname ).toLowerCase());
+    console.log("file.originalname " + file.originalname)
+    // Check mime
+    console.log("extname " + extname);
+    const mimetype = filetypes.test( file.mimetype );
+    console.log("mimetype " + file.mimetype);
+    if( mimetype && extname ){
+     return cb( null, true );
+    } else {
+     cb( 'Error: Images Only!' );
+    }
+};
+
+
 // Set default API response
 router.get('/', function (req, res) 
 {
@@ -483,6 +550,64 @@ router.get('/obtenerCertificados',function(req,res)
 router.get('/obtenerCertificadosPorAlumno/:alumnoId',function(req,res)
 {
     escAlumnoCertificadosController.obtenerCertificadosPorAlumno(req,res);
+});
+
+//EndPoint para IMAGENES
+router.post('/cargaCertificado', uploadCertificados.single("Certificado"), (req,res) => 
+{
+
+    console.log("nombre " + req.file.filename);
+    console.log("nombre2 " + req.file.fieldname);
+    console.log("nombre2 " + req.file.path);
+
+   // var encode_image = img.toString('base64');
+     // Define a JSONobject for the image attributes for saving to database
+  
+  //  var finalImg = {
+  //    contentType: req.file.mimetype,
+ //     image:  new Buffer(encode_image, 'base64')
+  //  };
+
+   console.log(finalImg);
+        
+                res.status(200)
+
+});
+
+// Endpoint imagenes de RETIROS
+router.post( '/profile-img-upload', function(req,res) {   
+    profileImgUpload( req, res, ( error ) => {
+    if( error ){
+     console.log( 'errors', error );
+     res.json( { error: error } );
+    } else {
+     // If File not found
+     if( req.file === undefined ){
+      console.log( 'Error: No File Selected!' );
+      res.json( 'Error: No File Selected' );
+     } else {
+      // If Success
+      const imageName = req.file.key;
+      const imageLocation = req.file.location;// Save the file name into database into profile model
+      console.log("Successsssssss");
+      console.log("imageName: " +  imageName);
+      console.log("imageLocation: " +  imageLocation);
+
+      /*
+      res.json({
+       image: imageName,
+       location: imageLocation
+      });
+        */
+      const datos = {
+        image: imageName,
+        location: imageLocation
+      }
+      res.status(200).send(datos);
+     
+     }
+    }
+   });
 });
 
 
