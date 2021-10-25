@@ -663,7 +663,7 @@ router.post('/obtenerImagenS3',function(req,res)
     var parametrosGetObject = {
         Bucket: 'regiapp-s3-data',
         //Key: 'tarjeta arduino y lector rfid.JPG',
-        Key: req.nombreImagen
+        Key: req.body.nombreImagen
         //Etag: 'a3a61aba8edffee39079bf7d71581617'
     }
     s3.getObject(parametrosGetObject, (err,data)=> {
