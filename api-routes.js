@@ -657,6 +657,25 @@ router.post( '/profile-img-upload-certificados', function(req,res) {
    });
 });
 
+router.get('/obtenerImagenS3',function(req,res)
+{
+    console.log("req.nombreImagen" + req.body.nombreImagen)
+    var parametrosGetObject = {
+        Bucket: 'regiapp-s3-data',
+        //Key: 'tarjeta arduino y lector rfid.JPG',
+        Key: req.nombreImagen
+        //Etag: 'a3a61aba8edffee39079bf7d71581617'
+    }
+    s3.getObject(parametrosGetObject, (err,data)=> {
+        if (err) throw err;
+        console.log(data);
+        //envio el buffer
+        res.status(200).send(data);
+        //el data.Body es el que tiene el buffer
+    });
+});
+
+
 
 
 // Export API routes

@@ -5,6 +5,7 @@ var AlumnoCertificadosSchema = new Schema({
     fecha: String,
     alumno_id: String,
     certificado: String,
+    nombreImagen: String
 });
 
 

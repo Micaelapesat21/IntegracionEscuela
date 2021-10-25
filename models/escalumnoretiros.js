@@ -5,6 +5,7 @@ var AlumnoRetirosSchema = new Schema({
     fecha: String,
     alumno_id: String,
     imagenSource: String,
+    nombreImagen: String
 });
 
 

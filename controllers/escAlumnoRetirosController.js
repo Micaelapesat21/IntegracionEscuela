@@ -41,10 +41,13 @@ let crearRetiro = (req,res) =>
     console.log( "fecha: " + req.body.fecha);
     console.log( "alumno_id: " + req.body.alumnoId);
     console.log( "imagenSource: " + req.body.imgsource);
+    console.log( "certificado: " + req.body.imageName);
+
     var nuevoRetiro = Retiro({
         fecha: req.body.fecha,
         alumno_id:req.body.alumnoId,
-        imagenSource: req.body.imgsource
+        imagenSource: req.body.imgsource,
+        nombreImagen: req.body.imageName
     });
     nuevoRetiro.save().
     then
