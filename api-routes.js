@@ -63,6 +63,23 @@ const profileImgUpload = multerrr({
     }
    }).single('profileImage');
 
+   const profileImgUploadCertificados = multerrr({
+    storage: multerS3({
+     s3: s3,
+     bucket: 'regiapp-s3-data',
+     //acl: 'public-read',
+     key: function (req, file, cb) {
+        console.log(file);
+      cb(null, 'Certificados/' + path.basename( file.originalname, path.extname( file.originalname ) ) + '-' + Date.now() + path.extname( file.originalname ) )
+     }
+    }),
+    limits:{ fileSize: 20000000 }, // In bytes: 2000000 bytes = 2 MB
+    fileFilter: function( req, file, cb ){
+     checkFileType( file, cb );
+    }
+   }).single('profileImageCertificado');
+
+      
 function checkFileType( file, cb ){
     // Allowed ext
     const filetypes = /jpeg|jpg|png|gif/;
@@ -609,6 +626,37 @@ router.post( '/profile-img-upload', function(req,res) {
     }
    });
 });
+
+// Endpoint imagenes de Certificados
+router.post( '/profile-img-upload-certificados', function(req,res) {   
+    profileImgUploadCertificados( req, res, ( error ) => {
+    if( error ){
+     console.log( 'errors', error );
+     res.json( { error: error } );
+    } else {
+     // If File not found
+     if( req.file === undefined ){
+      console.log( 'Error: No File Selected!' );
+      res.json( 'Error: No File Selected' );
+     } else {
+      // If Success
+      const imageName = req.file.key;
+      const imageLocation = req.file.location;// Save the file name into database into profile model
+      console.log("Successsssssss");
+      console.log("imageName: " +  imageName);
+      console.log("imageLocation: " +  imageLocation);
+
+      const datos = {
+        image: imageName,
+        location: imageLocation
+      }
+      res.status(200).send(datos);
+     
+     }
+    }
+   });
+});
+
 
 
 // Export API routes
