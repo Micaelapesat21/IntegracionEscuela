@@ -657,7 +657,7 @@ router.post( '/profile-img-upload-certificados', function(req,res) {
    });
 });
 
-router.get('/obtenerImagenS3',function(req,res)
+router.post('/obtenerImagenS3',function(req,res)
 {
     console.log("req.nombreImagen" + req.body.nombreImagen)
     var parametrosGetObject = {
