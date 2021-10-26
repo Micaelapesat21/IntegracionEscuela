@@ -10,6 +10,7 @@ let escUsuariosController = require('./controllers/escUsuariosController');
 let escCursoController = require('./controllers/escCursoController');
 let escAlumnoAsistenciaController = require('./controllers/escAlumnoAsistenciaController');
 let escNotificacionController = require('./controllers/escNotificacionController');
+let escMensajesController = require('./controllers/escMensajesController');
 let escAlumnoRetirosController = require('./controllers/escAlumnoRetirosController');
 let escAlumnoCertificadosController = require('./controllers/escAlumnoCertificadosController');
 
@@ -529,6 +530,39 @@ router.patch('/actualizarNotificacion/Escnotificacion/:id',function(req,res)
 {
     escNotificacionController.actualizarNotificacion(req,res);
 });
+
+
+///ESCMENSAJES
+
+//EndPoint para obtener las notificacion por Usuario
+router.get('/obtenerMensajePorUsuario/:usuario', function(req, res)
+{
+    console.log("leer obtenerMensajePorUsuario");
+    escMensajesController.obtenerMensajePorUsuario(req,res);
+});
+
+//EndPoint para obtener las notificacion
+router.get('/obtenerMensajes',function(req,res)
+{
+    console.log("api-router-obtenerMensajes");
+    escMensajesController.obtenerMensajes(req,res);
+});
+
+//EndPoint para crear notificacion
+router.post('/crearMensaje/Escmensaje',function(req,res)
+{
+    console.log(req.body);
+    escMensajesController.crearMensaje(req,res);
+});
+
+///FIN ESCMENSAJES
+
+//EndPoint para eliminar Curso en la BD
+router.delete('/eliminarNotificacion/Escnotificacion',function(req,res)
+{
+    escNotificacionController.eliminarNotificacion(req,res);
+});
+
 
 //ESCALUMNORETIROS
 //EndPoint para crear responsables de retiros de alumnos
