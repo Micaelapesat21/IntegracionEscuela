@@ -1,4 +1,4 @@
-var Mensaje = require('../models/escnotificaciones');
+var Mensaje = require('../models/escmensaje');
 var Curso = require('../models/esccurso');
 var Alumno = require('../models/escalumno');
 var Titular = require('../models/esctitular');
