@@ -8,6 +8,7 @@ var MensajeSchema = new Schema({
         type: Schema.ObjectId,
         ref: "escusuarios"
     },
+    nombre: String,
     leida: String,
     texto: String,
     alumno: String,

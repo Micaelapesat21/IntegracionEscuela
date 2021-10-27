@@ -74,27 +74,37 @@ let crearMensaje = (req,res) =>
 {
     console.log("Crear Mensaje");
     console.log(req.body);
-    var newContact = Mensaje({
-        usuario: req.body.usuario,
-        leida: req.body.leida, 
-        texto: req.body.texto,
-        alumno: req.body.alumno,
-        fecha: req.body.fecha
-    });
-    newContact.save().
-    then
-    (
-        (newContact)=>
-        {console.log(newContact);
 
-            res.status(200).send(newContact); 
-        },
-        (err)=>
-        { 
-            res.status(500).send(err);
-            console.log(err);
-        }
-    ) 
+    Usuario.findById(req.body.usuario, function(err, result) {
+        Titular.findOne({documento: result.documento}, function(err,result2) {
+            console.log("encontre el titular: " + result2)
+                    var newContact = Mensaje({
+                        usuario: req.body.usuario,
+                        leida: req.body.leida, 
+                        texto: req.body.texto,
+                        alumno: req.body.alumno,
+                        fecha: req.body.fecha,
+                        nombre: result2.nombre + " " + result2.apellido
+                    });
+
+                    newContact.save().
+                    then
+                    (
+                        (newContact)=>
+                        {console.log(newContact);
+                
+                            res.status(200).send(newContact); 
+                        },
+                        (err)=>
+                        { 
+                            res.status(500).send(err);
+                            console.log(err);
+                        }
+                    )
+        });
+
+    });
+     
 }
 
 function findUser(userId,res){
