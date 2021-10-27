@@ -10,7 +10,9 @@ var corsOptions = {
   origin: true,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
-app.use(cors(corsOptions));
+//app.use(cors(corsOptions));
+app.use(cors());
+
 
 //conectar BD
 var urlBD='mongodb+srv://regiapp:regiapp@cluster0.z3gyq.mongodb.net/dbregiapp?retryWrites=true&w=majority';

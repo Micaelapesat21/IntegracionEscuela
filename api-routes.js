@@ -367,15 +367,19 @@ router.post('/actualizarServicio/Escservicio',function(req,res)
 //EndPoint para leer toda la base de Usuarios
 router.get('/obtenerUsuarios',function(req,res)
 {
-    console.log("leer");
     escUsuariosController.obtenerUsuarios(req,res);
 });
 
 //EndPoint para obtener el usuario por mail
 router.get('/obtenerUsuario',function(req,res)
 {
-    console.log("leer");
     escUsuariosController.obtenerUsuario(req,res);
+});
+
+//EndPoint para obtener el nombre del usuario
+router.get('/obtenerNombreUsuario/:usuario',function(req,res)
+{
+    escUsuariosController.obtenerNombreUsuario(req,res);
 });
 
 
@@ -562,7 +566,6 @@ router.delete('/eliminarNotificacion/Escnotificacion',function(req,res)
 {
     escNotificacionController.eliminarNotificacion(req,res);
 });
-
 
 //ESCALUMNORETIROS
 //EndPoint para crear responsables de retiros de alumnos

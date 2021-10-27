@@ -10,15 +10,13 @@ const { QueryCursor } = require('mongoose');
 let obtenerMensajes = (req, res) =>
 {      
     console.log("obtenerMensajes");
-    Mensaje.find(function(err,listaMensajes)
-    {
-        console.log("collecion");
-        res.status(200).send(listaMensajes);
+    Mensaje.find(function(err,mensajes){
+        res.status(200).send(mensajes);
         (err)=>{
             res.status(500).send(err);
             console.log(err);
         }
-    });  
+    });
 };
 
 let obtenerMensajePorUsuario = (req, res) =>

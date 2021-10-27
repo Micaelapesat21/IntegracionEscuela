@@ -1,4 +1,6 @@
 var Usuario = require('../models/escusuarios');
+var Titular = require('../models/esctitular');
+
 var bodyParser = require('body-parser');
 
 
@@ -27,6 +29,27 @@ let obtenerUsuario = (req, res) =>
         }
     });
 };
+
+let obtenerNombreUsuario = (req, res) =>
+{      
+    console.log("obtenerNombreUsuario: " + req.params.usuario);
+    Usuario.findOne({ _id: req.params.usuario }, function (err, result) { 
+        console.log("result.dni " + result.documento)
+       
+        Titular.findOne({documento: result.documento}, function(err, titular) {
+        console.log("nombreTitular " + titular)
+            res.status(200).send(titular);
+        
+            (err)=>{
+                res.status(500).send(err);
+                console.log(err);
+            }
+
+        })
+        
+    });
+};
+
 
 let obtenerUsuario2 = (req, res) =>
 {      
@@ -233,5 +256,6 @@ module.exports =
     obtenerUsuarios,
     obtenerUsuario,
     obtenerUsuario2,
-    loginUsuarios
+    loginUsuarios,
+    obtenerNombreUsuario
 };
