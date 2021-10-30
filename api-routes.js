@@ -261,10 +261,18 @@ router.get('/obtenerCuotas',function(req,res)
 });
 
 
+//EndPoint para leer toda la base de cuota por usuario
+router.post('/obtenerCuotasDeUsuario',function(req,res)
+{
+    console.log("obtenerCuotasDeUsuario");
+    escCuotaController.obtenerCuotasDeUsuario(req,res);
+});
+
+
 //EndPoint para insertar cuota en la BD
 router.post('/crearCuota/Esccuota',function(req,res)
 {   
-    escCuotaController.crearCuota(req,res);
+    escCuotaController.crearCuota1(req,res);
 });
 
 //EndPoint para eliminar cuota en la BD
@@ -283,6 +291,12 @@ router.post('/actualizarCuota/Esccuota',function(req,res)
 router.post('/realizarPago',function(req,res)
 {
     escCuotaController.realizarPago(req,res);
+});
+
+//Endpoint para pago de cuotas
+router.post('/pagarCuota',function(req,res)
+{
+    escCuotaController.pagarCuota(req,res);
 });
 
 //EndPoint para obtener facturas pagas

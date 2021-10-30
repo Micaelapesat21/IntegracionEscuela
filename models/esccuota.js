@@ -14,8 +14,8 @@ var CuotaSchema = new Schema({
     numeroTransaccion: Number,
     titular: String,
     numeroFactura: Number,
-    fechaEmision: Date,
-    fechaVencimiento: Date,
+    fechaEmision: String,
+    fechaVencimiento: String,
     totalCuota: Number,
     quienPaga: String,
     formaDePago: String,
@@ -41,6 +41,11 @@ var CuotaSchema = new Schema({
     { 
         type: Schema.ObjectId,
         ref: "esctitular"
+    },
+    alumno: 
+    { 
+        type: Schema.ObjectId,
+        ref: "escalumno"
     }
 });
 

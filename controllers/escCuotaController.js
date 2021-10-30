@@ -23,7 +23,7 @@ function formattedDate(d = new Date) {
     return `${day}/${month}/${year}`;
   }
 
-
+{/* 
 let crearCuota = (req, res) =>
 {
     console.log("Crear cuota");
@@ -251,6 +251,7 @@ let crearCuota = (req, res) =>
 
 
 }
+*/}
 let realizarPago = (req, res) => {
     let id = { numeroFactura: req.body.numeroFactura };
 
@@ -302,7 +303,7 @@ let realizarPago = (req, res) => {
 
 let crearCuota1 = (req,res) =>
 {
-    console.log("Crear cuota");
+    console.log("Crear cuota1");
 
     let id = {_id: res.req.body.idAlumno};
 
@@ -323,9 +324,10 @@ let crearCuota1 = (req,res) =>
         let dServicios = [ ];
 
         console.log(dAlumno);
+        console.log("idServicio: " + idServicio);
 
 
-        if (idServicio > 0) {
+        if (idServicio.length > 0) {
             console.log("TRUEEEEEE")
             for(let i = 0; i < idServicio.length; i++) {
                 Servicio.findOne( { _id: idServicio[i] }, function(err, docs) 
@@ -369,7 +371,7 @@ let crearCuota1 = (req,res) =>
                             } else {
                                 venc = dd+'/'+ mm+1 +'/'+yyyy;
                             }
-                            
+                            console.log("Today" + today);
                             console.log(dTurnoAFacturar);
                             dTotalCuota = dTotalServicios + dTurnoAFacturar.precioTurno
 
@@ -379,13 +381,13 @@ let crearCuota1 = (req,res) =>
                                 mes:req.body.mes,
                                 anio: req.body.anio,
                                 pagada: false,
-                                alumno: dAlumno,
+                                alumno: id,
                                 titular: dTitular,
                                 numeroFactura: (Math.random() * 10000000000000000000),
                                 facturada: true,
                                 pagada: false,
                                 fechaEmision: today,
-                                fechaVencimiento: today + 30,
+                                fechaVencimiento: venc,
                                 turno: dTurnoAFacturar.nombreTurno,
                                 valorTurno: dTurnoAFacturar.precioTurno,
                                 valorServicios: dTotalServicios,
@@ -451,9 +453,10 @@ let crearCuota1 = (req,res) =>
                             today = dd+'/'+mm+'/'+yyyy;
 
                             if (mm==12) {
-                                venc = dd+'/'+ 1 +'/'+yyyy;
+                                venc = dd+'/'+ 01 +'/'+yyyy;
                             } else {
-                                venc = dd+'/'+ mm+1 +'/'+yyyy;
+                                mm = mm + 1;
+                                venc = dd+'/'+ mm +'/'+yyyy;
                             }
                             
                             console.log(dTurnoAFacturar);
@@ -469,13 +472,14 @@ let crearCuota1 = (req,res) =>
                                 facturada: true,
                                 pagada: false,
                                 fechaEmision: today,
-                                fechaVencimiento: today + 30,
+                                fechaVencimiento: venc,
                                 turno: dTurnoAFacturar.nombreTurno,
                                 valorTurno: dTurnoAFacturar.precioTurno,
                                 valorServicios: 0,
                                 totalCuota: dTotalCuota,
                                 quienPaga: "",
                                 numeroTransaccion: "",
+                                alumno:id
                             });
         
             
@@ -569,8 +573,7 @@ let eliminarCuota = (req,res)=>
 
 let obtenerCuotas = (req, res) =>
 {      
-    console.log("llegue a leer");
-
+    
     dataLogin = {
         "nombre_usuario": "escuelab.bankame",
         "clave": "Escuelab1234"
@@ -709,15 +712,62 @@ let obtenerPago = (req, res) =>
         path: 'datosFacturacion',
         model: 'esctitular'
     });
+};
+
+let obtenerCuotasDeUsuario = (req, res) =>
+{
+    console.log("obtenerCuotasDeUsuario");
+    console.log("alumno: " + req.body.alumnoId);
+
+    Cuota.find({ alumno: req.body.alumnoId } , function(err,listaCuotas)
+    {
+        console.log("encontre algo" + listaCuotas);
+        res.status(200).send(listaCuotas);
+        (err)=>{
+            res.status(500).send(err);
+            console.log(err);
+        }
+    })
+}
+
+let pagarCuota = (req,res) => 
+{
+    let id = {_id: req.body.id};
+    let params = { 
+        pagada:true,
+    };
+
+console.log("id: " + req.body.id)
+
+for(let prop in params) if(!params[prop]) delete params[prop];
+
+    Cuota.findOneAndUpdate(
+            id,
+            {$set : params},
+            {new:true}, function(err,result)
+       
+            {
+        console.log("Cuota modificad: " + result);
+        (err)=>
+            { 
+                res.status(500).send(err);
+                console.log(err);
+            }
+        });
+
+    res.status(200).send({estado:"Campos modificados"}); 
 }
 
 
 module.exports = 
 {
-    crearCuota,
+    //crearCuota,
+    crearCuota1,
     eliminarCuota,
     actualizarCuota,
     obtenerCuotas,
+    obtenerCuotasDeUsuario,
+    pagarCuota,
     realizarPago,
     obtenerPago
 };

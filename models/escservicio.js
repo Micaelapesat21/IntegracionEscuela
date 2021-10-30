@@ -3,7 +3,6 @@ var Schema = mongoose.Schema;
 
 
 const servicioSchema = new Schema({
-    
         id: String,
         nombreCategoriaServicio: String,
         nombreServicio: String,
