@@ -81,8 +81,10 @@ let crearNotificacion = (req,res) =>
         usuario: req.body.usuario,
         leida: req.body.leida, 
         texto: req.body.texto,
-        alumno: req.body.alumno
+        alumno: req.body.alumno,
+        fecha: req.body.fecha
     });
+    
     newContact.save().
     then
     (

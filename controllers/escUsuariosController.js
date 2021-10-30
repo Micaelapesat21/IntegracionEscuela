@@ -195,25 +195,23 @@ let registerUserWithSocialCredentials = (req,res) =>
 
 let actualizarUsuarios = (req,res) => 
 {
-    let email = {_email: res.req.body.emailUsuarios};
-
-    console.log("update",email);
-
+    let id = {_id: req.body.userId};
     let params = { 
-        email: req.body.email,
-        password:req.body.password,
-        
-};
+        password:req.body.pass,
+    };
+
+console.log("id: " + req.body.userId)
+console.log("req.body.password: " + req.body.pass)
 
 for(let prop in params) if(!params[prop]) delete params[prop];
 
-
-        Usuario.findOneAndUpdate(
-            email,
+    Usuario.findOneAndUpdate(
+            id,
             {$set : params},
-            {new:true},function(err)
-        {
-        console.log("Nombre modificado");
+            {new:true}, function(err,result)
+       
+            {
+        console.log("Usuario modificado: " + result);
         (err)=>
             { 
                 res.status(500).send(err);

@@ -10,7 +10,8 @@ const { QueryCursor } = require('mongoose');
 let obtenerMensajes = (req, res) =>
 {      
     console.log("obtenerMensajes");
-    Mensaje.find(function(err,mensajes){
+    Mensaje.find({leida: "N"},function(err,mensajes){
+        console.log("Mensajes del obtener : " + JSON.stringify(mensajes));
         res.status(200).send(mensajes);
         (err)=>{
             res.status(500).send(err);
@@ -179,7 +180,7 @@ let crearNotificacionMasiva = async (req,res) =>
 let actualizarMensaje = (req,res) => 
 {
     //let id = {_id: res.req.body.idNotificacion};
-    console.log("notificacion a marcar: " +  req.params.id)
+    console.log("mensaje a marcar: " +  req.params.id)
     Mensaje.find({_id:req.params.id}, function (err, mensaje) { 
 
     //console.log("update",id);

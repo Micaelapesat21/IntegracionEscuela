@@ -13,7 +13,8 @@ let escNotificacionController = require('./controllers/escNotificacionController
 let escMensajesController = require('./controllers/escMensajesController');
 let escAlumnoRetirosController = require('./controllers/escAlumnoRetirosController');
 let escAlumnoCertificadosController = require('./controllers/escAlumnoCertificadosController');
-
+let escTarjetaController = require('./controllers/escTarjetaController');
+let escTipoController = require('./controllers/escTipoController');
 
 
 
@@ -555,8 +556,14 @@ router.get('/obtenerMensajes',function(req,res)
 //EndPoint para crear notificacion
 router.post('/crearMensaje/Escmensaje',function(req,res)
 {
-    console.log(req.body);
+    console.log("crear mensahe el body es: " + req.body);
     escMensajesController.crearMensaje(req,res);
+});
+
+//EndPoint para actualizar un Mensaje y marcarlo como Leido
+router.post('/actualizarMensaje/Escmensaje/:id',function(req,res)
+{
+    escMensajesController.actualizarMensaje(req,res);
 });
 
 ///FIN ESCMENSAJES
@@ -712,8 +719,23 @@ router.post('/obtenerImagenS3',function(req,res)
     });
 });
 
+//END POINT TARJETAS
+//EndPoint para crear una tarjeta
+router.post('/crearTarjeta/Esctarjeta',function(req,res)
+{
+    escTarjetaController.crearTarjeta(req,res);
+});
+//EndPoint para obtener las tarjetas
+router.get('/obtenerTarjetas',function(req,res)
+{
+    escTarjetaController.obtenerTarjetas(req,res);
+});
 
-
+//EndPoint para obtener las tarjetas de un usuario
+router.get('/obtenerTarjetaPorIdUsuario/:id',function(req,res)
+{
+    escTarjetaController.obtenerTarjetaPorIdUsuario(req,res);
+});
 
 // Export API routes
 module.exports = router;
