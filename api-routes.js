@@ -103,6 +103,7 @@ function checkFileType( file, cb ){
 // Set default API response
 router.get('/', function (req, res) 
 {
+    console.log("estoy aca?")
     res.json(
     {
        status: 'API Its Working',
@@ -116,6 +117,7 @@ router.post('/cargarFactura',function(req,res)
     console.log("leer");
     escCuotaController.crearFacturaBanco(req,res);
 })
+
 
 //ESCTURNO
 
@@ -260,6 +262,12 @@ router.get('/obtenerCuotas',function(req,res)
     escCuotaController.obtenerCuotas(req,res);
 });
 
+//EndPoint para leer toda los pagos de las cuotas
+router.get('/obtenerPagos',function(req,res)
+{
+    console.log("leer");
+    escCuotaController.obtenerPagos(req,res);
+});
 
 //EndPoint para leer toda la base de cuota por usuario
 router.post('/obtenerCuotasDeUsuario',function(req,res)
@@ -293,7 +301,7 @@ router.post('/realizarPago',function(req,res)
     escCuotaController.realizarPago(req,res);
 });
 
-//Endpoint para pago de cuotas
+//Endpoint para pago de cutas
 router.post('/pagarCuota',function(req,res)
 {
     escCuotaController.pagarCuota(req,res);

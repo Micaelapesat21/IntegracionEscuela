@@ -18,7 +18,7 @@ let crearAlumno = (req,res) =>
         { 
 
             console.log("Crear alumno");
-            console.log(req.body);
+       
             var nuevoAlumno = Alumno({
                 nombre:req.body.nombre,
                 apellido: req.body.apellido,
@@ -39,28 +39,27 @@ let crearAlumno = (req,res) =>
                 gimnasio: req.body.gimnasio
             });
 
-            console.log(nuevoAlumno);
             nuevoAlumno.save().
             then
             (
                 (nuevoAlumno)=>
                 {` `
-                    console.log("Nuevo alumno", nuevoAlumno);
+                  
                     Titular.findOneAndUpdate({_id: req.body.idTitular },{$push:{alumno:nuevoAlumno._id}},{ new: true },function(err,results) {
                         if(err){
                             console.log("Error al crear alumno en push Alumno a Titular");
                             res.status(500).send(err);
-                            console.log(err);
+                        
+                            
                         }
                         else{
-                            console.log(req.body.idTitular);        
-                            console.log("estoy puscheando el alumno al curso");
-                            console.log(req.body.curso);
+                           
+                            
                             Curso.findOneAndUpdate({_id: req.body.curso},{$push:{alumnos:nuevoAlumno._id}},{ new: true },function(err,results) {
                                 if(err){
                                     console.log("Error al crear alumno en push Alumno a curso");
                                     res.status(500).send(err);
-                                    console.log(err);
+                                   
                                 }
                             });
 
@@ -79,22 +78,19 @@ let crearAlumno = (req,res) =>
                                 "contactoEmergencia": "XXX"
                             };
 
-                            console.log(dataGimnasio);
 
                             axios({
                                 method: 'post',
                                 url: 'https://peaceful-caverns-01556.herokuapp.com/api/alumnos/crear',
                                 data: dataGimnasio
                               }).then((response) => {
-                                console.log(response);
-                                console.log("Alumno creado");
-                                console.log("Titular encontrado", results); 
+                               
                                 res.status(200).send(nuevoAlumno);
                               }, (error) => {
-                                console.log(error);
+                            
                                 console.log("No pudo crear el alumno");  
                                 res.status(500).send(err);
-                                console.log(err);
+                      
                               });
                             } else {
                                 console.log("No me doy de alta");
@@ -110,7 +106,7 @@ let crearAlumno = (req,res) =>
                 { 
                     console.log("No pudo crear el alumno");  
                     res.status(500).send(err);
-                    console.log(err);
+                
                 }
             )
         });
@@ -123,7 +119,6 @@ let actualizarAlumno = (req,res) =>
 {
     let id = {_id: res.req.body.idAlumno};
 
-    console.log("update",id);
 
     let params = { 
         nombre:req.body.nombre,
@@ -151,7 +146,7 @@ for(let prop in params) if(!params[prop]) delete params[prop];
             {$set : params},
             {new:true},function(err)
         {
-        console.log(params);
+  
         console.log("Alumno modificado");
         (err)=>
             { 
@@ -165,17 +160,18 @@ for(let prop in params) if(!params[prop]) delete params[prop];
 
 let eliminarAlumno = (req,res)=>
 {
-    console.log(res.req.body.id)
+   
     if (res.req.body.id != null) {
         let id = {_id: res.req.body.id};
         Alumno.deleteOne(id, function(err)
         {
-            console.log(id);
+            
             res.status(200).send({estado:"Alumno eliminado"}); //devuelvo resultado  
             (err)=>
             { 
                 res.status(500).send(err);
-                console.log(err);
+                
+                
             }      
         });
 
@@ -185,7 +181,8 @@ let eliminarAlumno = (req,res)=>
             if(err){
                 console.log("Error al eliminar el curso");
                 res.status(500).send(err);
-                console.log(err);
+             
+                
             }
         });
 
@@ -195,7 +192,7 @@ let eliminarAlumno = (req,res)=>
             if(err){
                 console.log("Error al eliminar del titular");
                 res.status(500).send(err);
-                console.log(err);
+            
             }
         });
 
@@ -213,7 +210,7 @@ let obtenerAlumnos = (req, res) =>
         res.status(200).send(listaAlumnos);
         (err)=>{
             res.status(500).send(err);
-            console.log(err);
+           
         }
     });       
 };
@@ -228,7 +225,7 @@ let obtenerAlumnoPorTitular = (req, res) =>
             res.status(200).send(docs);
             (err)=>{
                 res.status(500).send(err);
-                console.log(err);
+                
             }
         });
     });
@@ -247,7 +244,7 @@ let obtenerAlumnoPorUsuario = (req, res) =>
                 res.status(200).send(docs3);
                 (err)=>{
                     res.status(500).send(err);
-                    console.log(err);
+                    
                 }
             });
     });
@@ -259,7 +256,6 @@ let asignarServicioAlumno = (req,res) =>
 {
     let id = {_id: res.req.body.idAlumno};
 
-    console.log("update",id);
 
     let params = { 
         servicios: req.body.servicios
@@ -270,12 +266,12 @@ let asignarServicioAlumno = (req,res) =>
             {$push : params},
             {new:true},function(err, success)
         {
-        console.log(err);
+     
         console.log("Alumno modificado");
         (err)=>
             { 
                 res.status(500).send(err);
-                console.log(err);
+               
             }
         });
 
@@ -287,7 +283,6 @@ let desasignarServicioAlumno = (req,res) =>
 {
     let id = {_id: res.req.body.idAlumno};
 
-    console.log("update",id);
 
     let params = { 
         servicios: req.body.servicios
@@ -298,12 +293,12 @@ let desasignarServicioAlumno = (req,res) =>
             {$pull : params},
             {new:true},function(err, success)
         {
-        console.log(err);
+      
         console.log("Alumno modificado");
         (err)=>
             { 
                 res.status(500).send(err);
-                console.log(err);
+               
             }
         });
 
@@ -314,7 +309,7 @@ let desasignarServicioAlumno = (req,res) =>
 let asignarAdicional = (req,res) =>
 {
     console.log("Asignar adicional");
-    console.log(req.body);
+   
     var dni = req.body.idAdicional;
 
 
@@ -322,19 +317,17 @@ let asignarAdicional = (req,res) =>
         if(err){
             console.log("Error al asignar adicional a alumno");
             res.status(500).send(err);
-            console.log(err);
+       
         }
         else{
             console.log("Adicional asignado");
-            res.status(200).send(nuevoAlumno);
-            console.log("Adicional encontrado", results);    
+            res.status(200).send(nuevoAlumno);  
         }
     });
     (err)=>
     { 
         console.log("No pudo asignar el adicional");  
         res.status(500).send(err);
-        console.log(err);
     }
 }
 
@@ -353,7 +346,7 @@ let asignarCursoAlumno = (req,res) =>
         (err)=>
             { 
                 res.status(500).send(err);
-                console.log(err);
+               
             }
         });
 

@@ -11,7 +11,7 @@ let obtenerRetiros = (req, res) =>
             res.status(200).send(result);
             (err)=>{
                 res.status(500).send(err);
-                console.log(err);
+              
             }
     });
 
@@ -21,8 +21,6 @@ let obtenerRetirosPorAlumno = (req, res) =>
 {      
 
     console.log("obtenerRetirosPorAlumno " );
-    console.log("Retiros por alumno: " + req.params);
-    console.log("alumnoId:" + req.params.alumnoId);
         
     Retiro.find({alumno_id: req.params.alumnoId}, function(err, result) 
     {
@@ -37,12 +35,7 @@ let obtenerRetirosPorAlumno = (req, res) =>
 
 let crearRetiro = (req,res) =>
 {
-    console.log("crearRetiro " );
-    console.log( "fecha: " + req.body.fecha);
-    console.log( "alumno_id: " + req.body.alumnoId);
-    console.log( "imagenSource: " + req.body.imgsource);
-    console.log( "certificado: " + req.body.imageName);
-
+   
     var nuevoRetiro = Retiro({
         fecha: req.body.fecha,
         alumno_id:req.body.alumnoId,
@@ -59,7 +52,7 @@ let crearRetiro = (req,res) =>
         (err)=>
         { 
             res.status(500).send(err);
-            console.log(err);
+            
         }
     ) 
 }

@@ -9,7 +9,7 @@ let obtenerCertificados = (req, res) =>
             res.status(200).send(result);
             (err)=>{
                 res.status(500).send(err);
-                console.log(err);
+              
             }
     });
 
@@ -18,10 +18,7 @@ let obtenerCertificados = (req, res) =>
 let obtenerCertificadosPorAlumno = (req, res) =>
 {      
 
-    console.log("oobtenerCertificadosPorAlumno " );
-    console.log("Retiros por alumno: " + req.params);
-    console.log("alumnoId:" + req.params.alumnoId);
-        
+         
     Certificado.find({alumno_id: req.params.alumnoId}, function(err, result) 
     {
              res.status(200).send(result);
@@ -35,11 +32,7 @@ let obtenerCertificadosPorAlumno = (req, res) =>
 
 let crearCertificado = (req,res) =>
 {
-    console.log("crearCertificado " );
-    console.log( "fecha: " + req.body.fecha);
-    console.log( "alumno_id: " + req.body.alumnoId);
-    console.log( "certificado: " + req.body.imgsource);
-    console.log( "certificado: " + req.body.imageName);
+   
     var nuevoCertificado = Certificado({
         fecha: req.body.fecha,
         alumno_id:req.body.alumnoId,
@@ -56,7 +49,7 @@ let crearCertificado = (req,res) =>
         (err)=>
         { 
             res.status(500).send(err);
-            console.log(err);
+           
         }
     ) 
 }

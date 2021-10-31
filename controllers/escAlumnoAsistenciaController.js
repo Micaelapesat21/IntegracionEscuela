@@ -64,7 +64,7 @@ let obtenerAlumnoPorEstado = (req, res) =>
 let obtenerAsistenciasPorAlumnoYFecha = (req, res) =>
 {      
 
-    console.log("Asistencias por alumno y fecha: " + req.body);
+    console.log("Asistencias por alumno y fecha: " + JSON.stringify(req.body));
     /*
         userId: userId,
         alumnoId: alumno,
@@ -83,6 +83,8 @@ let obtenerAsistenciasPorAlumnoYFecha = (req, res) =>
 
     Asistencia.find({$and:[{alumno_id: req.body.alumnoId}, {fecha:{$gte:req.body.fechaI}}, {fecha:{$lte:req.body.fechaF}}]}, function(err, alumno) 
     {
+    
+        console.log("Result: " + JSON.stringify(alumno))
              res.status(200).send(alumno);
             //agregar array 
                 (err)=>{
@@ -98,10 +100,8 @@ let obtenerAsistencias = (req, res) =>
     console.log("obtenerAsistencias");
     Asistencia.find( function(err, result) 
     { 
-        console.log("estoy dentro de la colección: ");
-        console.log("resultado: " + result);
-        
-        res.status(200).send(result);
+     
+       res.status(200).send(result);
           (err)=>{
                 res.status(500).send(err)
             }

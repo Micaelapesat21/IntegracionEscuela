@@ -255,7 +255,6 @@ let crearCuota = (req, res) =>
 let realizarPago = (req, res) => {
     let id = { numeroFactura: req.body.numeroFactura };
 
-    console.log("update", id);
 
     var numeroTrans = 0;
 
@@ -265,7 +264,7 @@ let realizarPago = (req, res) => {
         .pipe(csv())
         .on('data', (row) => {
             numeroTrans = parseInt(row.numeroTransaccion) + 1
-            console.log(numeroTrans)
+          
             const createCsvWriter = require('csv-writer').createObjectCsvWriter;
             const csvWriter = createCsvWriter({
                 path: './assets/numeroTransaccion.csv',
@@ -291,7 +290,7 @@ let realizarPago = (req, res) => {
                     res.status(200).send(resultado);
                     (err) => {
                         res.status(500).send(err);
-                        console.log(err);
+                     
                     }
                 });
         });
@@ -323,12 +322,10 @@ let crearCuota1 = (req,res) =>
         let dTotalServicios = 0;
         let dServicios = [ ];
 
-        console.log(dAlumno);
-        console.log("idServicio: " + idServicio);
 
 
         if (idServicio.length > 0) {
-            console.log("TRUEEEEEE")
+          
             for(let i = 0; i < idServicio.length; i++) {
                 Servicio.findOne( { _id: idServicio[i] }, function(err, docs) 
                 {
@@ -344,9 +341,7 @@ let crearCuota1 = (req,res) =>
                                 dServicios.push(dServiciosAFacturar[i]);
                                 dTotalServicios = dTotalServicios + dServiciosAFacturar[i].precioMensual;
                             }
-                            console.log(dServicios);
-
-
+                          
                             let date = new Date()
 
                             var today = new Date();
@@ -371,8 +366,7 @@ let crearCuota1 = (req,res) =>
                             } else {
                                 venc = dd+'/'+ mm+1 +'/'+yyyy;
                             }
-                            console.log("Today" + today);
-                            console.log(dTurnoAFacturar);
+                           
                             dTotalCuota = dTotalServicios + dTurnoAFacturar.precioTurno
 
 
@@ -403,18 +397,18 @@ let crearCuota1 = (req,res) =>
                             (
                                 (nuevaCuota)=>
                                 {` `
-                                    console.log("Nueva cuota", nuevaCuota);
+                                  
                                     Alumno.findOneAndUpdate({_id: req.body.idAlumno },{$push:{cuota:nuevaCuota._id}},{ new: true },function(err,results) {
                                         if(err){
                                             console.log("Error al crear alumno en push Cuota a Alumno");
                                             res.status(500).send(err);
-                                            console.log(err);
+                                      
                                             return;
                                         }
                                         else{
                                             console.log("Cuota creada");
                                             res.status(200).send(nuevaCuota);
-                                            console.log("Cuota encontrada", results);
+                                          
                                             return;
                                         }
                                     });
@@ -459,7 +453,7 @@ let crearCuota1 = (req,res) =>
                                 venc = dd+'/'+ mm +'/'+yyyy;
                             }
                             
-                            console.log(dTurnoAFacturar);
+                         
                             dTotalCuota = dTurnoAFacturar.precioTurno
 
                             var nuevaCuota = Cuota({
@@ -488,18 +482,18 @@ let crearCuota1 = (req,res) =>
                             (
                                 (nuevaCuota)=>
                                 {` `
-                                    console.log("Nueva cuota", nuevaCuota);
+                                 
                                     Alumno.findOneAndUpdate({_id: req.body.idAlumno },{$push:{cuota:nuevaCuota._id}},{ new: true },function(err,results) {
                                         if(err){
                                             console.log("Error al crear alumno en push Cuota a Alumno");
                                             res.status(500).send(err);
-                                            console.log(err);
+                                           
                                             return;
                                         }
                                         else{
                                             console.log("Cuota creada");
                                             res.status(200).send(nuevaCuota);
-                                            console.log("Cuota encontrada", results);
+                                       
                                             return;
                                         }
                                     });
@@ -521,7 +515,6 @@ let actualizarCuota = (req,res) =>
 {
     let id = {idCuota: req.body.idCuota};
 
-    console.log("update",id);
 
     let params = { 
         nombre:req.body.nombre,
@@ -542,7 +535,7 @@ for(let prop in params) if(!params[prop]) delete params[prop];
         (err)=>
             { 
                 res.status(500).send(err);
-                console.log(err);
+               
             }
         });
 
@@ -551,18 +544,18 @@ for(let prop in params) if(!params[prop]) delete params[prop];
 
 let eliminarCuota = (req,res)=>
 {
-    console.log(res.req.body.idCuota)
+ 
     if (res.req.body.idCuota != null) {
         let id = {_id: res.req.body.idCuota};
 
         Cuota.deleteOne(id, function(err)
         {
-            console.log(id);
+            
             res.status(200).send({estado:"Cuota eliminado"}); //devuelvo resultado  
             (err)=>
             { 
                 res.status(500).send(err);
-                console.log(err);
+                
             }      
         });
     } else {
@@ -587,7 +580,7 @@ let obtenerCuotas = (req, res) =>
         .pipe(csv())
         .on('data', (row) => {
             numeroTrans = parseInt(row.numeroTransaccion) + 1
-            console.log(numeroTrans)
+         
             const createCsvWriter = require('csv-writer').createObjectCsvWriter;
             const csvWriter = createCsvWriter({
                 path: './assets/numeroTransaccion.csv',
@@ -618,16 +611,16 @@ let obtenerCuotas = (req, res) =>
                     )
                     .then((response) => {
                         var numero_cuenta = response.data.cuentas[0].numero_cuenta;
-                        console.log(token)
+                      
         
                         
                         axios.get(
                             'https://integracion-banco.herokuapp.com/cuentas/' + numero_cuenta + '/facturas/2020/12', 
                                 { headers: { 'Authorization' : token } } )
                             .then((response) => {
-                                console.log(response.data)
                                 
-                                console.log( response.data.facturas.length);
+                                
+                               
                                 for (let i = 0; i < response.data.facturas.length ; i++) {
                                     if (response.data.facturas[i].fecha_pagado !== null) {
                                         
@@ -640,16 +633,15 @@ let obtenerCuotas = (req, res) =>
                                             { numeroFactura: response.data.facturas[i].numero_factura },
                                             { $set: params }, { new: true },
                                             function(err, resultado) {
-                                                console.log(resultado);
+                                          
 
                                                 (err) => {
-                                                    console.log(err);
+                                                    console.log("error");
                                                 }
                                             })
 
                                     }
-                                    console.log(i);
-                                    console.log(response.data.facturas.length);
+                                    
                                     if (i === response.data.facturas.length-1) {
                                         Cuota.find(function(err,listaCuotas)
                                         {
@@ -667,7 +659,7 @@ let obtenerCuotas = (req, res) =>
                                 }
                             },
                             (error) => {
-                                console.log(error.response)
+                            
                                 var status = error.response.status
                                 res.status(500).send(error);
                             });
@@ -706,7 +698,7 @@ let obtenerPago = (req, res) =>
         res.status(200).send(listaCuotas);
         (err)=>{
             res.status(500).send(err);
-            console.log(err);
+         
         }
     }).populate({
         path: 'datosFacturacion',
@@ -714,11 +706,21 @@ let obtenerPago = (req, res) =>
     });
 };
 
+let obtenerPagos = (req, res) =>
+{
+    Cuota.find({ pagada: true } , function(err,listaCuotas)
+    {
+        res.status(200).send(listaCuotas);
+        (err)=>{
+            res.status(500).send(err);
+        }
+    });
+};
+
 let obtenerCuotasDeUsuario = (req, res) =>
 {
     console.log("obtenerCuotasDeUsuario");
-    console.log("alumno: " + req.body.alumnoId);
-
+  
     Cuota.find({ alumno: req.body.alumnoId } , function(err,listaCuotas)
     {
         console.log("encontre algo" + listaCuotas);
@@ -769,5 +771,6 @@ module.exports =
     obtenerCuotasDeUsuario,
     pagarCuota,
     realizarPago,
-    obtenerPago
+    obtenerPago,
+    obtenerPagos
 };

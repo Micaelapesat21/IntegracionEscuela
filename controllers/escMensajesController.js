@@ -11,7 +11,6 @@ let obtenerMensajes = (req, res) =>
 {      
     console.log("obtenerMensajes");
     Mensaje.find({leida: "N"},function(err,mensajes){
-        console.log("Mensajes del obtener : " + JSON.stringify(mensajes));
         res.status(200).send(mensajes);
         (err)=>{
             res.status(500).send(err);

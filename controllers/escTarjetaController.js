@@ -5,10 +5,7 @@ var Usuario = require('../models/escusuarios');
 
 let crearTarjeta = (req,res) =>
 {
-    console.log("crearTarjeta:" + JSON.stringify(req.body));
-
-    console.log("tipoBody: " + tipoBody);
-
+    
     Usuario.findOne({usuario: req.body.usuario}, function(err,result) { 
         console.log("Usuario: " + result._id);
             var nuevaTarjeta = new Tarjeta({
