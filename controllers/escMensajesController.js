@@ -84,7 +84,8 @@ let crearMensaje = (req,res) =>
                         texto: req.body.texto,
                         alumno: req.body.alumno,
                         fecha: req.body.fecha,
-                        nombre: result2.nombre + " " + result2.apellido
+                        nombre: result2.nombre + " " + result2.apellido,
+                        hora: req.body.hora
                     });
 
                     newContact.save().
@@ -189,7 +190,8 @@ let actualizarMensaje = (req,res) =>
         leida: "S", 
         texto: mensaje.texto,
         alumno: mensaje.alumno,
-        fecha: mensaje.fecha
+        fecha: mensaje.fecha,
+        hora: mensaje.hora
     };
 
 for(let prop in params) if(!params[prop]) delete params[prop];

@@ -212,7 +212,7 @@ let obtenerAlumnos = (req, res) =>
             res.status(500).send(err);
            
         }
-    });       
+    }).sort({nombre: 1});  
 };
 
 let obtenerAlumnoPorTitular = (req, res) =>

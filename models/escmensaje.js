@@ -12,7 +12,8 @@ var MensajeSchema = new Schema({
     leida: String,
     texto: String,
     alumno: String,
-    fecha: String
+    fecha: String,
+    hora: String
 });
 
 MensajeSchema.set('toObject', {

@@ -82,7 +82,8 @@ let crearNotificacion = (req,res) =>
         leida: req.body.leida, 
         texto: req.body.texto,
         alumno: req.body.alumno,
-        fecha: req.body.fecha
+        fecha: req.body.fecha,
+        hora: req.body.hora
     });
     
     newContact.save().
@@ -140,7 +141,8 @@ let crearNotificacionMasiva = async (req,res) =>
                                     leida: "N", 
                                     texto: req.body.texto,
                                     fecha: req.body.fecha,
-                                    alumno: result.nombre + " " + result.apellido
+                                    alumno: result.nombre + " " + result.apellido,
+                                    hora: req.body.hora
                                 });
                                 newContact.save().then
                                                         (
@@ -228,7 +230,8 @@ let actualizarNotificacion = (req,res) =>
         leida: "S", 
         texto: notificacion.texto,
         alumno: notificacion.alumno,
-        fecha: notificacion.fecha
+        fecha: notificacion.fecha,
+        hora: notificacion.hora
     };
 
 for(let prop in params) if(!params[prop]) delete params[prop];

@@ -12,7 +12,7 @@ let obtenerTitulares = (req, res) =>
             res.status(500).send(err);
             console.log(err);
         }
-    });  
+    }).sort({nombre: 1});  
 };
 
 let obtenerTitular = (req, res) =>
