@@ -118,7 +118,7 @@ let obtenerCursos = (req, res) =>
             res.status(500).send(err);
             console.log(err);
         }
-    });  
+    }).sort({numero: 1, division: 1});  
 
     //arregloCurso.sort(function(a, b){return a.numero - b.numero})
        
